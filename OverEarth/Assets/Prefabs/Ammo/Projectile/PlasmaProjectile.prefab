@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4250167216941082}
   - component: {fileID: 198630194190211466}
   - component: {fileID: 199557905669984984}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GlowingCircle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4709,7 +4709,7 @@ GameObject:
   - component: {fileID: 4676345271428256}
   - component: {fileID: 198263902289138048}
   - component: {fileID: 199040624544222698}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: GlowingOrb
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9407,7 +9407,7 @@ GameObject:
   - component: {fileID: 4134864450608020}
   - component: {fileID: 198325452140279300}
   - component: {fileID: 199257852360154906}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Particles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14106,7 +14106,7 @@ GameObject:
   - component: {fileID: 54856315509678208}
   - component: {fileID: 135838921090627542}
   - component: {fileID: 5337392994992174450}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: PlasmaProjectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14157,7 +14157,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 3
+  m_Radius: 4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5337392994992174450
 MonoBehaviour:

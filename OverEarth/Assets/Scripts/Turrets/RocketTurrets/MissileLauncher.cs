@@ -12,14 +12,16 @@ public class MissileLauncher : Turret
         turretRange = 50000f;
         cooldown = 5f;
         currentCooldown = cooldown;
+
         rightTraverse = 180f;
         leftTraverse = 180f;
         elevation = 60f;
         depression = 5f;
     }
 
-    public override bool AimedOnEnemy()
+    public override bool AimedAtEnemy()
     {
+        // Missile launcher always "aimed on enemy" if there is the nearest target
         if (NearestTargetWithParameter != null)
         {
             return true;
@@ -29,24 +31,14 @@ public class MissileLauncher : Turret
 
     public override void Shoot()
     {
-        //// создание анимации
-        //Transform shootAnimation = Instantiate(ShootAnimation);
-        //// начальное расположение анимации
-        //shootAnimation.transform.position = turretLauncher.transform.position;
-        //// направление анимации
-        //shootAnimationLeft.forward = turretLauncher.forward;
-
-        //Destroy(shootAnimation.gameObject, 0.3f); // удалить объект анимации выстрела через 0.3 секунды
-        
         GameObject missile = Instantiate(MissilePrefab); // Create a new missile
+        
+        missile.transform.position = TurretCannons.transform.position; // Set missile position to this turret cannons position
+        missile.transform.rotation = TurretCannons.transform.rotation; // Set missile rotation to this turret cannons rotation
+        missile.tag = gameObject.tag; // Set missile tag equal to this turret
 
-        // Set missile position, rotation and tag equal to this missile launcher
-        missile.transform.position = TurretCannon.transform.position;
-        missile.transform.rotation = TurretCannon.transform.rotation;
-        missile.tag = gameObject.tag;
+        currentCooldown = cooldown; // Add a cooldown to this turret
 
-        currentCooldown = cooldown;
-
-        GetComponent<AudioSource>().Play();
+        GetComponent<AudioSource>().Play(); // Play an shoot sound
     }
 }

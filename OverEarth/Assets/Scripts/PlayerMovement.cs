@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public AutoFireChanged autoFireChanged;
     public bool autoFire = false; // If guns mode setting to auto fire on player ship
 
-    public static Rigidbody PlayerShipRigidbody;
+    public Rigidbody PlayerShipRigidbody;
 
     public Ship ShipScript;
 

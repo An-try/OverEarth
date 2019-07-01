@@ -46,15 +46,17 @@ public class PlasmaTurret : Turret
                                       Random.Range(-turretScatter, turretScatter),
                                       Random.Range(-turretScatter, turretScatter));
 
-        // Creating shoot animation
+        // Creating shoot animation with position and rotation of the shoot place. Also parent shoot animation to the shoot place
         GameObject shootAnimation = Instantiate(ShootAnimationPrefab, ShootPlace.transform.position, ShootPlace.transform.rotation, ShootPlace.transform);
-        shootAnimation.transform.forward = TurretCannon.transform.forward;
         Destroy(shootAnimation.gameObject, shootAnimation.GetComponent<ParticleSystem>().main.duration);
-        // Creating bullet
+
+        // Creating bullet with position and rotation of the shoot place
         GameObject bullet = Instantiate(ProjectilePrefab, ShootPlace.transform.position, ShootPlace.transform.rotation);
+        // Add force to the bullet so it will fly directly
         bullet.GetComponent<Rigidbody>().AddForce((ShootPlace.transform.forward + scatter) * bulletForce);
 
-        currentCooldown = cooldown;
-        GetComponent<AudioSource>().Play();
+        currentCooldown = cooldown; // Add a cooldown to this turret
+
+        GetComponent<AudioSource>().Play(); // Play an shoot sound
     }
 }

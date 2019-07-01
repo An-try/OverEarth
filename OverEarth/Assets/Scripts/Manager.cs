@@ -104,16 +104,30 @@ public class Manager : MonoBehaviour
         }
 
         InvokeRepeating("UpdateCurrentFPSInfo", 0, 0.5f); // Update FPS info info every 0.5 seconds
-        
+
         // Spawn an enemy ship on the game object named "ShipSpawn"
         // TODO: Remake enemies spawn
-        SpawnShip("Enemy", GameObject.Find("ShipSpawn").transform.position, GameObject.Find("ShipSpawn").transform.localRotation);
-        SpawnShip("Enemy", GameObject.Find("ShipSpawn1").transform.position, GameObject.Find("ShipSpawn1").transform.localRotation);
-        SpawnShip("Enemy", GameObject.Find("ShipSpawn2").transform.position, GameObject.Find("ShipSpawn2").transform.localRotation);
+
+        //SpawnShip("Enemy", GameObject.Find("ShipSpawn").transform.position, GameObject.Find("ShipSpawn").transform.localRotation);
+        //SpawnShip("Enemy", GameObject.Find("ShipSpawn1").transform.position, GameObject.Find("ShipSpawn1").transform.localRotation);
+        //SpawnShip("Enemy", GameObject.Find("ShipSpawn2").transform.position, GameObject.Find("ShipSpawn2").transform.localRotation);
     }
 
     private void Update() // Update is called every frame
     {
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            SpawnShip("Enemy", GameObject.Find("ShipSpawn").transform.position, GameObject.Find("ShipSpawn").transform.localRotation);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha9))
+        {
+            SpawnShip("Enemy", GameObject.Find("ShipSpawn1").transform.position, GameObject.Find("ShipSpawn1").transform.localRotation);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            SpawnShip("Enemy", GameObject.Find("ShipSpawn2").transform.position, GameObject.Find("ShipSpawn2").transform.localRotation);
+        }
+
         currentFPS = (int)(1f / Time.unscaledDeltaTime); // Get current frames per second
 
         // If the current target info camera has destroyed, spawn a new target info camera, transform and parent it to player ship

@@ -60,6 +60,7 @@ public abstract class Rocket : Ammo
         {
             rocketEngine.missileVelocity++;
         }
+
         RocketRigidbody.velocity = transform.forward * rocketEngine.missileVelocity; // Apply velocity to the missile
 
         ObstaclesAvoidance(); // Avoid obstacles and move to the target
@@ -93,11 +94,6 @@ public abstract class Rocket : Ammo
 
     private void ObstaclesAvoidance() // TODO: Remake obstacles avoidance algorithm
     {
-        if (Target == null)
-        {
-            return;
-        }
-
         float rayLength = 400f;
         float rocketSizeToAvoid = 3f;
 
@@ -187,7 +183,7 @@ public abstract class Rocket : Ammo
         }
         else // If there isn't obstacle on the rocket way
         {
-            RotateToTarget(true, Vector3.zero); // Move rocket to target
+            RotateToTarget(true, transform.position + transform.forward); // Move rocket to target. If there is no target move forward
         }
     }
 

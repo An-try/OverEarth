@@ -2,20 +2,20 @@
 {
     void SetTurretParameters();
     void ChangeTurretAutoFire(bool turretAutoFire);
+
     void AutomaticTurretControl();
     void ManualTurretControl();
 
+    bool AimedAtEnemy();
+    bool AimedAtOwner();
     void SearchTheNearestTargetWithParameter();
-    void SetAimPoint();
-    void RotateBase();
-    void RotateCannon();
-    bool AimedOnEnemy();
-    bool AimedOnYourself();
 
-    void Shoot();
+    void RotateBase();
+    void RotateCannons();
+    void RotateToDefault();
 
     void CooldownDecrease();
     bool CooldownIsZero();
 
-    void RotateToIdle();
+    void Shoot();
 }

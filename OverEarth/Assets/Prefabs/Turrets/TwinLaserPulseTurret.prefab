@@ -148,7 +148,7 @@ MonoBehaviour:
   TargetsList: []
   NearestTargetWithParameter: {fileID: 0}
   TurretBase: {fileID: 1744142559798906}
-  TurretCannon: {fileID: 1855947822126170}
+  TurretCannons: {fileID: 1855947822126170}
   ShootPlace: {fileID: 0}
   ShootAnimationPrefab: {fileID: 0}
   AimPoint: {x: 0, y: 0, z: 0}

@@ -1,19 +1,20 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class PlayerInfoPanel : MonoBehaviour
 {
-    public static PlayerInfoPanel instance;
-    
+    public static PlayerInfoPanel instance; // Singleton for this script
+
     public Text PlayerInfoText;
 
-    string mainStringColor = "white";
-    string positiveStringColor = "lime";
-    string negativeStringColor = "red";
+    private Ship playerShipScript;
 
-    private void Awake()
+    // Text colors that will be displayed on the player info panel
+    private string mainStringColor = "white";
+    private string positiveStringColor = "lime";
+    private string negativeStringColor = "red";
+
+    private void Awake() // Awake is called when the script instance is being loaded
     {
         if (instance == null) // If instance not exist
         {
@@ -25,9 +26,11 @@ public class PlayerInfoPanel : MonoBehaviour
         }
     }
 
-    private void Start()
+    private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
     {
+        // Delegate called when player ship is assigned
         Manager.instance.onPlayerShipAssigned += StartUpdateShipInfo;
+        playerShipScript = Manager.instance.PlayerShip.GetComponent<Ship>();
     }
 
     private void StartUpdateShipInfo()
@@ -37,7 +40,8 @@ public class PlayerInfoPanel : MonoBehaviour
 
     private void UpdateShipInfo()
     {
-        if (Manager.instance.PlayerShip != null)
+        // If player ship exists display the ship's info
+        if (Manager.instance.PlayerShip)
         {
             PlayerInfoText.text =
 /* Health points     */ $"<color={mainStringColor}>Health: </color>" + OutputCurrentHP() +
@@ -47,7 +51,7 @@ public class PlayerInfoPanel : MonoBehaviour
 /* Stop force        */ $"\n<color={mainStringColor}>Stop force: </color>" + OutputCurrentStopForce() +
 /* Turret auto fire  */ $"\n<color={mainStringColor}>Turret auto fire: </color>" + OutputIfAutoFire();
         }
-        else
+        else // If player ship does not exist inform player that it was destroyed
         {
             PlayerInfoText.text = $"<color={negativeStringColor}>Player ship has been destroyed</color>";
         }
@@ -55,24 +59,22 @@ public class PlayerInfoPanel : MonoBehaviour
 
     private string OutputCurrentHP()
     {
-        int playerShipHP = (int)Manager.instance.PlayerShip.GetComponent<Ship>().HP;
-        return $"<color={positiveStringColor}>" + playerShipHP + "</color>";
+        int playerShipHP = (int)playerShipScript.HP; // Get player ship script and HP
+        return $"<color={positiveStringColor}>" + playerShipHP + "</color>"; // Return player ship HP
     }
 
     private string OutputCurrentDefence()
     {
-        Ship PlayerShipScript = Manager.instance.PlayerShip.GetComponent<Ship>();
-
-        return $"<color={positiveStringColor}>\n Kinetic:     " + PlayerShipScript.kineticDefence + "%" +
-                                             "\n Explosion: " + PlayerShipScript.explosionDefence + "%" +
-                                             "\n Laser:       " + PlayerShipScript.laserDefence + "%" +
-                                             "\n Flame:       " + PlayerShipScript.flameDefence + "%" +
-                                             "\n Fragment:  " + PlayerShipScript.fragmentDefence + "%</color>";
+        return $"<color={positiveStringColor}>\n Kinetic:     " + playerShipScript.kineticDefence + "%" +
+                                             "\n Explosion: " + playerShipScript.explosionDefence + "%" +
+                                             "\n Laser:       " + playerShipScript.laserDefence + "%" +
+                                             "\n Flame:       " + playerShipScript.flameDefence + "%" +
+                                             "\n Fragment:  " + playerShipScript.fragmentDefence + "%</color>";
     }
 
     private string OutputCurrentSpeed()
     {
-        int PlayerSpeed = (int)Manager.instance.PlayerShip.GetComponent<Rigidbody>().velocity.magnitude;
+        int PlayerSpeed = (int)PlayerMovement.instance.PlayerShipRigidbody.velocity.magnitude;
 
         if (PlayerSpeed > 0)
         {
@@ -83,7 +85,7 @@ public class PlayerInfoPanel : MonoBehaviour
 
     private string OutputCurrentTransmission()
     {
-        int PlayerTransmission = Manager.instance.PlayerShip.GetComponent<Ship>().transmission;
+        int PlayerTransmission = playerShipScript.transmission;
 
         if (PlayerTransmission > 0)
         {
@@ -94,7 +96,7 @@ public class PlayerInfoPanel : MonoBehaviour
 
     private string OutputCurrentStopForce()
     {
-        int StopForce = (int)PlayerMovement.PlayerShipRigidbody.drag;
+        int StopForce = (int)PlayerMovement.instance.PlayerShipRigidbody.drag;
 
         if (StopForce > 0)
         {

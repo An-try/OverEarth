@@ -301,7 +301,7 @@ MonoBehaviour:
   TargetsList: []
   NearestTargetWithParameter: {fileID: 0}
   TurretBase: {fileID: 1849001976023146}
-  TurretCannon: {fileID: 1691963451514128}
+  TurretCannons: {fileID: 1691963451514128}
   ShootPlace: {fileID: 0}
   ShootAnimationPrefab: {fileID: 1853411115896420, guid: b539fa8305c5d6e46b7db63498a8ed96,
     type: 3}

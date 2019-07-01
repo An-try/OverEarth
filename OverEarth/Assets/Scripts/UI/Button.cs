@@ -1,100 +1,101 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Button : MonoBehaviour, IPointerUpHandler,
-                                     IPointerDownHandler,
-                                     IPointerEnterHandler,
-                                     IPointerExitHandler
+/// <summary>
+/// Class for any UI button that has text or image component.
+/// </summary>
+public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
 {
-    Text buttonText;
-    Image buttonSprite;
+    private Text buttonText;
+    private Image buttonImage;
 
-    Color32 neutralButtonColor;
-    Color32 activeButtonColor;
+    private Color32 neutralButtonColor; // Button color when it is in default state
+    private Color32 activeButtonColor; // Button color when the user hover cursor on it or press the button
 
     private Vector3 defaulButtontScale;
-    private float buttonPressedScaleMultiplier = 0.9f;
+    private float buttonPressedScaleMultiplier = 0.9f; // Button scale multiplier when button is pressed
 
     private bool buttonPressed = false;
 
-    void Awake()
+    private void Awake() // Awake is called when the script instance is being loaded
     {
-        neutralButtonColor = new Color32(255, 255, 255, 127);
-        activeButtonColor = new Color32(255, 255, 255, 255);
+        neutralButtonColor = new Color32(255, 255, 255, 127); // White translucent color
+        activeButtonColor = new Color32(255, 255, 255, 255); // White color
 
-        defaulButtontScale = transform.localScale;
+        defaulButtontScale = transform.localScale; // Set defaul buttont scale
 
-        if (transform.GetComponent<Text>() != null)
+        if (transform.GetComponent<Text>() != null) // If there is a text component on the button
         {
-            buttonText = transform.GetComponent<Text>();
-            buttonText.color = neutralButtonColor;
+            buttonText = transform.GetComponent<Text>(); // Get text component
+            buttonText.color = neutralButtonColor; // Set text component color
         }
-        if (transform.GetComponent<Image>() != null)
+
+        if (transform.GetComponent<Image>() != null) // If there is an image component on the button
         {
-            buttonSprite = transform.GetComponent<Image>();
-            buttonSprite.color = neutralButtonColor;
+            buttonImage = transform.GetComponent<Image>(); // Get image component
+            buttonImage.color = neutralButtonColor; // Set image component color
         }
-        InvokeRepeating("UpdateButton", 1f, 1f);
+
+        InvokeRepeating("UpdateButton", 1f, 1f); // Check and update button state each period of time
     }
 
     private void UpdateButton()
     {
-        if (!gameObject.activeInHierarchy)
+        if (!gameObject.activeInHierarchy) // If game object is active in the scene
         {
             SetButtonColor(neutralButtonColor);
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerEnter(PointerEventData eventData) // Called when the cursor enters the zone of the button
     {
         SetButtonColor(activeButtonColor);
     }
 
-    public void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData) // Called when the cursor leaves the button area
     {
-        if (!buttonPressed)
+        if (!buttonPressed) // If button is not pressed
         {
             SetButtonColor(neutralButtonColor);
         }
     }
 
-    public void OnPointerUp(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData) // Called when the user presses the left mouse button
+    {
+        SetButtonPressedScale();
+        buttonPressed = true;
+    }
+
+    public void OnPointerUp(PointerEventData eventData) // Called when the user releases the left mouse button
     {
         SetButtonColor(neutralButtonColor);
         SetButtonDefaultScale();
         buttonPressed = false;
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        SetButtonPressedScale();
-        buttonPressed = true;
-    }
-
-    private void SetButtonDefaultScale()
-    {
-        transform.localScale = defaulButtontScale;
-    }
-
     private void SetButtonPressedScale()
     {
+        // Make button smaller by multiplying its each scale value
         transform.localScale = new Vector3(transform.localScale.x * buttonPressedScaleMultiplier,
                                            transform.localScale.y * buttonPressedScaleMultiplier,
                                            transform.localScale.z * buttonPressedScaleMultiplier);
     }
 
+    private void SetButtonDefaultScale()
+    {
+        transform.localScale = defaulButtontScale; // Set default button scale to this button
+    }
+
     private void SetButtonColor(Color32 newColor)
     {
-        if (buttonText != null)
+        if (buttonText != null) // If there is a text component
         {
-            buttonText.color = newColor;
+            buttonText.color = newColor; // Set the new color to the text
         }
-        if (buttonSprite != null)
+        if (buttonImage != null) // If there is an image component
         {
-            buttonSprite.color = newColor;
+            buttonImage.color = newColor; // Set the new color to the image
         }
     }
 }

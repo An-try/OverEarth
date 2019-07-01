@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class TwinLaserTurret : Turret
 {
@@ -28,13 +26,14 @@ public class TwinLaserTurret : Turret
 
     public override void Shoot()
     {
-        RightLaserBeam.GetComponent<Laser>().laserLength = turretRange;
-        RightLaserBeam.GetComponent<Laser>().SetHitDuration(hitDuration);
-        LeftLaserBeam.GetComponent<Laser>().laserLength = turretRange;
-        LeftLaserBeam.GetComponent<Laser>().SetHitDuration(hitDuration);
+        RightLaserBeam.GetComponent<Laser>().laserLength = turretRange; // Set the laset lenght to the right laser beam
+        RightLaserBeam.GetComponent<Laser>().SetHitDuration(hitDuration); // Set the hit duration to the right laser beam
 
-        currentCooldown = cooldown + hitDuration;
+        LeftLaserBeam.GetComponent<Laser>().laserLength = turretRange; // Set the laset lenght to the left laser beam
+        LeftLaserBeam.GetComponent<Laser>().SetHitDuration(hitDuration); // Set the hit duration to the left laser beam
 
-        GetComponent<AudioSource>().Play();
+        currentCooldown = cooldown + hitDuration; // Add a cooldown to this turret
+
+        GetComponent<AudioSource>().Play(); // Play an shoot sound
     }
 }
