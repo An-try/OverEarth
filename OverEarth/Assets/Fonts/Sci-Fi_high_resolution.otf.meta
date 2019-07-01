@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 7e44b28b6116c134a977cdf6feb2bff5
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 300
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Sci-Fi [Rus by me]
+  fontNames:
+  - Sci-Fi [Rus by me]
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1975def0a0a93ce4b9b2b902039d03b1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
