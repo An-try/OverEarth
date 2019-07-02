@@ -2,6 +2,8 @@
 
 public class InventoryUI : MonoBehaviour
 {
+    public GameObject InventorySlotPrefab;
+
     private InventorySlot[] inventorySlots;
 
     private Inventory inventory;
@@ -15,10 +17,18 @@ public class InventoryUI : MonoBehaviour
     private void SetInventory()
     {
         inventory = Inventory.instance; // Get instance of the inventory
-
         inventory.onItemChanged += UpdateUI; // When any item changed in inventory
 
-        inventorySlots = GetComponentsInChildren<InventorySlot>(); // Get all children game objects in this game object as slots
+        inventorySlots = new InventorySlot[Inventory.instance.inventoryMaximumSpace]; // Create an array with length of inventory maximum space
+
+        // Instantiate inventory slots in the player inventory UI
+        for (int i = 0; i < Inventory.instance.inventoryMaximumSpace; i++)
+        {
+            // Create an inventory slot and parent it to this game object
+            GameObject inventorySlot = Instantiate(InventorySlotPrefab, gameObject.transform);
+
+            inventorySlots[i] = inventorySlot.GetComponent<InventorySlot>(); // Add an InventorySlot component to the inventorySlots array
+        }
     }
 
     private void UpdateUI()

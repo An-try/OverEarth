@@ -24,4 +24,11 @@ public class Equipment : Item
     }
 }
 
-public enum EquipmentSlot { Upgrade, Armor, Shield, Weapon, Engine }
+public enum EquipmentSlot
+{
+    Upgrade,
+    Armor,
+    Shield,
+    Weapon,
+    Engine
+}

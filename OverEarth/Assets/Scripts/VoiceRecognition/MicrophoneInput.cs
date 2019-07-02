@@ -1,13 +1,16 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Audio;
 
+/// <summary>
+/// This script is no longer used.
+/// This script requires AudioSource on this game object.
+/// </summary>
+[RequireComponent(typeof(AudioSource))]
 public class MicrophoneInput : MonoBehaviour
 {
     private AudioSource audioSource;
 
-    private string selectedMicrophone;
+    private string selectedMicrophone; // Name of the selected microphone
 
     public AudioMixerGroup audioMixerGroupMaster;
     public AudioMixerGroup audioMixerGroupMicrophone;
@@ -16,23 +19,25 @@ public class MicrophoneInput : MonoBehaviour
 
     public int deviceIndex = 0;
 
-    void Start()
+    private void Start()
     {
-        audioSource = Manager.instance.GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>(); // Get AudioSource component on this object
 
         if (useMicrophone)
         {
-            if(Microphone.devices.Length > deviceIndex) // Если к компьютеру подключено устройство записи звука под заданым индексом
+            if (Microphone.devices[deviceIndex] != null) // If a sound device with a specified index is connected to the computer
             {
-                selectedMicrophone = Microphone.devices[deviceIndex].ToString();
-                audioSource.outputAudioMixerGroup = audioMixerGroupMicrophone;
+                selectedMicrophone = Microphone.devices[deviceIndex]; // Get the name of this device
+                audioSource.outputAudioMixerGroup = audioMixerGroupMicrophone; // Set the audio mixer to the audio source
+                // Start to record a voice with selected microphone, looping and frequency
                 audioSource.clip = Microphone.Start(selectedMicrophone, true, 1, AudioSettings.outputSampleRate);
             }
-            else
+            else // If a sound device with a specified index does not exist
             {
                 useMicrophone = false;
             }
         }
-        audioSource.Play();
+
+        audioSource.Play(); // Play the recorded sound
     }
 }

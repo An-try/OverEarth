@@ -28,7 +28,13 @@ public class EquipmentManager : MonoBehaviour
 
     private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
     {
-        inventory = Inventory.instance;
+        // Delegate called when player ship spawned
+        Manager.instance.onPlayerShipAssigned += SetInventory;
+    }
+
+    private void SetInventory()
+    {
+        inventory = Inventory.instance; // Get instance of inventory
 
         int slotsAmount = System.Enum.GetNames(typeof(EquipmentSlot)).Length; // Get equipment slots amount
         currentEquipment = new Equipment[slotsAmount]; // Create new equipment

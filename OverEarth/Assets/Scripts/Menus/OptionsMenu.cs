@@ -54,6 +54,7 @@ public class OptionsMenu : MonoBehaviour
             ReadSettingsFromFile();
             ApplyNewSettings();
         }
+
         UpdateSettingsOnPanel(); // Change values on the settings panel depending on the current game settings
     }
 

@@ -30,7 +30,7 @@ public class Laser : Ammo
             // Turn on the line renderer and draw a laser
             lineRenderer.enabled = true;
             DrawLaserAndDealDamage();
-            currentHitDuration -= Time.fixedDeltaTime; // Decrease laser hit duration
+            currentHitDuration -= Time.deltaTime; // Decrease laser hit duration
         }
         else // If the laser duration time is up
         {
@@ -53,7 +53,7 @@ public class Laser : Ammo
             // Amount of this parts is calculates like this: HIT_DURATION / TIME_BETWEEN_EACH_DURATION_PART
             // For example: 0.1 / 0.02(Fixed update time) = 5 parts
             // Thus, the damage formula looks like this: DAMAGE_PER_HIT / (HIT_DURATION / TIME_BETWEEN_EACH_DURATION_PART)
-            DamageManager.instance.DealLaserDamage(laserDamagePerHit / (laserHitDuration / Time.fixedDeltaTime), hit);
+            DamageManager.instance.DealLaserDamage(laserDamagePerHit / (laserHitDuration / Time.deltaTime), hit);
         }
         else // If raycast hit nothing
         {

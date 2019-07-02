@@ -18,7 +18,7 @@ public abstract class Projectile : Ammo
     {
         DamageManager.instance.DealProjectileDamage(kineticDamage, collision); // Call a method of dealing damage by this rocket to the hitted ship
 
-        DestroyProjectile();
+        DestroyProjectile(); // Destroy this projectile
     }
 
     private void DestroyProjectile()

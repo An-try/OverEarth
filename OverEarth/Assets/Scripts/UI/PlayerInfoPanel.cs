@@ -30,12 +30,12 @@ public class PlayerInfoPanel : MonoBehaviour
     {
         // Delegate called when player ship is assigned
         Manager.instance.onPlayerShipAssigned += StartUpdateShipInfo;
-        playerShipScript = Manager.instance.PlayerShip.GetComponent<Ship>();
     }
 
     private void StartUpdateShipInfo()
     {
         InvokeRepeating("UpdateShipInfo", 0, 0.1f);
+        playerShipScript = Manager.instance.PlayerShip.GetComponent<Ship>(); // Get player ship script
     }
 
     private void UpdateShipInfo()
@@ -43,28 +43,31 @@ public class PlayerInfoPanel : MonoBehaviour
         // If player ship exists display the ship's info
         if (Manager.instance.PlayerShip)
         {
+            // Display player info
             PlayerInfoText.text =
-/* Health points     */ $"<color={mainStringColor}>Health: </color>" + OutputCurrentHP() +
-/* Defence           */ $"\n<color={mainStringColor}>Defence:</color>" + OutputCurrentDefence() +
-/* Speed             */ $"\n<color={mainStringColor}>Speed: </color>" + OutputCurrentSpeed() +
-/* Transmission      */ $"\n<color={mainStringColor}>Transmission: </color>" + OutputCurrentTransmission() +
-/* Stop force        */ $"\n<color={mainStringColor}>Stop force: </color>" + OutputCurrentStopForce() +
-/* Turret auto fire  */ $"\n<color={mainStringColor}>Turret auto fire: </color>" + OutputIfAutoFire();
+/* Health points       */ $"<color={mainStringColor}>Health: </color>" + OutputHP() +
+/* Defence             */ $"\n<color={mainStringColor}>Defence:</color>" + OutputDefence() +
+/* Speed               */ $"\n<color={mainStringColor}>Speed: </color>" + OutputSpeed() +
+/* Transmission        */ $"\n<color={mainStringColor}>Transmission: </color>" + OutputTransmission() +
+/* Stop force          */ $"\n<color={mainStringColor}>Stop force: </color>" + OutputStopForce() +
+/* Rotation stop force */ $"\n<color={mainStringColor}>Rotation stop force: </color>" + OutputRotationStopForce() +
+/* Turret auto fire    */ $"\n<color={mainStringColor}>Turret auto fire: </color>" + OutputIfAutoFire();
         }
-        else // If player ship does not exist inform player that it was destroyed
+        else // If player ship does not exist
         {
-            PlayerInfoText.text = $"<color={negativeStringColor}>Player ship has been destroyed</color>";
+            PlayerInfoText.text = $"<color={negativeStringColor}>Player ship has been destroyed</color>"; // Inform player about it
         }
     }
 
-    private string OutputCurrentHP()
+    private string OutputHP()
     {
-        int playerShipHP = (int)playerShipScript.HP; // Get player ship script and HP
+        int playerShipHP = (int)playerShipScript.HP; // Get player ship HP
         return $"<color={positiveStringColor}>" + playerShipHP + "</color>"; // Return player ship HP
     }
 
-    private string OutputCurrentDefence()
+    private string OutputDefence()
     {
+        // Get defences of player ship and return them
         return $"<color={positiveStringColor}>\n Kinetic:     " + playerShipScript.kineticDefence + "%" +
                                              "\n Explosion: " + playerShipScript.explosionDefence + "%" +
                                              "\n Laser:       " + playerShipScript.laserDefence + "%" +
@@ -72,42 +75,57 @@ public class PlayerInfoPanel : MonoBehaviour
                                              "\n Fragment:  " + playerShipScript.fragmentDefence + "%</color>";
     }
 
-    private string OutputCurrentSpeed()
+    private string OutputSpeed()
     {
-        int PlayerSpeed = (int)PlayerMovement.instance.PlayerShipRigidbody.velocity.magnitude;
+        // Get the rigidbody velocity magnitude(length of the vector) of player ship
+        int playerShipSpeed = (int)PlayerMovement.instance.playerShipRigidbody.velocity.magnitude;
 
-        if (PlayerSpeed > 0)
+        if (playerShipSpeed > 0)
         {
-            return $"<color={positiveStringColor}>" + PlayerSpeed + "</color>";
+            return $"<color={positiveStringColor}>" + playerShipSpeed + "</color>";
         }
-        return $"<color={negativeStringColor}>" + PlayerSpeed + "</color>";
+        return $"<color={negativeStringColor}>" + playerShipSpeed + "</color>";
     }
 
-    private string OutputCurrentTransmission()
+    private string OutputTransmission()
     {
-        int PlayerTransmission = playerShipScript.transmission;
+        // Get the player ship transmission
+        int playerShipTransmission = playerShipScript.transmission;
 
-        if (PlayerTransmission > 0)
+        if (playerShipTransmission > 0)
         {
-            return $"<color={positiveStringColor}>" + PlayerTransmission + "</color>";
+            return $"<color={positiveStringColor}>" + playerShipTransmission + "</color>";
         }
-        return $"<color={negativeStringColor}>" + PlayerTransmission + "</color>";
+        return $"<color={negativeStringColor}>" + playerShipTransmission + "</color>";
     }
 
-    private string OutputCurrentStopForce()
+    private string OutputStopForce()
     {
-        int StopForce = (int)PlayerMovement.instance.PlayerShipRigidbody.drag;
+        // Get the rigidbody drag
+        int stopForce = (int)PlayerMovement.instance.playerShipRigidbody.drag;
 
-        if (StopForce > 0)
+        if (stopForce > 0)
         {
-            return $"<color={positiveStringColor}>" + StopForce + "</color>";
+            return $"<color={positiveStringColor}>" + stopForce + "</color>";
         }
-        return $"<color={negativeStringColor}>" + StopForce + "</color>";
+        return $"<color={negativeStringColor}>" + stopForce + "</color>";
+    }
+
+    private string OutputRotationStopForce()
+    {
+        // Get the rigidbody angular drag
+        int stopRotationForce = (int)PlayerMovement.instance.playerShipRigidbody.angularDrag;
+
+        if (stopRotationForce > 0)
+        {
+            return $"<color={positiveStringColor}>" + stopRotationForce + "</color>";
+        }
+        return $"<color={negativeStringColor}>" + stopRotationForce + "</color>";
     }
 
     private string OutputIfAutoFire()
     {
-        if (PlayerMovement.instance.autoFire)
+        if (PlayerMovement.instance.autoFire) // If the auto fire enabled
         {
             return $"<color={positiveStringColor}>Yes</color>";
         }

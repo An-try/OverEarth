@@ -92,7 +92,7 @@ public abstract class Rocket : Ammo
         Target = nearestTarget; // Set the new target
     }
 
-    private void ObstaclesAvoidance() // TODO: Remake obstacles avoidance algorithm
+    private void ObstaclesAvoidance() // TODO: Improve the obstacles avoidance algorithm
     {
         float rayLength = 400f;
         float rocketSizeToAvoid = 3f;
@@ -135,48 +135,48 @@ public abstract class Rocket : Ammo
         if (Physics.Raycast(rayForwardFirst, out hit, rayLength / 2) || Physics.Raycast(rayForwardSecond, out hit, rayLength / 2) ||
             Physics.Raycast(rayForwardThird, out hit, rayLength / 2) || Physics.Raycast(rayForwardFourth, out hit, rayLength / 2))
         {
-            // If forward rays of this missile does not cross current target of this missile
+            // If forward rays of this missile does not cross current target of this missile avoid this object
             if (hit.collider.transform.root.gameObject != Target)
             {
                 // Try to avoid by rotating to the new direction that have no obstacles
-                if (!Physics.Raycast(rayUp, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayUp, out hit, rayLength)) // If the upper ray hits nothing
                 {
-                    RotateToTarget(false, rayUp.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayUp.GetPoint(rayLength)); // Move to the new point up
                     return;
                 }
-                if (!Physics.Raycast(rayUpRight, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayUpRight, out hit, rayLength)) // If the upper right ray hits nothing
                 {
-                    RotateToTarget(false, rayUpRight.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayUpRight.GetPoint(rayLength)); // Move to the new point up right
                     return;
                 }
-                if (!Physics.Raycast(rayRight, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayRight, out hit, rayLength)) // If the right ray hits nothing
                 {
-                    RotateToTarget(false, rayRight.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayRight.GetPoint(rayLength)); // Move to the new point right
                     return;
                 }
-                if (!Physics.Raycast(rayRightDown, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayRightDown, out hit, rayLength)) // If the lower right ray hits nothing
                 {
-                    RotateToTarget(false, rayRightDown.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayRightDown.GetPoint(rayLength)); // Move to the new point right down
                     return;
                 }
-                if (!Physics.Raycast(rayDown, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayDown, out hit, rayLength)) // If the lower ray hits nothing
                 {
-                    RotateToTarget(false, rayDown.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayDown.GetPoint(rayLength)); // Move to the new point down
                     return;
                 }
-                if (!Physics.Raycast(rayDownLeft, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayDownLeft, out hit, rayLength)) // If the lower left ray hits nothing
                 {
-                    RotateToTarget(false, rayDownLeft.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayDownLeft.GetPoint(rayLength)); // Move to the new point down left
                     return;
                 }
-                if (!Physics.Raycast(rayLeft, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayLeft, out hit, rayLength)) // If the left ray hits nothing
                 {
-                    RotateToTarget(false, rayLeft.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayLeft.GetPoint(rayLength)); // Move to the new point left
                     return;
                 }
-                if (!Physics.Raycast(rayLeftUp, out hit, rayLength)) // If ray hits something
+                if (!Physics.Raycast(rayLeftUp, out hit, rayLength)) // If the upper left ray hits nothing
                 {
-                    RotateToTarget(false, rayLeftUp.GetPoint(rayLength)); // Move to the new point
+                    RotateToTarget(false, rayLeftUp.GetPoint(rayLength)); // Move to the new point left up
                     return;
                 }
             }

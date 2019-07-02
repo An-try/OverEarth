@@ -16,8 +16,8 @@ public class Ship : MonoBehaviour
     public int transmission = 0; // Transmission can be positive and negative. This defines the ship moving direction - forward or backward
 
     public float thrustForce = 1f; // Forward or backward speed
-    public float strafeForce = 0.2f; // Strafe speed. Directions: up, down, right, left
-    public float rotationForce = 0.5f;
+    public float strafeForce = 200f; // Strafe speed. Directions: up, down, right, left
+    public float rotationForce = 500f;
     public float maxRotationSpeed = 0.1f;
 
     public float stopForce = 2f;
@@ -45,6 +45,9 @@ public class Ship : MonoBehaviour
     public void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
     {
         MainHullTexture = MainHull.GetComponent<MeshRenderer>(); // Get mesh renderer of this ship main hull
+
+        thrustForce *= GetComponent<Rigidbody>().mass; // Multiply forward speed by the mass of the ship
+        rotationForce *= GetComponent<Rigidbody>().mass; // Multiply rotation speed by the mass of the ship
 
         // Spawn laser beam turrets on the ship
         foreach (GameObject TurretPlace in LaserTurretPlaces)

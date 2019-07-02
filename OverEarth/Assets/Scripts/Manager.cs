@@ -13,6 +13,8 @@ public class Manager : MonoBehaviour
     // FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
     // OnEnable() // Called when the object becomes enabled and active
     // OnCollisionEnter(Collision collision) // Called when this collider/rigidbody has begun touching another rigidbody/collider
+    // OnMouseUp() // OnMouseUp is called when the user has released the mouse button
+    // OnDestroy() // Called when destroying this script
     // base.SomeMethod(); // Calling the base class of this method
 
     // TODO: Make an object pooling
@@ -21,9 +23,13 @@ public class Manager : MonoBehaviour
 
     private int currentFPS; // Current frames per second
 
-    // Delegate when player ship spawned
+    // Delegate called when player ship spawned
     public delegate void OnPlayerShipAssigned();
     public OnPlayerShipAssigned onPlayerShipAssigned;
+
+    // Delegate called when new selected target assigned
+    public delegate void OnCurrentSelectedTargetAssigned();
+    public OnCurrentSelectedTargetAssigned onCurrentSelectedTargetAssigned;
 
     // Prefab of any ship in the game
     // There is only one kind of ship in the game
@@ -104,6 +110,8 @@ public class Manager : MonoBehaviour
         }
 
         InvokeRepeating("UpdateCurrentFPSInfo", 0, 0.5f); // Update FPS info info every 0.5 seconds
+        // Check if the current target info camera exists. If it does not exist spawn a new target info camera
+        InvokeRepeating("SpawnNewTargetInfoCamera", 0f, 0.5f);
 
         // Spawn an enemy ship on the game object named "ShipSpawn"
         // TODO: Remake enemies spawn
@@ -129,16 +137,6 @@ public class Manager : MonoBehaviour
         }
 
         currentFPS = (int)(1f / Time.unscaledDeltaTime); // Get current frames per second
-
-        // If the current target info camera has destroyed, spawn a new target info camera, transform and parent it to player ship
-        // TODO: Remake target camera algorithm
-        if (CurrentTargetInfoCamera == null && PlayerShip != null)
-        {
-            GameObject cameraTemp = Instantiate(TargetInfoCameraPrefab, PlayerShip.transform);
-            cameraTemp.GetComponent<TargetInfoCamera>().PlayerShip = PlayerShip;
-            cameraTemp.transform.SetParent(PlayerShip.transform);
-            CurrentTargetInfoCamera = cameraTemp;
-        }
 
         if (Time.timeScale == 1) // If game is not paused
         {
@@ -193,6 +191,17 @@ public class Manager : MonoBehaviour
     {
         // Update current FPS on the text component of the FPSinfo object
         FPSInfo.GetComponent<Text>().text = "<color=magenta>FPS: " + currentFPS + "</color>";
+    }
+
+    // If the current target info camera has destroyed, spawn a new target info camera and parent it to the player ship
+    private void SpawnNewTargetInfoCamera()
+    {
+        if (PlayerShip && !CurrentTargetInfoCamera) // If player ship exists and current target info camera does not exist
+        {
+            // Instantiate a new target info camera and parent it to player ship
+            GameObject cameraTemp = Instantiate(TargetInfoCameraPrefab, PlayerShip.transform);
+            CurrentTargetInfoCamera = cameraTemp; // Set current target info camera
+        }
     }
 
     // On the start of the game deactivate button that call player ship spawn

@@ -1,7 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is a temporary script that allows to add laser beam turret or plasma turret to the inventory.
+/// </summary>
 public class addgun : MonoBehaviour
 {
     public int id;
@@ -12,18 +14,12 @@ public class addgun : MonoBehaviour
     {
         if (id == 0)
         {
-            //if (!Inventory.instance.items.Contains(items[0]))
-                Inventory.instance.AddItem(items[0]);
-            //else
-                //Inventory.instance.RemoveItem(items[0]);
+            Inventory.instance.AddItem(items[0]);
         }
 
         if (id == 1)
         {
-            //if (!Inventory.instance.items.Contains(items[1]))
-                Inventory.instance.AddItem(items[1]);
-            //else
-                //Inventory.instance.RemoveItem(items[1]);
+            Inventory.instance.AddItem(items[1]);
         }
     }
 }

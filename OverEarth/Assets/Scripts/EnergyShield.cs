@@ -5,7 +5,7 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class EnergyShield : MonoBehaviour
 {
-    // TODO: Shield
+    // TODO: Energy shield
 
     //public Vector4[] Points;
 

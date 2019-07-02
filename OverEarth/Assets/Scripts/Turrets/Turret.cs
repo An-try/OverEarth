@@ -62,7 +62,7 @@ public abstract class Turret : MonoBehaviour, ITurret
         {
             case "Player":  // If this turret is on a player ship
                 // Subscribe to the delegate that called when auto fire changes in the PlayerMovement script
-                PlayerMovement.instance.autoFireChanged += ChangeTurretAutoFire;
+                PlayerMovement.instance.onAutoFireChanged += ChangeTurretAutoFire;
                 turretAI = PlayerMovement.instance.autoFire; // Set if the turret is controlled by AI
                 TargetsList = Manager.Enemies; // Set enemies as targets for this turret
                 break;
@@ -90,7 +90,7 @@ public abstract class Turret : MonoBehaviour, ITurret
     {
         if (currentCooldown >= 0)
         {
-            currentCooldown -= Time.fixedDeltaTime;
+            currentCooldown -= Time.deltaTime;
         }
     }
 

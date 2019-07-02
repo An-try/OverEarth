@@ -127,6 +127,7 @@ public class PlayerShipCameraController : MonoBehaviour
 
             Manager.instance.CurrentSelectedTarget = hit.transform.gameObject; // Set current selected target as hitted game object
             Manager.instance.LastSelectedTarget = hit.transform.gameObject; // Set last selected target as hitted game object
+            Manager.instance.onCurrentSelectedTargetAssigned?.Invoke();
         }
         else // If ray doesn't hit anything
         {

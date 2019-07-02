@@ -2368,8 +2368,8 @@ MonoBehaviour:
   maxSpeed: 100
   transmission: 0
   thrustForce: 1
-  strafeForce: 0.2
-  rotationForce: 0.5
+  strafeForce: 200
+  rotationForce: 500
   maxRotationSpeed: 0.1
   stopForce: 2
   autoStopForce: 1

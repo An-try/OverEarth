@@ -5,11 +5,13 @@ using UnityEngine.Windows.Speech;
 
 public class VoiceShipControl : MonoBehaviour
 {
-    public static VoiceShipControl instance;
+    public static VoiceShipControl instance; // Singleton for this script
 
+    // Delegate called when any command is executed
     public delegate void OnCommandExecuted();
     public OnCommandExecuted onCommandExecuted;
 
+    // Delegate called when turning on or off voice ship control
     public delegate void OnVoiceShipControlTurnedOnOff(bool value);
     public OnVoiceShipControlTurnedOnOff onVoiceShipControlTurnedOnOff;
 
@@ -18,8 +20,8 @@ public class VoiceShipControl : MonoBehaviour
     public KeywordRecognizer keywordRecognizer;
 
     private List<string> AllCommands = new List<string>();
-
-    public Dictionary<string, Action> CurrentChoiceActions = new Dictionary<string, Action>();
+    
+    public Dictionary<string, Action> CurrentAvailableCommands = new Dictionary<string, Action>();
     
     private Dictionary<string, Action> MainActions = new Dictionary<string, Action>();
     private Dictionary<string, Action> ShipActions = new Dictionary<string, Action>();
@@ -29,7 +31,7 @@ public class VoiceShipControl : MonoBehaviour
 
     public Dictionary<string, Action> DefaultActions = new Dictionary<string, Action>();
 
-    private void Awake()
+    private void Awake() // Awake is called when the script instance is being loaded
     {
         if (instance == null) // If instance not exist
         {
@@ -40,9 +42,9 @@ public class VoiceShipControl : MonoBehaviour
             Destroy(this); // Destroy this script
         }
 
-        playerShipScript = PlayerMovement.instance.ShipScript;
+        playerShipScript = PlayerMovement.instance.shipScript; // Get the player ship script
 
-        // Задаём команды для голосового управления
+        // Set the commands for voice control
         MainActions.Add("ship", ShipAction);
             ShipActions.Add("move", MoveDirectionAction);
                 MoveDirectionActions.Add("forward", ForwardDirectionAction);
@@ -51,27 +53,29 @@ public class VoiceShipControl : MonoBehaviour
                 MoveDirectionActions.Add("left", LeftDirectionAction);
                 MoveDirectionActions.Add("stop", StopShipAction);
             ShipActions.Add("inventory", InventoryAction);
-            InventoryActions.Add("interact", InventoryInteractAction);
+                InventoryActions.Add("interact", InventoryInteractAction);
         DefaultActions.Add("main", CancelCommandAction);
 
-        // Добавляем фразы для распознавания в один список
+        // Add phrases for recognition in one list
         AllCommands.AddRange(MainActions.Keys);
         AllCommands.AddRange(ShipActions.Keys);
         AllCommands.AddRange(MoveDirectionActions.Keys);
         AllCommands.AddRange(SetSpeedActions.Keys);
         AllCommands.AddRange(InventoryActions.Keys);
 
-        CurrentChoiceActions = MainActions; // Задать на прослушивание главные команды
-        onCommandExecuted?.Invoke();
+        CurrentAvailableCommands = MainActions; // Check the main commands
+        onCommandExecuted?.Invoke(); // Call a delegate of command executing to update the available commands on UI panel
 
+        // This try-catch block catches an error when speech recognition is not supported on this computer
         try
         {
-            keywordRecognizer = new KeywordRecognizer(AllCommands.ToArray()); // Создать разпознаватель слов с массивом фраз для распознавания
-
-            keywordRecognizer.OnPhraseRecognized += SpeechRecognize; // Если услышали что-нибудь(OnPhraseRecognized), вызвать метод разпознавания фразы(SpeechRecognize)
+            keywordRecognizer = new KeywordRecognizer(AllCommands.ToArray()); // Create a word recognizer with an array of phrases to recognize
+            // Delegate call when some phrase has been recognized
+            keywordRecognizer.OnPhraseRecognized += RecognizeSpeech;
         }
-        catch
+        catch // If speech recognition is not supported on this computer
         {
+            // Show warning message, and destroy warning message, voice commands info panel and this script after a while
             float timeToDestroy = 10f;
             StartCoroutine(
                 Methods.ShowWarningMessage(Manager.instance.WarningMessageObject, "Speech recognition is not supported on this computer", timeToDestroy));
@@ -84,78 +88,77 @@ public class VoiceShipControl : MonoBehaviour
     {
         if (!keywordRecognizer.IsRunning)
         {
-            keywordRecognizer.Start(); // Начать распознавание речи
+            keywordRecognizer.Start(); // Start speech recognition
         }
         else
         {
-            keywordRecognizer.Stop();
+            keywordRecognizer.Stop(); // Stop speech recognition
         }
+
         onVoiceShipControlTurnedOnOff?.Invoke(keywordRecognizer.IsRunning);
     }
 
-    private void SpeechRecognize(PhraseRecognizedEventArgs speech)
+    private void RecognizeSpeech(PhraseRecognizedEventArgs phrase)
     {
-        if (CurrentChoiceActions.ContainsKey(speech.text))
+        if (CurrentAvailableCommands.ContainsKey(phrase.text)) // If available commands contains current above phrase
         {
-            CurrentChoiceActions[speech.text].Invoke(); // Вызвать метод выполнения команды по сказаной фразе
+            CurrentAvailableCommands[phrase.text].Invoke(); // Call the command execution method for the above phrase
             onCommandExecuted?.Invoke();
         }
-        if (DefaultActions.ContainsKey(speech.text))
+
+        if (DefaultActions.ContainsKey(phrase.text)) // If default commands contains current said phras
         {
-            DefaultActions[speech.text].Invoke();
+            DefaultActions[phrase.text].Invoke(); // Call the command execution method for the above phrase
             onCommandExecuted?.Invoke();
         }
     }
 
-    private void OnDestroy()
+    private void OnDestroy() // Called when destroying this script
     {
-        if (keywordRecognizer != null)
+        if (keywordRecognizer != null) // If there is any keyword recognizer
         {
-            if (keywordRecognizer.IsRunning)
+            if (keywordRecognizer.IsRunning) // If it is running
             {
-                keywordRecognizer.Stop();
+                keywordRecognizer.Stop(); // Stop this keyword recognizer
             }
 
-            keywordRecognizer.Dispose();
+            keywordRecognizer.Dispose(); // Dispose this keyword recognizer
         }
     }
-
-    // Описание методов выполнения команд
-    private void MainAction()
+    
+    private void MainAction() // Change available commands
     {
-        CurrentChoiceActions = MainActions;
+        CurrentAvailableCommands = MainActions;
     }
 
-    private void ShipAction()
+    private void ShipAction() // Change available commands
     {
-        CurrentChoiceActions = ShipActions;
+        CurrentAvailableCommands = ShipActions;
     }
 
-    private void MoveDirectionAction()
+    private void MoveDirectionAction() // Change available commands
     {
-        CurrentChoiceActions = MoveDirectionActions;
+        CurrentAvailableCommands = MoveDirectionActions;
     }
 
-    private void ForwardDirectionAction()
+    private void ForwardDirectionAction() // Move player ship forward
     {
         playerShipScript.transmission = 4;
     }
 
-    private void BackDirectionAction()
+    private void BackDirectionAction() // Move player ship backward
     {
         playerShipScript.transmission = -4;
     }
 
-    private void RightDirectionAction()
+    private void RightDirectionAction() // Rotate player ship right
     {
         // TODO: Rotate ship right
-        playerShipScript.transmission = 4;
     }
 
-    private void LeftDirectionAction()
+    private void LeftDirectionAction() // Rotate player ship left
     {
         // TODO: Rotate ship left
-        playerShipScript.transmission = -4;
     }
 
     private void StopShipAction()
@@ -163,18 +166,18 @@ public class VoiceShipControl : MonoBehaviour
         playerShipScript.transmission = 0;
     }
 
-    private void InventoryAction()
+    private void InventoryAction() // Change available commands
     {
-        CurrentChoiceActions = InventoryActions;
+        CurrentAvailableCommands = InventoryActions;
     }
 
-    private void InventoryInteractAction()
+    private void InventoryInteractAction() // Open or close inventory panel
     {
         Manager.instance.ActivateDeactivateUIPanel(Manager.instance.InventoryPanel);
     }
 
-    private void CancelCommandAction()
+    private void CancelCommandAction() // Change available commands. Executes when player wants to return to the main commands
     {
-        CurrentChoiceActions = MainActions;
+        CurrentAvailableCommands = MainActions;
     }
 }
