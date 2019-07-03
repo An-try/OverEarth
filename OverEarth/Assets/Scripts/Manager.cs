@@ -190,7 +190,7 @@ public class Manager : MonoBehaviour
     private void UpdateCurrentFPSInfo()
     {
         // Update current FPS on the text component of the FPSinfo object
-        FPSInfo.GetComponent<Text>().text = "<color=magenta>FPS: " + currentFPS + "</color>";
+        FPSInfo.GetComponent<Text>().text = "<color=magenta>FPS: " + currentFPS + "</color>" + "\nPress \"P\" for help";
     }
 
     // If the current target info camera has destroyed, spawn a new target info camera and parent it to the player ship
