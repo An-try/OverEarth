@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 /// <summary>
-/// This class displays game control
+/// This class displays game control.
 /// </summary>
 public class InputHelp : MonoBehaviour
 {
@@ -21,6 +21,7 @@ public class InputHelp : MonoBehaviour
             "\nBraking: <color=blue> Space </color>" +
             "\nAuto fire: <color=blue> F </color>" +
             "\nInventory: <color=blue> I </color>" +
+            "\nVoice ship control: <color=blue> V </color>" +
             "\nInput help panel: <color=blue> P </color>" +
             "\nChange camera: <color=blue> L </color>" +
             "\nSpawn enemies: <color=blue> 8 </color> / <color=blue> 9 </color> / <color=blue> 0 </color>" +
