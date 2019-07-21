@@ -25,13 +25,13 @@ public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
         defaulButtontScale = transform.localScale; // Set defaul buttont scale
 
-        if (transform.GetComponent<Text>() != null) // If there is a text component on the button
+        if (transform.GetComponent<Text>()) // If there is a text component on the button
         {
             buttonText = transform.GetComponent<Text>(); // Get text component
             buttonText.color = neutralButtonColor; // Set text component color
         }
 
-        if (transform.GetComponent<Image>() != null) // If there is an image component on the button
+        if (transform.GetComponent<Image>()) // If there is an image component on the button
         {
             buttonImage = transform.GetComponent<Image>(); // Get image component
             buttonImage.color = neutralButtonColor; // Set image component color
@@ -89,11 +89,11 @@ public class Button : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, 
 
     private void SetButtonColor(Color32 newColor)
     {
-        if (buttonText != null) // If there is a text component
+        if (buttonText) // If there is a text component
         {
             buttonText.color = newColor; // Set the new color to the text
         }
-        if (buttonImage != null) // If there is an image component
+        if (buttonImage) // If there is an image component
         {
             buttonImage.color = newColor; // Set the new color to the image
         }
