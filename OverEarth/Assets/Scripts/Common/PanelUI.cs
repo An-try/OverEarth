@@ -5,7 +5,7 @@ using DG.Tweening;
 
 namespace OverEarth
 {
-    public class PanelUI<T> : Singleton<T> where T : MonoBehaviour
+    public abstract class PanelUI<T> : Singleton<T> where T : MonoBehaviour
     {
         [SerializeField] private CanvasGroup _panelGroup;
 
@@ -13,8 +13,10 @@ namespace OverEarth
 
         private float _animationTime = 0.5f;
 
-        private void Start()
+        protected override void Awake()
         {
+            base.Awake();
+
             Init();
         }
 

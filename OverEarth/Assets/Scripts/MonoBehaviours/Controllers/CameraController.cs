@@ -48,24 +48,6 @@ namespace OverEarth
             }
         }
 
-        public Ray AimRay
-        {
-            get
-            {
-                if (_aimingMethod == AimingMethods.CameraCenter)
-                {
-                    return new Ray(_camera.transform.position, _camera.transform.forward);
-                }
-                else if (_aimingMethod == AimingMethods.CursorPosition)
-                {
-                    return _camera.ScreenPointToRay(Input.mousePosition);
-                }
-
-                Debug.LogError("AimingMethods is invalid!");
-                return new Ray();
-            }
-        }
-
         private void OnEnable()
         {
             SubscribeEvents();

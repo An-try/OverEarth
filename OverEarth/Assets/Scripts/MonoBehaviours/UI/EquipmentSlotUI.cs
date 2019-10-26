@@ -8,8 +8,9 @@ namespace OverEarth
 {
     public class EquipmentSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        [SerializeField] private EquipmentSlot _equipmentSlot;
         [SerializeField] private Sprite _emptySlotImage;
+
+        private EquipmentSlot _equipmentSlot;
 
         private Image _image;
 
@@ -24,24 +25,30 @@ namespace OverEarth
             _emptySlotImage = _image.sprite;
         }
 
-        private void OnEnable()
-        {
-            SubscribeEvents();
-        }
+        //private void OnEnable()
+        //{
+        //    SubscribeEvents();
+        //}
 
         private void SubscribeEvents()
         {
             _equipmentSlot.EquipmentChangedEvent += UpdateSlotUI;
         }
 
-        private void OnDisable()
-        {
-            UnsubscribeEvents();
-        }
+        //private void OnDisable()
+        //{
+        //    UnsubscribeEvents();
+        //}
 
         private void UnsubscribeEvents()
         {
             _equipmentSlot.EquipmentChangedEvent -= UpdateSlotUI;
+        }
+
+        public void AssignEquipmentSlot(EquipmentSlot equipmentSlot)
+        {
+            _equipmentSlot = equipmentSlot;
+            SubscribeEvents();
         }
 
         private void SetEquipment(EquipmentItem equipmentItem)
@@ -107,20 +114,31 @@ namespace OverEarth
             if (slotUnderCursor == this)
             {
                 SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
-                return;
-            }
-
-            if (!slotUnderCursor.Equipment)
-            {
-                // Set equipment.
-                slotUnderCursor.SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
             }
             else
             {
                 // Replace equipment.
-                EquipmentItem equipmentItem = Equipment;
+                EquipmentItem equipmentItem = DragAndDropContainer.Instance.GetItemInContainer();
                 SetEquipment(slotUnderCursor.Equipment);
                 slotUnderCursor.SetEquipment(equipmentItem);
+            }
+
+            //if (!slotUnderCursor.Equipment)
+            //{
+            //    // Set equipment.
+            //    slotUnderCursor.SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
+            //}
+            //else
+            //{
+                
+            //}
+        }
+
+        private void OnDestroy()
+        {
+            if (_equipmentSlot)
+            {
+                UnsubscribeEvents();
             }
         }
     }

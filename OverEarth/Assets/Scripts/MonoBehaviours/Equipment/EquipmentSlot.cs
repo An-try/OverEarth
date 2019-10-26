@@ -38,7 +38,6 @@ namespace OverEarth
 
         private void InstantiateEquipment()
         {
-            print(Equipment.ObjectPrefab.name);
             _currentEquipmentObject = Instantiate(Equipment.ObjectPrefab, transform.position, transform.rotation, transform);
         }
     }

@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace OverEarth
 {
-    public abstract class UI : MonoBehaviour
+    public class InventorySlotUI : MonoBehaviour
     {
-        private Image _image;
+
     }
 }

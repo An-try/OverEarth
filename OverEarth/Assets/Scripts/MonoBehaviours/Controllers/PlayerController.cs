@@ -7,7 +7,7 @@ namespace OverEarth
 {
     public class PlayerController : Singleton<PlayerController>
     {
-        public static Ship Ship;
+        public Ship Ship;
 
         public static event Action<bool> AIStateChangedEvent;
         public static event Action MenuButtonPressedEvent;

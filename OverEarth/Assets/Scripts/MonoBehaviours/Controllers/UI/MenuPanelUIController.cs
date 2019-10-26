@@ -45,6 +45,21 @@ namespace OverEarth
             _equipmentSlotsUI = _equipmentPanel.GetComponentsInChildren<EquipmentSlotUI>().ToList();
         }
 
+        private void Start()
+        {
+            AssignEquipmentSlotsToEquipmentSlotsUI();
+        }
+
+        private void AssignEquipmentSlotsToEquipmentSlotsUI()
+        {
+            List<EquipmentSlot> equipmentSlots = PlayerController.Instance.Ship.Equipment.GetComponentsInChildren<EquipmentSlot>().ToList();
+
+            for (int i = 0; i < equipmentSlots.Count; i++)
+            {
+                _equipmentSlotsUI[i].AssignEquipmentSlot(equipmentSlots[i]);
+            }
+        }
+
         private void UpdateInventoryUI()
         {
 
