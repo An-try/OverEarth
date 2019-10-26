@@ -5,32 +5,36 @@ using UnityEngine.UI;
 
 namespace OverEarth
 {
-    [RequireComponent(typeof(Damageable), typeof(Inventory))]
+    //[RequireComponent(typeof(Damageable), typeof(Inventory))]
     public class Equipment : MonoBehaviour
     {
         // Delegate calls after replacing equipment
         public delegate void OnEquipmentChanged(Equipment newEquipment, Equipment oldEquipment);
         public OnEquipmentChanged onEquipmentChanged;
 
-        private Damageable _damageable;
-        private Inventory _inventory;
+        //private Damageable _damageable;
+        //private Inventory _inventory;
 
         public List<EquipmentSlot> EquipmentSlots { get; private set; }
 
         private void Awake() // Awake is called when the script instance is being loaded
         {
-            _damageable = GetComponent<Damageable>();
-            _inventory = GetComponent<Inventory>();
+            //_damageable = GetComponent<Damageable>();
+            //_inventory = GetComponent<Inventory>();
 
             EquipmentSlots = GetComponentsInChildren<EquipmentSlot>().ToList();
         }
-        public Sprite Image;
+        public EquipmentItem equipmentItem1;
+        public EquipmentItem equipmentItem2;
         private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
         {
-            EquipmentItem equipmentItem = new EquipmentItem();
-            equipmentItem.ObjectPrefab = GameObject.CreatePrimitive(PrimitiveType.Cube);
-            equipmentItem.Image = Image;
-            EquipmentSlots[0].SetEquipment(equipmentItem);
+            Invoke("A", 1f);
+        }
+
+        void A()
+        {
+            EquipmentSlots[0].SetEquipment(equipmentItem1);
+            EquipmentSlots[1].SetEquipment(equipmentItem2);
         }
 
         public void EquipItem(EquipmentItem equipmentItem, EquipmentSlot equipmentSlot)

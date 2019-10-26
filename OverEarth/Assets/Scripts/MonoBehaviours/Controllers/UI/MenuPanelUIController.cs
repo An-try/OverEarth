@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace OverEarth
 {
-    public class MenuPanelUIController : Singleton<MenuPanelUIController>
+    public class MenuPanelUIController : PanelUI<MenuPanelUIController>
     {
         [SerializeField] private GameObject _menuPanel;
         [SerializeField] private Transform _equipmentPanel;
@@ -45,19 +45,6 @@ namespace OverEarth
             _equipmentSlotsUI = _equipmentPanel.GetComponentsInChildren<EquipmentSlotUI>().ToList();
         }
 
-        private void Start()
-        {
-            SetEquipmentSlotsToUIElementsOnPanel();
-        }
-
-        private void SetEquipmentSlotsToUIElementsOnPanel()
-        {
-            for (int i = 0; i < _equipmentSlotsUI.Count; i++)
-            {
-                _equipmentSlotsUI[i].Slot = _equipment.EquipmentSlots[i];
-            }
-        }
-
         private void UpdateInventoryUI()
         {
 
@@ -67,27 +54,25 @@ namespace OverEarth
         {
             if (MenuOpened)
             {
-                CloseInventory();
+                CloseMenu();
                 MenuOpened = false;
             }
             else
             {
-                OpenInventory();
+                OpenMenu();
                 MenuOpened = true;
             }
         }
 
-        private void OpenInventory()
+        private void OpenMenu()
         {
-            _menuPanel.SetActive(true);
-
+            OpenPanel();
             MenuInteractedEvent?.Invoke(true);
         }
 
-        private void CloseInventory()
+        private void CloseMenu()
         {
-            _menuPanel.SetActive(false);
-
+            ClosePanel();
             MenuInteractedEvent?.Invoke(false);
         }
     }

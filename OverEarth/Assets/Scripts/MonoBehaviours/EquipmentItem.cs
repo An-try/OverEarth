@@ -10,15 +10,15 @@ namespace OverEarth
     [CreateAssetMenu(fileName = "New equipment", menuName = "OverEarth/Inventory/EquipmentItem")]
     public class EquipmentItem : Item
     {
-        public EquipmentSlots equipmentSlot;
+        public EquipmentSlots EquipmentSlot = EquipmentSlots.Upgrade;
 
-        public int HealthModifier;
-        public int HealthRegen;
+        public int HealthModifier = 0;
+        public int HealthRegen = 0;
 
-        public int ArmorModifier;
-        public int ArmorRegen;
+        public int ArmorModifier = 0;
+        public int ArmorRegen = 0;
 
-        public int ShieldModifier;
-        public int ShieldRegen;
+        public int ShieldModifier = 0;
+        public int ShieldRegen = 0;
     }
 }

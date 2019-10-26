@@ -6,16 +6,17 @@ using UnityEngine.EventSystems;
 
 namespace OverEarth
 {
-    public class EquipmentSlotUI : MonoBehaviour, IBeginDragHandler, IEndDragHandler
+    public class EquipmentSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
+        [SerializeField] private EquipmentSlot _equipmentSlot;
         [SerializeField] private Sprite _emptySlotImage;
-
-        [HideInInspector] public EquipmentSlot Slot;
 
         private Image _image;
 
         private Color _emptySlotImageColor = Color.blue;
         private Color _filledSlotImageColor = Color.white;
+
+        public EquipmentItem Equipment => _equipmentSlot.Equipment;
 
         private void Awake()
         {
@@ -30,7 +31,7 @@ namespace OverEarth
 
         private void SubscribeEvents()
         {
-            Slot.EquipmentChangedEvent += UpdateSlotUI;
+            _equipmentSlot.EquipmentChangedEvent += UpdateSlotUI;
         }
 
         private void OnDisable()
@@ -40,7 +41,12 @@ namespace OverEarth
 
         private void UnsubscribeEvents()
         {
-            Slot.EquipmentChangedEvent -= UpdateSlotUI;
+            _equipmentSlot.EquipmentChangedEvent -= UpdateSlotUI;
+        }
+
+        private void SetEquipment(EquipmentItem equipmentItem)
+        {
+            _equipmentSlot.SetEquipment(equipmentItem);
         }
 
         private void UpdateSlotUI(EquipmentItem equipmentItem)
@@ -57,16 +63,65 @@ namespace OverEarth
             }
         }
 
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            DragAndDropContainer.SlotUnderCursor = this;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            DragAndDropContainer.SlotUnderCursor = null;
+        }
+
         public void OnBeginDrag(PointerEventData eventData)
         {
-            _image.color = _emptySlotImageColor;
-            DragAndDropContainer.Instance.AddItemToContainer(Slot.CurrentEquipmentItem, transform);
-            Slot.RemoveEquipment();
+            if (_equipmentSlot.Equipment)
+            {
+                _image.color = _emptySlotImageColor;
+                DragAndDropContainer.Instance.AddItemToContainer(_equipmentSlot.Equipment, transform);
+                _equipmentSlot.RemoveEquipment();
+            }
+        }
+
+        public void OnDrag(PointerEventData eventData)
+        {
+            DragAndDropContainer.Instance.UpdateDragAndDropContainerPosition();
         }
 
         public void OnEndDrag(PointerEventData eventData)
         {
+            if (DragAndDropContainer.SlotUnderCursor)
+            {
+                SetOrReplaceEquipment();
+            }
+            else
+            {
+                SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
+            }
+        }
 
+        private void SetOrReplaceEquipment()
+        {
+            EquipmentSlotUI slotUnderCursor = DragAndDropContainer.SlotUnderCursor;
+
+            if (slotUnderCursor == this)
+            {
+                SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
+                return;
+            }
+
+            if (!slotUnderCursor.Equipment)
+            {
+                // Set equipment.
+                slotUnderCursor.SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
+            }
+            else
+            {
+                // Replace equipment.
+                EquipmentItem equipmentItem = Equipment;
+                SetEquipment(slotUnderCursor.Equipment);
+                slotUnderCursor.SetEquipment(equipmentItem);
+            }
         }
     }
 }

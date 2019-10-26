@@ -2854,7 +2854,7 @@ GameObject:
   - component: {fileID: 6656096464183915643}
   m_Layer: 0
   m_Name: Space Station
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4974,7 +4974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &428637145755739717
 Transform:
   m_ObjectHideFlags: 0
@@ -14574,7 +14574,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059090181652990, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4630725240265036, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14641,7 +14641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059090181652990, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4630725240265036, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14708,7 +14708,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059090181652990, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4630725240265036, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_LocalPosition.x
@@ -14775,7 +14775,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1059090181652990, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_TagString
-      value: Player
+      value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 4630725240265036, guid: 1b79a074686b4504fb1a37bc6104119b, type: 3}
       propertyPath: m_LocalPosition.x

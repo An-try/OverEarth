@@ -2311,6 +2311,7 @@ GameObject:
   - component: {fileID: 114167332469570596}
   - component: {fileID: 6404252923708765788}
   - component: {fileID: 3088786226755485126}
+  - component: {fileID: 5056153978330720413}
   m_Layer: 0
   m_Name: Star Destroyer
   m_TagString: Player
@@ -2391,6 +2392,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35a1483b3730afc40a73d378af67d70e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  equipmentItem1: {fileID: 0}
+  equipmentItem2: {fileID: 0}
+--- !u!114 &5056153978330720413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1057741258852800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7e109506ff5982438ae62051e89366f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1058322735722126
@@ -11007,8 +11022,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1138049083471786
 GameObject:
   m_ObjectHideFlags: 0
@@ -15016,8 +15029,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1231899750942862
 GameObject:
   m_ObjectHideFlags: 0
@@ -17299,8 +17310,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1298952354992406
 GameObject:
   m_ObjectHideFlags: 0
@@ -31267,8 +31276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1437801924863516
 GameObject:
   m_ObjectHideFlags: 0
@@ -37494,8 +37501,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1609899147336636
 GameObject:
   m_ObjectHideFlags: 0
@@ -44478,8 +44483,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1795790129629164
 GameObject:
   m_ObjectHideFlags: 0
@@ -44523,8 +44526,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1808078197189306
 GameObject:
   m_ObjectHideFlags: 0
@@ -44810,8 +44811,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1818246586376190
 GameObject:
   m_ObjectHideFlags: 0
@@ -46097,8 +46096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1839115230281556
 GameObject:
   m_ObjectHideFlags: 0
@@ -46838,8 +46835,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa56c340acd49c4c8b325dbde290a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 0}
-  CurrentEquipmentItem: {fileID: 0}
 --- !u!1 &1853074256905126
 GameObject:
   m_ObjectHideFlags: 0
@@ -52330,7 +52325,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4693608721398886}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 180}
 --- !u!1 &8811120700404160400
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,23 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace OverEarth
 {
     public class DragAndDropContainer : Singleton<DragAndDropContainer>
     {
-        [SerializeField] private SpriteRenderer _dragAndDropItem;
+        public static EquipmentSlotUI SlotUnderCursor;
 
-        [SerializeField] private EquipmentItem _itemInContainer;
+        [SerializeField] private Image _dragAndDropItem;
 
+        private EquipmentItem _itemInContainer;
         private Vector3 _senderPosition;
 
-        private void Update()
+        public void UpdateDragAndDropContainerPosition()
         {
             if (_itemInContainer != null)
             {
-                _dragAndDropItem.transform.position =
-                    CameraController.Instance.AimRay.direction * Vector3.Distance(CameraController.Instance.transform.position, _senderPosition);
+                _dragAndDropItem.transform.position = Input.mousePosition;
             }
         }
 
@@ -30,6 +31,7 @@ namespace OverEarth
 
             _itemInContainer = item;
             _dragAndDropItem.sprite = item.GetImage();
+            _dragAndDropItem.enabled = true;
 
             _senderPosition = sender.position;
         }
@@ -37,7 +39,15 @@ namespace OverEarth
         public void RemoveItemFromContainer()
         {
             _itemInContainer = null;
+            _dragAndDropItem.enabled = false;
             _dragAndDropItem.sprite = null;
+        }
+
+        public EquipmentItem GetItemInContainer()
+        {
+            EquipmentItem itemInContainer = _itemInContainer;
+            RemoveItemFromContainer();
+            return itemInContainer;
         }
     }
 }

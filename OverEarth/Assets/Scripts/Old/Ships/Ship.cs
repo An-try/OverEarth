@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OverEarth
 {
-    [RequireComponent(typeof(Inventory), typeof(Equipment))]
+    //[RequireComponent(typeof(Inventory), typeof(Equipment))]
     public abstract class Ship : Damageable
     {
         [SerializeField] private Transform _shipObservingPlaceForCamera;
@@ -23,8 +23,8 @@ namespace OverEarth
 
         public int shipFiresAmount = 0;
 
-        private Inventory _inventory;
-        private Equipment _equipment;
+        //private Inventory _inventory;
+        //private Equipment _equipment;
 
         public GameObject MainHull;
         public MeshRenderer MainHullTexture;
@@ -48,8 +48,8 @@ namespace OverEarth
 
         private void Awake()
         {
-            _inventory = GetComponent<Inventory>();
-            _equipment = GetComponent<Equipment>();
+            //_inventory = GetComponent<Inventory>();
+            //_equipment = GetComponent<Equipment>();
         }
 
         private protected override void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time

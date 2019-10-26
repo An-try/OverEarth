@@ -1,6 +1,5 @@
 Plugins:
 	DOTween (HOTween v2) v1.2.280
-	TextMesh Pro v1.2.2
 
 Downloads:
 	Space Elements Pack (Royalty Free License) https://www.cgtrader.com/free-3d-models/space/other/space-768e8b7f-9741-4868-9bde-28d3f927b946

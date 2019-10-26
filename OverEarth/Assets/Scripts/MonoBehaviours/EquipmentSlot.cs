@@ -9,7 +9,7 @@ namespace OverEarth
     {
         public event Action<EquipmentItem> EquipmentChangedEvent;
 
-        public EquipmentItem CurrentEquipmentItem { get; private set; }
+        public EquipmentItem Equipment { get; private set; }
 
         private GameObject _currentEquipmentObject;
 
@@ -17,26 +17,29 @@ namespace OverEarth
         {
             RemoveEquipment();
 
-            CurrentEquipmentItem = equipmentItem;
+            Equipment = equipmentItem;
 
             InstantiateEquipment();
+
+            EquipmentChangedEvent?.Invoke(Equipment);
         }
 
         public void RemoveEquipment()
         {
-            CurrentEquipmentItem = null;
+            Equipment = null;
 
             if (_currentEquipmentObject)
             {
                 Destroy(_currentEquipmentObject);
             }
 
-            EquipmentChangedEvent?.Invoke(CurrentEquipmentItem);
+            EquipmentChangedEvent?.Invoke(Equipment);
         }
 
         private void InstantiateEquipment()
         {
-            _currentEquipmentObject = Instantiate(CurrentEquipmentItem.ObjectPrefab, transform.position, transform.rotation, transform);
+            print(Equipment.ObjectPrefab.name);
+            _currentEquipmentObject = Instantiate(Equipment.ObjectPrefab, transform.position, transform.rotation, transform);
         }
     }
 }
