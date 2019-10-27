@@ -9,6 +9,10 @@ namespace OverEarth
     {
         [SerializeField] private List<MonoBehaviour> _functionalСomponents;
 
+        public List<Damageable> DamageableParts { get; private protected set; }
+
+        public DamageablePartTypes DamageablePartType { get; private set; }
+
         public event Action<float, float> TakeDamageEvent;
 
         private protected float _maxDurability;

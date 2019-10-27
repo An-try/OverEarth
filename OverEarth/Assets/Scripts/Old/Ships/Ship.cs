@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -50,6 +52,8 @@ namespace OverEarth
 
         private void Awake()
         {
+            DamageableParts = GetComponentsInChildren<Damageable>().ToList();
+
             Inventory = GetComponent<Inventory>();
             Equipment = GetComponent<Equipment>();
 
@@ -95,7 +99,7 @@ namespace OverEarth
                     mainParticlesSettings.loop = true; // Set looping to burning particles
                     particleSystem.Play(); // Start a burning particle system
                     burningLight.enabled = true; // Turn on the burning light
-                    burningLight.intensity = Random.Range(250, 351); // Change the intensity of burning light to create a simple burning sensation
+                    burningLight.intensity = UnityEngine.Random.Range(250, 351); // Change the intensity of burning light to create a simple burning sensation
                 }
                 else
                 {

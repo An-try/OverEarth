@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +9,9 @@ namespace OverEarth
 {
     public class DamageableUI : MonoBehaviour
     {
-        [SerializeField] private Damageable _damageablePart;
+        [SerializeField] private DamageablePartTypes _damageablePartType;
+
+        private Damageable _damageablePart;
         private Image _partImage;
 
         private void Awake()
@@ -33,6 +37,11 @@ namespace OverEarth
         private void UnsubscribeEvents()
         {
             _damageablePart.TakeDamageEvent -= UpdateImageColor;
+        }
+
+        public void AssignDamageablePart(Damageable damageable)
+        {
+            _damageablePart = damageable.DamageableParts.Find(shipPart => shipPart.DamageablePartType.Equals(_damageablePartType));
         }
 
         private void UpdateImageColor(float _maxDurability, float _currentDurability)
