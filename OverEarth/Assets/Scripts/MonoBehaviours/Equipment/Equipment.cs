@@ -25,18 +25,7 @@ namespace OverEarth
             EquipmentSlots = GetComponentsInChildren<EquipmentSlot>().ToList();
         }
 
-        private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
-        {
-            Invoke("A", 1f);
-        }
-
-        void A()
-        {
-            EquipmentSlots[0].SetEquipment(ItemsContainer.Instance.EquipmentItems[0]);
-            EquipmentSlots[1].SetEquipment(ItemsContainer.Instance.EquipmentItems[1]);
-        }
-
-        public void EquipItem(EquipmentItem equipmentItem, EquipmentSlot equipmentSlot)
+        public void EquipItem(Item item, EquipmentSlot equipmentSlot)
         {
             //Equip(equipmentItem, equipmentSlot, equipmentSlotUI); // Equip this item
             //RemoveItemFromInventory(equipmentItem); // Remove this item from inventory

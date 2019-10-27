@@ -6,39 +6,19 @@ using UnityEngine.EventSystems;
 
 namespace OverEarth
 {
-    public class EquipmentSlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class EquipmentSlotUI : SlotUI
     {
-        [SerializeField] private Sprite _emptySlotImage;
-
         private EquipmentSlot _equipmentSlot;
 
-        private Image _image;
+        private protected override Color _emptySlotImageColor => Color.blue;
 
-        private Color _emptySlotImageColor = Color.blue;
-        private Color _filledSlotImageColor = Color.white;
-
-        public EquipmentItem Equipment => _equipmentSlot.Equipment;
-
-        private void Awake()
-        {
-            _image = GetComponent<Image>();
-            _emptySlotImage = _image.sprite;
-        }
-
-        //private void OnEnable()
-        //{
-        //    SubscribeEvents();
-        //}
+        public override Item Item => _equipmentSlot.Equipment;
+        public override bool IsInventorySlot => false;
 
         private void SubscribeEvents()
         {
             _equipmentSlot.EquipmentChangedEvent += UpdateSlotUI;
         }
-
-        //private void OnDisable()
-        //{
-        //    UnsubscribeEvents();
-        //}
 
         private void UnsubscribeEvents()
         {
@@ -51,87 +31,18 @@ namespace OverEarth
             SubscribeEvents();
         }
 
-        private void SetEquipment(EquipmentItem equipmentItem)
+        public override void SetItem(Item item)
         {
-            _equipmentSlot.SetEquipment(equipmentItem);
+            _equipmentSlot.SetEquipment(item);
+            UpdateSlotUI(item);
         }
 
-        private void UpdateSlotUI(EquipmentItem equipmentItem)
+        private protected override void RemoveItem()
         {
-            if (equipmentItem)
+            if (Item.IsEquipment())
             {
-                _image.sprite = equipmentItem.Image;
-                _image.color = _filledSlotImageColor;
-            }
-            else
-            {
-                _image.sprite = _emptySlotImage;
-                _image.color = _emptySlotImageColor;
-            }
-        }
-
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            DragAndDropContainer.SlotUnderCursor = this;
-        }
-
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            DragAndDropContainer.SlotUnderCursor = null;
-        }
-
-        public void OnBeginDrag(PointerEventData eventData)
-        {
-            if (_equipmentSlot.Equipment)
-            {
-                _image.color = _emptySlotImageColor;
-                DragAndDropContainer.Instance.AddItemToContainer(_equipmentSlot.Equipment, transform);
                 _equipmentSlot.RemoveEquipment();
             }
-        }
-
-        public void OnDrag(PointerEventData eventData)
-        {
-            DragAndDropContainer.Instance.UpdateDragAndDropContainerPosition();
-        }
-
-        public void OnEndDrag(PointerEventData eventData)
-        {
-            if (DragAndDropContainer.SlotUnderCursor)
-            {
-                SetOrReplaceEquipment();
-            }
-            else
-            {
-                SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
-            }
-        }
-
-        private void SetOrReplaceEquipment()
-        {
-            EquipmentSlotUI slotUnderCursor = DragAndDropContainer.SlotUnderCursor;
-
-            if (slotUnderCursor == this)
-            {
-                SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
-            }
-            else
-            {
-                // Replace equipment.
-                EquipmentItem equipmentItem = DragAndDropContainer.Instance.GetItemInContainer();
-                SetEquipment(slotUnderCursor.Equipment);
-                slotUnderCursor.SetEquipment(equipmentItem);
-            }
-
-            //if (!slotUnderCursor.Equipment)
-            //{
-            //    // Set equipment.
-            //    slotUnderCursor.SetEquipment(DragAndDropContainer.Instance.GetItemInContainer());
-            //}
-            //else
-            //{
-                
-            //}
         }
 
         private void OnDestroy()

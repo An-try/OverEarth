@@ -7,6 +7,5 @@ namespace OverEarth
     public class ItemsContainer : Singleton<ItemsContainer>
     {
         public List<Item> Items;
-        public List<EquipmentItem> EquipmentItems;
     }
 }

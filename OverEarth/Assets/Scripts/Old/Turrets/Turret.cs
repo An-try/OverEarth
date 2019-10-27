@@ -68,6 +68,11 @@ namespace OverEarth
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
+            if (!PlayerController.Instance.AllowShooting) // TODO : EDIT THIS
+            {
+                return;
+            }
+
             if (turretAI) // If the turret is controlled by AI
             {
                 AutomaticTurretControl();

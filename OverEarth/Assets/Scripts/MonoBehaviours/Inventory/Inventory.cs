@@ -15,7 +15,7 @@ namespace OverEarth
 
         private int _inventoryMaximumSpace = 50;
 
-        private List<IItem> _inventoryItems = new List<IItem>();
+        private List<InventorySlotUI> _inventorySlotsUI;
 
         private void Awake()
         {
@@ -23,27 +23,46 @@ namespace OverEarth
             _equipment = GetComponent<Equipment>();
         }
 
-        public bool AddItem(IItem item)
+        private void Start()
         {
-            // If the item that needs to be added to inventory is default item and there is free space in inventory
-            if (_inventoryItems.Count < _inventoryMaximumSpace)
-            {
-                _inventoryItems.Add(item); // Add item to inventory
-                onItemChanged?.Invoke();
-                return true; // Item added
-            }
-            return false; // Item can't be added
+            _inventorySlotsUI = MenuPanelUIController.Instance.InventorySlotsUI;
+
+            _inventorySlotsUI[0].SetItem(ItemsContainer.Instance.Items[0]);
+            _inventorySlotsUI[1].SetItem(ItemsContainer.Instance.Items[0]);
+            _inventorySlotsUI[2].SetItem(ItemsContainer.Instance.Items[0]);
+
+            _inventorySlotsUI[3].SetItem(ItemsContainer.Instance.Items[1]);
+            _inventorySlotsUI[4].SetItem(ItemsContainer.Instance.Items[1]);
+            _inventorySlotsUI[5].SetItem(ItemsContainer.Instance.Items[1]);
+            _inventorySlotsUI[6].SetItem(ItemsContainer.Instance.Items[1]);
+
+            _inventorySlotsUI[7].SetItem(ItemsContainer.Instance.Items[2]);
+            _inventorySlotsUI[8].SetItem(ItemsContainer.Instance.Items[2]);
+            _inventorySlotsUI[9].SetItem(ItemsContainer.Instance.Items[2]);
+            _inventorySlotsUI[10].SetItem(ItemsContainer.Instance.Items[2]);
         }
 
-        public bool RemoveItem(IItem item)
-        {
-            if (_inventoryItems.Contains(item))
-            {
-                _inventoryItems.Remove(item); // Remove item from inventory
-                onItemChanged?.Invoke();
-                return true;
-            }
-            return false;
-        }
+        //public bool AddItem(Item item)
+        //{
+        //    // If the item that needs to be added to inventory is default item and there is free space in inventory
+        //    if (_inventorySlots.Count < _inventoryMaximumSpace)
+        //    {
+        //        _inventorySlots.Add(item); // Add item to inventory
+        //        onItemChanged?.Invoke();
+        //        return true; // Item added
+        //    }
+        //    return false; // Item can't be added
+        //}
+
+        //public bool RemoveItem(Item item)
+        //{
+        //    if (_inventorySlots.Contains(item))
+        //    {
+        //        _inventorySlots.Remove(item); // Remove item from inventory
+        //        onItemChanged?.Invoke();
+        //        return true;
+        //    }
+        //    return false;
+        //}
     }
 }

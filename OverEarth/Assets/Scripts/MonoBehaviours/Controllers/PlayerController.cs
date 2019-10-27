@@ -7,6 +7,7 @@ namespace OverEarth
 {
     public class PlayerController : Singleton<PlayerController>
     {
+        public bool AllowShooting = true;
         public Ship Ship;
 
         public static event Action<bool> AIStateChangedEvent;

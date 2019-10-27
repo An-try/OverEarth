@@ -1,6 +1,6 @@
 ﻿namespace OverEarth
 {
-    public enum EquipmentSlots
+    public enum EquipmentTypes
     {
         Upgrade,
         Armor,

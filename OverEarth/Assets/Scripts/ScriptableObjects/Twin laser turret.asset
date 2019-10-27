@@ -9,17 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74fee7635d5d2464c96ffde4634560bb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9138194207ff7814b96ac24dae58cc7c, type: 3}
   m_Name: Twin laser turret
   m_EditorClassIdentifier: 
   Name: Twin laser turret
   Image: {fileID: 21300000, guid: 3490c9ca41e41d748afef574143503e8, type: 3}
   ObjectPrefab: {fileID: 1059090181652990, guid: 1b79a074686b4504fb1a37bc6104119b,
     type: 3}
-  EquipmentSlot: 3
-  HealthModifier: 0
-  HealthRegen: 0
-  ArmorModifier: 0
-  ArmorRegen: 0
-  ShieldModifier: 0
-  ShieldRegen: 0
+  _isEquipment: 1

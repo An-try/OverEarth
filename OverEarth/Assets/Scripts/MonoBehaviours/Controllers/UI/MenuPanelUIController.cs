@@ -11,12 +11,14 @@ namespace OverEarth
         [SerializeField] private GameObject _menuPanel;
         [SerializeField] private Transform _equipmentPanel;
         [SerializeField] private Equipment _equipment;
+        [SerializeField] private Transform _inventorySlotsContainer;
 
         public static event Action<bool> MenuInteractedEvent;
 
         public bool MenuOpened { get; private set; } = false;
 
         private List<EquipmentSlotUI> _equipmentSlotsUI;
+        public List<InventorySlotUI> InventorySlotsUI { get; private set; }
 
         private void OnEnable()
         {
@@ -43,6 +45,7 @@ namespace OverEarth
             base.Awake();
 
             _equipmentSlotsUI = _equipmentPanel.GetComponentsInChildren<EquipmentSlotUI>().ToList();
+            InventorySlotsUI = _inventorySlotsContainer.GetComponentsInChildren<InventorySlotUI>().ToList();
         }
 
         private void Start()

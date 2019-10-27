@@ -7,11 +7,11 @@ namespace OverEarth
 {
     public class DragAndDropContainer : Singleton<DragAndDropContainer>
     {
-        public static EquipmentSlotUI SlotUnderCursor;
+        public static SlotUI SlotUnderCursor;
 
         [SerializeField] private Image _dragAndDropItem;
 
-        private EquipmentItem _itemInContainer;
+        private Item _itemInContainer;
         private Vector3 _senderPosition;
 
         public void UpdateDragAndDropContainerPosition()
@@ -22,7 +22,7 @@ namespace OverEarth
             }
         }
 
-        public void AddItemToContainer(EquipmentItem item, Transform sender)
+        public void AddItemToContainer(Item item, Transform sender)
         {
             if (_itemInContainer != null)
             {
@@ -30,7 +30,7 @@ namespace OverEarth
             }
 
             _itemInContainer = item;
-            _dragAndDropItem.sprite = item.GetImage();
+            _dragAndDropItem.sprite = item.Image;
             _dragAndDropItem.enabled = true;
 
             _senderPosition = sender.position;
@@ -43,9 +43,9 @@ namespace OverEarth
             _dragAndDropItem.sprite = null;
         }
 
-        public EquipmentItem GetItemInContainer()
+        public Item GetItemInContainer()
         {
-            EquipmentItem itemInContainer = _itemInContainer;
+            Item itemInContainer = _itemInContainer;
             RemoveItemFromContainer();
             return itemInContainer;
         }

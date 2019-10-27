@@ -16,7 +16,7 @@ MonoBehaviour:
   Image: {fileID: 21300000, guid: aaeed94bdf92cbc41bc049d070219b0d, type: 3}
   ObjectPrefab: {fileID: 1146533288891614, guid: 24b6271c535dac74a8e8b2fda476dd90,
     type: 3}
-  EquipmentSlot: 3
+  _equipmentType: 3
   HealthModifier: 0
   HealthRegen: 0
   ArmorModifier: 0

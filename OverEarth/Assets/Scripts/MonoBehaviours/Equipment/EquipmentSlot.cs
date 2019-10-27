@@ -7,19 +7,22 @@ namespace OverEarth
 {
     public class EquipmentSlot : MonoBehaviour
     {
-        public event Action<EquipmentItem> EquipmentChangedEvent;
+        public event Action<Item> EquipmentChangedEvent;
 
-        public EquipmentItem Equipment { get; private set; }
+        public Item Equipment { get; private set; }
 
         private GameObject _currentEquipmentObject;
 
-        public void SetEquipment(EquipmentItem equipmentItem)
+        public void SetEquipment(Item item)
         {
             RemoveEquipment();
 
-            Equipment = equipmentItem;
+            Equipment = item;
 
-            InstantiateEquipment();
+            if (Equipment)
+            {
+                InstantiateEquipment();
+            }
 
             EquipmentChangedEvent?.Invoke(Equipment);
         }
