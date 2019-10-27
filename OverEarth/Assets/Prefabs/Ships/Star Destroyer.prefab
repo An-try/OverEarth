@@ -2311,7 +2311,6 @@ GameObject:
   - component: {fileID: 114167332469570596}
   - component: {fileID: 6404252923708765788}
   - component: {fileID: 3088786226755485126}
-  - component: {fileID: 5056153978330720413}
   m_Layer: 0
   m_Name: Star Destroyer
   m_TagString: Player
@@ -2392,20 +2391,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 35a1483b3730afc40a73d378af67d70e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  equipmentItem1: {fileID: 0}
-  equipmentItem2: {fileID: 0}
---- !u!114 &5056153978330720413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1057741258852800}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7e109506ff5982438ae62051e89366f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1058322735722126

@@ -6,7 +6,7 @@ namespace OverEarth
 {
     public class TurretsSection : Damageable
     {
-        [SerializeField] private TurretPlace[] _turretPlaces;
+        [SerializeField] private List<TurretPlace> _turretPlaces;
 
         private void Awake()
         {
@@ -16,13 +16,14 @@ namespace OverEarth
             _currentArmor = _maxArmor;
         }
 
-        private protected override IEnumerator PlayDestroyAnimation()
+        public override void DestroyObject()
         {
-            yield return new WaitForSeconds(1);
+            base.DestroyObject();
 
-            DestroyGameObject();
-
-            yield break;
+            for (int i = 0; i < _turretPlaces.Count; i++)
+            {
+                _turretPlaces[i].DoDamage(MinMaxValuesConstants.MAX_DAMAGE);
+            }
         }
     }
 }

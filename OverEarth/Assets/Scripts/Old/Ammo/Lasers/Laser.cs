@@ -57,7 +57,6 @@ namespace OverEarth
                 // Thus, the damage formula looks like this: DAMAGE_PER_HIT / (HIT_DURATION / TIME_BETWEEN_EACH_DURATION_PART)
                 float damage = laserDamagePerHit / (laserHitDuration / Time.fixedDeltaTime);
                 DoDamage(damage, hit);
-                
             }
             else // If raycast hit nothing
             {

@@ -7,8 +7,8 @@ namespace OverEarth
 {
     public class PlayerController : Singleton<PlayerController>
     {
-        public bool AllowShooting = true;
         public Ship Ship;
+        public Station Station;
 
         public static event Action<bool> AIStateChangedEvent;
         public static event Action MenuButtonPressedEvent;
@@ -16,6 +16,7 @@ namespace OverEarth
 
         private AimingMethods _aimingMethod = AimingMethods.CameraCenter;
 
+        public bool InStation { get; private set; }
         public bool IsAIEnabled { get; private set; }
 
         private void Update()
@@ -44,7 +45,7 @@ namespace OverEarth
 
         private void ChangeAimingMethod()
         {
-            if (MenuPanelUIController.Instance.MenuOpened)
+            if (MenuPanelUIController.Instance.IsMenuOpened)
             {
                 return;
             }

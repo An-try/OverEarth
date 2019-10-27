@@ -50,6 +50,12 @@ namespace OverEarth
         {
             Inventory = GetComponent<Inventory>();
             Equipment = GetComponent<Equipment>();
+
+            _maxDurability = 9999999999999999999;
+            _currentDurability = 9999999999999999999;
+
+            _maxArmor = 9999999999999999999;
+            _currentArmor = 9999999999999999999;
         }
 
         private protected override void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
@@ -95,15 +101,6 @@ namespace OverEarth
                     burningLight.enabled = false; // Turn off the burning light
                 }
             }
-        }
-
-        private protected override IEnumerator PlayDestroyAnimation()
-        {
-            yield return new WaitForSeconds(1);
-
-            DestroyGameObject();
-
-            yield break;
         }
 
         public float GetParameterValue(EntityParameters entityParameter)

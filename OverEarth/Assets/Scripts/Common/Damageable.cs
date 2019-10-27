@@ -7,6 +7,8 @@ namespace OverEarth
 {
     public abstract class Damageable : MonoBehaviour
     {
+        [SerializeField] private List<MonoBehaviour> _functionalСomponents;
+
         public event Action<float, float> TakeDamageEvent;
 
         private protected float _maxDurability;
@@ -23,8 +25,6 @@ namespace OverEarth
         {
             TakeDamageEvent?.Invoke(_maxDurability, _currentDurability);
         }
-
-        private protected abstract IEnumerator PlayDestroyAnimation();
 
         public void DoDamage(float damage)
         {
@@ -53,13 +53,51 @@ namespace OverEarth
 
             if (_currentDurability <= 0)
             {
-                StartCoroutine(PlayDestroyAnimation());
+                DestroyObject();
             }
         }
 
-        private protected void DestroyGameObject()
+        public virtual void DestroyObject()
         {
+            StartCoroutine(PlayDestroyAnimation());
+        }
 
+        private IEnumerator PlayDestroyAnimation()
+        {
+            SetActiveFunctionalComponents(false);
+            transform.SetParent(null);
+            AddExplosionForce();
+            
+            yield return new WaitForSeconds(1);
+
+            Destroy(gameObject, 3600);
+
+            yield break;
+        }
+
+        private void SetActiveFunctionalComponents(bool value)
+        {
+            for (int i = 0; i < _functionalСomponents.Count; i++)
+            {
+                _functionalСomponents[i].enabled = value;
+            }
+        }
+
+        private void AddExplosionForce()
+        {
+            Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
+
+            if (rigidbody)
+            {
+                rigidbody.AddExplosionForce(100f, transform.position, 10f);
+            }
+            else
+            {
+                rigidbody = gameObject.AddComponent<Rigidbody>();
+                rigidbody.angularDrag = 0;
+                rigidbody.useGravity = false;
+                rigidbody.AddExplosionForce(100f, transform.position, 10f);
+            }
         }
     }
 }

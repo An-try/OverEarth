@@ -68,7 +68,7 @@ namespace OverEarth
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
-            if (!PlayerController.Instance.AllowShooting) // TODO : EDIT THIS
+            if (MenuPanelUIController.Instance.IsMenuOpened)
             {
                 return;
             }
@@ -88,7 +88,7 @@ namespace OverEarth
         public virtual void SetTurretParameters()
         {
             // Check this turret tag
-            switch (transform.tag)
+            switch (transform.root.tag)
             {
                 case "Player":  // If this turret is on a player ship
                     turretAI = PlayerController.Instance.IsAIEnabled; // Set if the turret is controlled by AI
@@ -110,7 +110,7 @@ namespace OverEarth
         // Set the turret AI. This method executes by delegate of PlayerMovement script
         public void ChangeTurretAIState(bool AIState)
         {
-            if (transform.CompareTag("Player"))
+            if (transform.root.CompareTag("Player"))
             {
                 turretAI = AIState;
             }

@@ -33,11 +33,8 @@ namespace OverEarth
 
         public override void Shoot()
         {
-            GameObject missile = Instantiate(MissilePrefab); // Create a new missile
-
-            missile.transform.position = TurretCannons.transform.position; // Set missile position to this turret cannons position
-            missile.transform.rotation = TurretCannons.transform.rotation; // Set missile rotation to this turret cannons rotation
-            missile.tag = gameObject.tag; // Set missile tag equal to this turret
+            GameObject missile = Instantiate(MissilePrefab, TurretCannons.transform.position, TurretCannons.transform.rotation); // Create a new missile
+            missile.GetComponent<Rocket>().TargetTags = TargetTags;
 
             currentCooldown = cooldown; // Add a cooldown to this turret
 

@@ -17,7 +17,7 @@ namespace OverEarth
         public GameObject ExplosionPrefab; // Explosion effect when rocket hit something
         public GameObject ExplosionSmokePrefab; // Smoke that takes off from a rocket
 
-        private List<string> _targetTags; // List that contains
+        public List<string> TargetTags { private get; set; } // List that contains
 
         public virtual void Awake() // Awake is called when the script instance is being loaded
         {
@@ -29,28 +29,12 @@ namespace OverEarth
         {
             RocketRigidbody = transform.GetComponent<Rigidbody>(); // Get the rigidbody attached to this game object
 
-            // Set the target list based on this rocket tag
-            switch (transform.tag)
-            {
-                case "Player":
-                    _targetTags = new List<string> { "Enemy" };
-                    break;
-                case "Ally":
-                    _targetTags = new List<string> { "Enemy" };
-                    break;
-                case "Enemy":
-                    _targetTags = new List<string> { "Player", "Ally" };
-                    break;
-                default:
-                    break;
-            }
-
             Destroy(gameObject, 60f); // Destroy the rocket after some time
         }
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
-            _target = Methods.SearchNearestTarget(transform, _targetTags);
+            _target = Methods.SearchNearestTarget(transform, TargetTags);
 
             if (HP <= 0)
             {

@@ -23,14 +23,5 @@ namespace OverEarth
 
             _turret = GetComponentInChildren<Turret>();
         }
-
-        private protected override IEnumerator PlayDestroyAnimation()
-        {
-            yield return new WaitForSeconds(1);
-
-            DestroyGameObject();
-
-            yield break;
-        }
     }
 }

@@ -16,13 +16,14 @@ namespace OverEarth
             _currentArmor = _maxArmor;
         }
 
-        private protected override IEnumerator PlayDestroyAnimation()
+        public override void DestroyObject()
         {
-            yield return new WaitForSeconds(1);
+            base.DestroyObject();
 
-            DestroyGameObject();
-
-            yield break;
+            for (int i = 0; i < _turretsSections.Count; i++)
+            {
+                _turretsSections[i].DoDamage(MinMaxValuesConstants.MAX_DAMAGE);
+            }
         }
     }
 }

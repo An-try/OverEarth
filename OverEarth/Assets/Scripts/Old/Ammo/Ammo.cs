@@ -22,10 +22,13 @@ namespace OverEarth
             {
                 hittedObject.DoDamage(damage);
             }
-            else if (hittedObject)
+            else
             {
                 hittedObject = hit.transform.GetComponentInParent<Damageable>();
-                hittedObject.DoDamage(damage);
+                if (hittedObject)
+                {
+                    hittedObject.DoDamage(damage);
+                }
             }
         }
 
@@ -37,10 +40,13 @@ namespace OverEarth
             {
                 hittedObject.DoDamage(damage);
             }
-            else if (hittedObject)
+            else
             {
                 hittedObject = collision.transform.GetComponentInParent<Damageable>();
-                hittedObject.DoDamage(damage);
+                if (hittedObject)
+                {
+                    hittedObject.DoDamage(damage);
+                }
             }
         }
     }

@@ -15,7 +15,7 @@ namespace OverEarth
 
         public static event Action<bool> MenuInteractedEvent;
 
-        public bool MenuOpened { get; private set; } = false;
+        public bool IsMenuOpened { get; private set; } = false;
 
         private List<EquipmentSlotUI> _equipmentSlotsUI;
         public List<InventorySlotUI> InventorySlotsUI { get; private set; }
@@ -70,15 +70,15 @@ namespace OverEarth
 
         private void InteractWithMenuPanel()
         {
-            if (MenuOpened)
+            if (IsMenuOpened)
             {
                 CloseMenu();
-                MenuOpened = false;
+                IsMenuOpened = false;
             }
             else
             {
                 OpenMenu();
-                MenuOpened = true;
+                IsMenuOpened = true;
             }
         }
 
