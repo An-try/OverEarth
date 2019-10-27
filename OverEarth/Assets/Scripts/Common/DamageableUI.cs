@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace OverEarth
 {
-    public abstract class DamageableUI : MonoBehaviour
+    public class DamageableUI : MonoBehaviour
     {
         [SerializeField] private Damageable _damageablePart;
         private Image _partImage;

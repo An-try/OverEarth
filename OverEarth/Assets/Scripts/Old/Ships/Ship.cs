@@ -21,6 +21,8 @@ namespace OverEarth
         private float _autoStopForce = 1f;
         private float _currentStopForce = 0f;
 
+        public float RadarRange = 10000f;
+
         public int shipFiresAmount = 0;
 
         public Inventory Inventory { get; private set; }
