@@ -56,7 +56,7 @@ namespace OverEarth
         private void SubscribeEvents()
         {
             PlayerController.AimingMethodChangedEvent += SetAimingMethod;
-            MenuPanelUIController.MenuInteractedEvent += ChangeCameraObservingPoint;
+            PlayerController.MenuButtonPressedEvent += ChangeCameraObservingPoint;
         }
 
         private void OnDisable()
@@ -67,7 +67,7 @@ namespace OverEarth
         private void UnsubscribeEvents()
         {
             PlayerController.AimingMethodChangedEvent -= SetAimingMethod;
-            MenuPanelUIController.MenuInteractedEvent -= ChangeCameraObservingPoint;
+            PlayerController.MenuButtonPressedEvent -= ChangeCameraObservingPoint;
         }
 
         private void Start()

@@ -30,7 +30,7 @@ namespace OverEarth
 
         public Dictionary<string, Action> DefaultActions = new Dictionary<string, Action>();
 
-        protected override void Awake() // Awake is called when the script instance is being loaded
+        private protected override void Awake() // Awake is called when the script instance is being loaded
         {
             // Set the commands for voice control
             MainActions.Add("ship", ShipAction);
@@ -101,7 +101,7 @@ namespace OverEarth
             }
         }
 
-        protected override void OnDestroy() // Called when destroying this script
+        private protected override void OnDestroy() // Called when destroying this script
         {
             base.OnDestroy();
             

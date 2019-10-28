@@ -8,14 +8,9 @@ namespace OverEarth
 {
     public class MenuPanelUIController : PanelUI<MenuPanelUIController>
     {
-        [SerializeField] private GameObject _menuPanel;
         [SerializeField] private Transform _equipmentPanel;
         [SerializeField] private Equipment _equipment;
         [SerializeField] private Transform _inventorySlotsContainer;
-
-        public static event Action<bool> MenuInteractedEvent;
-
-        public bool IsMenuOpened { get; private set; } = false;
 
         private List<EquipmentSlotUI> _equipmentSlotsUI;
         public List<InventorySlotUI> InventorySlotsUI { get; private set; }
@@ -27,7 +22,7 @@ namespace OverEarth
 
         private void SubscribeEvents()
         {
-            PlayerController.MenuButtonPressedEvent += InteractWithMenuPanel;
+            PlayerController.MenuButtonPressedEvent += InteractWithPanel;
         }
 
         private void OnDisable()
@@ -37,15 +32,34 @@ namespace OverEarth
 
         private void UnsubscribeEvents()
         {
-            PlayerController.MenuButtonPressedEvent -= InteractWithMenuPanel;
+            PlayerController.MenuButtonPressedEvent -= InteractWithPanel;
         }
 
-        protected override void Awake()
+        private void InteractWithPanel(bool isMenuOpened)
+        {
+            if (!isMenuOpened)
+            {
+                ClosePanel();
+            }
+            else
+            {
+                OpenPanel();
+            }
+        }
+
+        private protected override void Awake()
         {
             base.Awake();
 
             _equipmentSlotsUI = _equipmentPanel.GetComponentsInChildren<EquipmentSlotUI>().ToList();
             InventorySlotsUI = _inventorySlotsContainer.GetComponentsInChildren<InventorySlotUI>().ToList();
+        }
+
+        private protected override void Init()
+        {
+            _panelGroup.alpha = 0;
+            _panelGroup.interactable = false;
+            _panelGroup.blocksRaycasts = false;
         }
 
         private void Start()
@@ -61,37 +75,6 @@ namespace OverEarth
             {
                 _equipmentSlotsUI[i].AssignEquipmentSlot(equipmentSlots[i]);
             }
-        }
-
-        private void UpdateInventoryUI()
-        {
-
-        }
-
-        private void InteractWithMenuPanel()
-        {
-            if (IsMenuOpened)
-            {
-                CloseMenu();
-                IsMenuOpened = false;
-            }
-            else
-            {
-                OpenMenu();
-                IsMenuOpened = true;
-            }
-        }
-
-        private void OpenMenu()
-        {
-            OpenPanel();
-            MenuInteractedEvent?.Invoke(true);
-        }
-
-        private void CloseMenu()
-        {
-            ClosePanel();
-            MenuInteractedEvent?.Invoke(false);
         }
     }
 }

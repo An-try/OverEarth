@@ -11,13 +11,14 @@ namespace OverEarth
         public Station Station;
 
         public static event Action<bool> AIStateChangedEvent;
-        public static event Action MenuButtonPressedEvent;
+        public static event Action<bool> MenuButtonPressedEvent;
         public static event Action<AimingMethods> AimingMethodChangedEvent;
 
         private AimingMethods _aimingMethod = AimingMethods.CameraCenter;
 
         public bool InStation { get; private set; }
         public bool IsAIEnabled { get; private set; }
+        public bool IsMenuOpened { get; private set; } = false;
 
         private void Update()
         {
@@ -45,7 +46,7 @@ namespace OverEarth
 
         private void ChangeAimingMethod()
         {
-            if (MenuPanelUIController.Instance.IsMenuOpened)
+            if (IsMenuOpened)
             {
                 return;
             }
@@ -63,7 +64,8 @@ namespace OverEarth
 
         private void MenuButtonPressed()
         {
-            MenuButtonPressedEvent?.Invoke();
+            IsMenuOpened = !IsMenuOpened;
+            MenuButtonPressedEvent?.Invoke(IsMenuOpened);
         }
     }
 }

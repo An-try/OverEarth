@@ -16,7 +16,7 @@ namespace OverEarth
         private void SubscribeEvents()
         {
             PlayerController.AimingMethodChangedEvent += ChangeCursor;
-            MenuPanelUIController.MenuInteractedEvent += ChangeCursor;
+            PlayerController.MenuButtonPressedEvent += ChangeCursor;
         }
 
         private void OnDisable()
@@ -27,7 +27,7 @@ namespace OverEarth
         private void UnsubscribeEvents()
         {
             PlayerController.AimingMethodChangedEvent -= ChangeCursor;
-            MenuPanelUIController.MenuInteractedEvent -= ChangeCursor;
+            PlayerController.MenuButtonPressedEvent -= ChangeCursor;
         }
 
         private void Start()

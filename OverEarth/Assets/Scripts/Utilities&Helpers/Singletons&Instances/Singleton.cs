@@ -5,7 +5,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 	private static T _instance;
 	private static bool _isDestroy;
 
-	protected virtual void Awake ()
+	private protected virtual void Awake ()
 	{
 		if (!_instance)
 			_instance = this as T;
@@ -13,7 +13,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 			Destroy (gameObject);
 	}
 
-	protected virtual void OnDestroy ()
+    private protected virtual void OnDestroy ()
 	{
 		_isDestroy = true;
 	}

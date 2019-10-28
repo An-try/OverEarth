@@ -7,25 +7,18 @@ namespace OverEarth
 {
     public abstract class PanelUI<T> : Singleton<T> where T : MonoBehaviour
     {
-        [SerializeField] private CanvasGroup _panelGroup;
+        [SerializeField] private protected CanvasGroup _panelGroup;
 
         private Sequence _animationSequence;
 
-        private float _animationTime = 0.5f;
+        private float _animationTime = 0.25f;
 
-        protected override void Awake()
+        private protected override void Awake()
         {
-            base.Awake();
-
             Init();
         }
 
-        private void Init()
-        {
-            _panelGroup.alpha = 0;
-            _panelGroup.interactable = false;
-            _panelGroup.blocksRaycasts = false;
-        }
+        private protected abstract void Init();
 
         private protected void OpenPanel()
         {

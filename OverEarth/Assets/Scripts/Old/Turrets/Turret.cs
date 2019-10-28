@@ -68,7 +68,7 @@ namespace OverEarth
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
-            if (MenuPanelUIController.Instance.IsMenuOpened)
+            if (PlayerController.Instance.IsMenuOpened)
             {
                 return;
             }
