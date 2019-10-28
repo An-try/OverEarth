@@ -73,7 +73,7 @@ namespace UnityStandardAssets.Vehicles.Aeroplane
 
             CalculateRollAndPitchAngles();
 
-            AutoLevel();
+            //AutoLevel();
 
             CalculateForwardSpeed();
 

@@ -28,7 +28,7 @@ namespace OverEarth
         private float _autoStopForce = 1f;
         private float _currentStopForce = 0f;
 
-        public float RadarRange = 10000f;
+        public float RadarRange = 3000f;
 
         private int _shipFiresAmount = 0;
 

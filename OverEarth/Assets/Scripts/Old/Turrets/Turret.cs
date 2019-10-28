@@ -34,6 +34,9 @@ namespace OverEarth
 
         public bool turretAI; // If the turret is controlled by AI
 
+        private float _defaultTimeToFindTarget = 1f;
+        private float _currentTimeToFindTarget;
+
         public float Range => _turretRange;
         public float RightTraverse => _rightTraverse;
         public float LeftTraverse => _leftTraverse;
@@ -83,6 +86,7 @@ namespace OverEarth
                 ManualTurretControl();
             }
 
+            FindTarget();
             CooldownDecrease();
         }
 
@@ -138,9 +142,6 @@ namespace OverEarth
         // Method executes when turret AI is enabled
         public void AutomaticTurretControl()
         {
-            _targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target, EntityParameters.None, MinMaxValues.MaxValue);
-            _target = target;
-
             if (_targetPart != null) // If there is any target
             {
                 AimPoint = _targetPart.position; // Set a target position as an aim point
@@ -163,7 +164,6 @@ namespace OverEarth
         // Method executes when turret AI is disabled
         public void ManualTurretControl()
         {
-            //AimPoint = CameraController.Instance.MouseAimRay.direction * _turretRange; // Set the point on which camera is looking as an aim point
             AimPoint = CameraController.Instance.AimPoint; // Set the point on which camera is looking as an aim point
 
             RotateBase(); // Totate base of the turret to the aim point
@@ -285,6 +285,18 @@ namespace OverEarth
                 }
             }
             return false; // Not aimed at the owner
+        }
+
+        private void FindTarget()
+        {
+            _currentTimeToFindTarget -= Time.fixedDeltaTime;
+
+            if (_currentTimeToFindTarget <= 0)
+            {
+                _targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target, EntityParameters.None, MinMaxValues.MaxValue);
+                _target = target;
+                _currentTimeToFindTarget = _defaultTimeToFindTarget;
+            }
         }
     }
 }
