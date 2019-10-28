@@ -11,6 +11,7 @@ namespace OverEarth
 
         public List<string> TargetTags; // Targets for this turret
         private protected Transform _target;
+        private protected Transform _targetPart;
 
         public GameObject TurretBase; // Base platform of the turret that rotates horizontally
         public GameObject TurretCannons; // Cannons of the turret that totates vertically
@@ -137,11 +138,12 @@ namespace OverEarth
         // Method executes when turret AI is enabled
         public void AutomaticTurretControl()
         {
-            _target = Methods.SearchNearestTarget(transform, TargetTags, EntityParameters.None, MinMaxValues.MaxValue);
+            _targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target, EntityParameters.None, MinMaxValues.MaxValue);
+            _target = target;
 
-            if (_target != null) // If there is any target
+            if (_targetPart != null) // If there is any target
             {
-                AimPoint = _target.position; // Set a target position as an aim point
+                AimPoint = _targetPart.position; // Set a target position as an aim point
 
                 RotateBase(); // Totate base of the turret to the aim point
                 RotateCannons(); // Totate cannons of the turret to the aim point
@@ -250,7 +252,7 @@ namespace OverEarth
             // If the turret is targeting an object except bullets and rockets (determined by layerMask)
             if (Physics.Raycast(aimingRay, out RaycastHit hit, _turretRange, layerMask))
             {
-                if (hit.collider.transform == _target || hit.collider.transform.parent == _target) // If aiming on current nearest target
+                if (hit.collider.transform.root == _target) // If aiming on current nearest target
                 {
                     return true; // Aimed at the enemy
                 }

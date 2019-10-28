@@ -8,6 +8,7 @@ namespace OverEarth
     public class MainUIPanelController : PanelUI<MainUIPanelController>
     {
         [SerializeField] private Transform _mainUIPanel;
+
         private List<DamageableUI> _damageablesUI;
 
         private protected override void Awake()

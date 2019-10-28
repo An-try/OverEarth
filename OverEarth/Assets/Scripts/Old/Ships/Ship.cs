@@ -13,14 +13,12 @@ namespace OverEarth
 
         public List<Damageable> DamageableParts { get; private set; }
 
-        private float _maxDurability;
-        private float _currentDurability;
-        private float _maxArmor;
-        private float _currentArmor;
+        public int Transmission = 0; // Transmission can be positive and negative. This defines the ship moving direction - forward or backward
 
+        private float _maxDurability = 0;
+        private float _maxArmor = 0;
         private float _maxSpeed = 100;
-        public int transmission = 0; // Transmission can be positive and negative. This defines the ship moving direction - forward or backward
-
+        
         private float _thrustForce = 1f; // Forward or backward speed
         private float _strafeForce = 200f; // Strafe speed. Directions: up, down, right, left
         private float _rotationForce = 500f;
@@ -32,7 +30,7 @@ namespace OverEarth
 
         public float RadarRange = 10000f;
 
-        public int shipFiresAmount = 0;
+        private int _shipFiresAmount = 0;
 
         public Inventory Inventory { get; private set; }
         public Equipment Equipment { get; private set; }
@@ -51,11 +49,6 @@ namespace OverEarth
         
 
         public Transform ShipObservingPlaceForCamera => _shipObservingPlaceForCamera;
-
-        public float MaxDurability => _maxDurability;
-        public float CurrentDurability => _currentDurability;
-        public float MaxArmor => _maxArmor;
-        public float CurrentArmor => _currentArmor;
         
         public float MaxSpeed => _maxSpeed;
         public float ThrustForce => _thrustForce;
@@ -69,17 +62,53 @@ namespace OverEarth
         {
             DamageableParts = GetComponentsInChildren<Damageable>().ToList();
 
+            for (int i = 0; i < DamageableParts.Count; i++)
+            {
+                _maxDurability += DamageableParts[i].MaxDurability;
+                _maxArmor += DamageableParts[i].MaxArmor;
+            }
+
+            SubscribeEvents();
+
             Inventory = GetComponent<Inventory>();
             Equipment = GetComponent<Equipment>();
-
-            _maxDurability = 9999999999999999999;
-            _currentDurability = 9999999999999999999;
-
-            _maxArmor = 9999999999999999999;
-            _currentArmor = 9999999999999999999;
         }
 
-        private protected virtual void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
+        private void SubscribeEvents()
+        {
+            for (int i = 0; i < DamageableParts.Count; i++)
+            {
+                DamageableParts[i].DestroyedEvent += RemovePartFromShip;
+            }
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+
+        private void UnsubscribeEvents()
+        {
+            for (int i = 0; i < DamageableParts.Count; i++)
+            {
+                DamageableParts[i].DestroyedEvent -= RemovePartFromShip;
+            }
+        }
+
+        private void RemovePartFromShip(Damageable damageable)
+        {
+            for (int i = 0; i < DamageableParts.Count; i++)
+            {
+                if (DamageableParts[i] == damageable)
+                {
+                    DamageableParts[i].DestroyedEvent -= RemovePartFromShip;
+                    DamageableParts.Remove(damageable);
+                    return;
+                }
+            }
+        }
+
+        private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
         {
             MainHullTexture = MainHull.GetComponent<MeshRenderer>(); // Get mesh renderer of this ship main hull
 
@@ -87,6 +116,13 @@ namespace OverEarth
             _rotationForce *= GetComponent<Rigidbody>().mass; // Multiply rotation speed by the mass of the ship
 
             InvokeRepeating("SetShipBurningSimulationIfShipIsOnFire", 0f, 0.1f); // Start or stop ship burning simulation
+
+            
+            // FOR DEBUGGING.
+            for (int i = 0; i < DamageableParts.Count; i++)
+            {
+                DamageableParts[i].SetDefaultParameters();
+            }
         }
 
         //private void FixedUpdate()
@@ -107,7 +143,7 @@ namespace OverEarth
                 var mainParticlesSettings = particleSystem.main; // Get main particle system settings
                 Light burningLight = particleSystem.GetComponentInChildren<Light>(); // Get light that lights when ship is burning
 
-                if (shipFiresAmount > 0) // If there is any fire on the ship
+                if (_shipFiresAmount > 0) // If there is any fire on the ship
                 {
                     mainParticlesSettings.loop = true; // Set looping to burning particles
                     particleSystem.Play(); // Start a burning particle system

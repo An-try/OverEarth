@@ -33,6 +33,7 @@ namespace OverEarth
                 if (_damageableParts[i])
                 {
                     _damageableParts[i].TakeDamageEvent += UpdateImageColor;
+                    _damageableParts[i].DestroyedEvent += SetDestroyedImageColor;
                     _damageableParts[i].InvokeTakingDamageEvent();
                 }
             }
@@ -48,6 +49,7 @@ namespace OverEarth
             for (int i = 0; i < _damageableParts.Count; i++)
             {
                 _damageableParts[i].TakeDamageEvent -= UpdateImageColor;
+                _damageableParts[i].DestroyedEvent -= SetDestroyedImageColor;
             }
         }
 
@@ -94,6 +96,11 @@ namespace OverEarth
             byte G = (byte)Mathf.Clamp(g, 0, 255);
 
             _partImage.color = new Color32(R, G, 0, 255);
+        }
+
+        private void SetDestroyedImageColor(Damageable damageable)
+        {
+            _partImage.color = Color.black;
         }
     }
 }

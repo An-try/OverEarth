@@ -39,7 +39,7 @@ namespace OverEarth
 
         public static void SetTimeScale(bool stopTime)
         {
-            _timeScale = stopTime ? 0 : 1;
+            //_timeScale = stopTime ? 0 : 1;
         }
 
         public static void ReverseTimeScale()

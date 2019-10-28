@@ -6,6 +6,7 @@ namespace OverEarth
 {
     public class CameraController : Singleton<CameraController>
     {
+        [SerializeField] private Transform _cameraParent;
         [SerializeField] private Camera _camera;
         [SerializeField] private Transform _targetCameraRotatesAround; // Player's ship game object around which the camera rotates
 
@@ -29,6 +30,8 @@ namespace OverEarth
         private float _limitRotateY = 90f; // Rotation limit by Y
         private float _cameraRotateAngleX;
         private float _cameraRotateAngleY;
+
+        public Camera Camera => _camera;
 
         public Vector3 AimPoint
         {
@@ -86,7 +89,7 @@ namespace OverEarth
 
             _cameraOffset = new Vector3(_cameraOffset.x, _cameraOffset.y, -Mathf.Abs(_scrollMax) / 2); // Set camera offset for start camera position
 
-            _camera.transform.position = _targetCameraRotatesAround.position + _cameraOffset; // Set start camera position
+            _cameraParent.position = _targetCameraRotatesAround.position + _cameraOffset; // Set start camera position
         }
 
         private void Update() // Update is called every frame
@@ -115,24 +118,24 @@ namespace OverEarth
 
         private void MoveCameraTowardsObject()
         {
-            _camera.transform.position = _camera.transform.localRotation * _cameraOffset + _targetCameraRotatesAround.position;
+            _cameraParent.position = _cameraParent.localRotation * _cameraOffset + _targetCameraRotatesAround.position;
         }
 
         private void RotateCameraTowardsObject()
         {
             _cameraOffset.z = Mathf.Clamp(_cameraOffset.z, -Mathf.Abs(_scrollMax), -Mathf.Abs(_scrollMin)); // Clamp camera offset
 
-            _cameraRotateAngleX = _camera.transform.localEulerAngles.y + Input.GetAxis("Mouse X") * _curentMouseRotateSensitivity; // Set new camera rotate angle by X
+            _cameraRotateAngleX = _cameraParent.localEulerAngles.y + Input.GetAxis("Mouse X") * _curentMouseRotateSensitivity; // Set new camera rotate angle by X
             _cameraRotateAngleY += Input.GetAxis("Mouse Y") * _curentMouseRotateSensitivity; // Set new camera rotate angle by Y
             _cameraRotateAngleY = Mathf.Clamp(_cameraRotateAngleY, -_limitRotateY, _limitRotateY); // Clamp rotation by Y
 
-            _camera.transform.eulerAngles = new Vector3(-_cameraRotateAngleY, _cameraRotateAngleX, 0); // Set new camera rotation.
+            _cameraParent.eulerAngles = new Vector3(-_cameraRotateAngleY, _cameraRotateAngleX, 0); // Set new camera rotation.
         }
 
         private Vector3 CameraCenterLookingPoint()
         {
             // Ray that comes out of the camera and determining contact point if it hit something
-            Ray ray = new Ray(_camera.transform.position, _camera.transform.forward);
+            Ray ray = new Ray(_cameraParent.position, _cameraParent.forward);
 
             if (Physics.Raycast(ray, out RaycastHit hit, _cameraAimRayLength)) // If this ray hits something
             {
@@ -141,9 +144,9 @@ namespace OverEarth
             else // If ray doesn't hit anything
             {
                 // Set the point that is at the end of the ray coming out of the camera
-                return new Vector3(_camera.transform.position.x + _camera.transform.forward.x * _cameraAimRayLength,
-                                   _camera.transform.position.y + _camera.transform.forward.y * _cameraAimRayLength,
-                                   _camera.transform.position.z + _camera.transform.forward.z * _cameraAimRayLength);
+                return new Vector3(_cameraParent.position.x + _cameraParent.forward.x * _cameraAimRayLength,
+                                   _cameraParent.position.y + _cameraParent.forward.y * _cameraAimRayLength,
+                                   _cameraParent.position.z + _cameraParent.forward.z * _cameraAimRayLength);
             }
         }
 
@@ -166,16 +169,16 @@ namespace OverEarth
             if (inventoryIsOpened)
             {
                 _canMovingCamera = false;
-                _cameraLastPosition = _camera.transform.position;
-                _cameraLastEulerAngles = _camera.transform.eulerAngles;
-                _camera.transform.position = PlayerShipController.Instance.ShipObservingPlace.position;
-                _camera.transform.rotation = PlayerShipController.Instance.ShipObservingPlace.rotation;
+                _cameraLastPosition = _cameraParent.position;
+                _cameraLastEulerAngles = _cameraParent.eulerAngles;
+                _cameraParent.position = PlayerShipController.Instance.ShipObservingPlace.position;
+                _cameraParent.rotation = PlayerShipController.Instance.ShipObservingPlace.rotation;
             }
             else
             {
                 _canMovingCamera = true;
-                _camera.transform.position = _cameraLastPosition;
-                _camera.transform.eulerAngles = _cameraLastEulerAngles;
+                _cameraParent.position = _cameraLastPosition;
+                _cameraParent.eulerAngles = _cameraLastEulerAngles;
             }
         }
 

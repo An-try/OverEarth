@@ -34,7 +34,7 @@ namespace OverEarth
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
-            _target = Methods.SearchNearestTarget(transform, TargetTags);
+            _target = Methods.SearchNearestTarget(transform, TargetTags, out Transform target);
 
             if (HP <= 0)
             {

@@ -3,25 +3,15 @@ using UnityEngine;
 
 namespace OverEarth
 {
-    [RequireComponent(typeof(Damageable), typeof(Equipment))]
     public class Inventory : MonoBehaviour
     {
         // Delegate calls when any item added or removed from the inventory
         public delegate void OnItemChanged();
         public OnItemChanged onItemChanged;
 
-        private Damageable _damageable;
-        private Equipment _equipment;
-
         private int _inventoryMaximumSpace = 50;
 
         private List<InventorySlotUI> _inventorySlotsUI;
-
-        private void Awake()
-        {
-            _damageable = GetComponent<Damageable>();
-            _equipment = GetComponent<Equipment>();
-        }
 
         private void Start()
         {

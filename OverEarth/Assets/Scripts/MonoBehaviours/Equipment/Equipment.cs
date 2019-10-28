@@ -5,23 +5,16 @@ using UnityEngine.UI;
 
 namespace OverEarth
 {
-    //[RequireComponent(typeof(Damageable), typeof(Inventory))]
     public class Equipment : MonoBehaviour
     {
         // Delegate calls after replacing equipment
         public delegate void OnEquipmentChanged(Equipment newEquipment, Equipment oldEquipment);
         public OnEquipmentChanged onEquipmentChanged;
 
-        //private Damageable _damageable;
-        //private Inventory _inventory;
-
         public List<EquipmentSlot> EquipmentSlots { get; private set; }
 
         private void Awake() // Awake is called when the script instance is being loaded
         {
-            //_damageable = GetComponent<Damageable>();
-            //_inventory = GetComponent<Inventory>();
-
             EquipmentSlots = GetComponentsInChildren<EquipmentSlot>().ToList();
         }
 

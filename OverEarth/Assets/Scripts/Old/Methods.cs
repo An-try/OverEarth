@@ -12,11 +12,11 @@ namespace OverEarth
     /// </summary>
     public static class Methods
     {
-        public static Transform SearchNearestTarget(Transform originalTransform, List<string> targetTags, EntityParameters entityParameter = EntityParameters.None, MinMaxValues minMaxValue = MinMaxValues.MaxValue)
+        public static Transform SearchNearestTarget(Transform originalTransform, List<string> targetTags, out Transform nearestTarget, EntityParameters entityParameter = EntityParameters.None, MinMaxValues minMaxValue = MinMaxValues.MaxValue)
         {
             Turret turretScript = originalTransform.GetComponent<Turret>();
 
-            Transform nearestTarget = null;
+            nearestTarget = null;
 
             #region Get targets by tags
             // Get all root game objects with tags.

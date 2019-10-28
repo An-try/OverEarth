@@ -30,24 +30,24 @@ namespace OverEarth
             // If player press any plus button on the keyboard
             if (Input.GetKeyDown(KeyCode.KeypadPlus) || Input.GetKeyDown(KeyCode.Equals))
             {
-                _shipScript.transmission++; // Add a transmission to the ship
+                _shipScript.Transmission++; // Add a transmission to the ship
             }
 
             // If player press any minus button on the keyboard
             if (Input.GetKeyDown(KeyCode.KeypadMinus) || Input.GetKeyDown(KeyCode.Minus))
             {
-                _shipScript.transmission--; // Subtract a transmission from the ship
+                _shipScript.Transmission--; // Subtract a transmission from the ship
             }
         }
 
         public void UpdateTransmissionByValue(int value)
         {
-            _shipScript.transmission = value;
+            _shipScript.Transmission = value;
         }
 
         private void ClampShipTransmission()
         {
-            _shipScript.transmission = Mathf.Clamp(_shipScript.transmission, -4, 4); // Clamp ship transmission from -4 to 4
+            _shipScript.Transmission = Mathf.Clamp(_shipScript.Transmission, -4, 4); // Clamp ship transmission from -4 to 4
         }
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
@@ -57,7 +57,7 @@ namespace OverEarth
 
         private void MoveShip()
         {
-            MoveForwardOrBack(_shipScript.transmission);
+            MoveForwardOrBack(_shipScript.Transmission);
 
             // Call the move methods. Transfer a parameters of input system as moving directions: positive or negative multiplying by forces
             RotateRightOrLeft(Input.GetAxis("RotateRightLeft") * _shipScript.RotationForce);
@@ -67,7 +67,7 @@ namespace OverEarth
             StrafeUpOrDown(Input.GetAxis("StrafeUpDown") * _shipScript.StrafeForce);
 
             // If the player’s ship has no orders to move
-            if (_shipScript.transmission == 0 && Input.GetAxis("StrafeSide") == 0 && Input.GetAxis("StrafeUpDown") == 0)
+            if (_shipScript.Transmission == 0 && Input.GetAxis("StrafeSide") == 0 && Input.GetAxis("StrafeUpDown") == 0)
             {
                 _playerShipRigidbody.drag = _shipScript.AutoStopForce; // Apply stop force to the ship
             }

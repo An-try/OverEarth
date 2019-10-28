@@ -12,7 +12,7 @@ namespace OverEarth
         public DamageablePartTypes DamageablePartType;
 
         public event Action TakeDamageEvent;
-        public event Action DestroyedEvent;
+        public event Action<Damageable> DestroyedEvent;
 
         private protected float _maxDurability;
         private protected float _currentDurability;
@@ -65,6 +65,8 @@ namespace OverEarth
                 _currentDurability -= damage;
             }
 
+            UIAnimationsController.Instance.TakeDamage();
+
             TakeDamageEvent?.Invoke();
 
             if (_currentDurability <= 0)
@@ -76,7 +78,7 @@ namespace OverEarth
         public virtual void DestroyObject()
         {
             StartCoroutine(PlayDestroyAnimation());
-            DestroyedEvent?.Invoke();
+            DestroyedEvent?.Invoke(this);
         }
 
         private IEnumerator PlayDestroyAnimation()
@@ -87,7 +89,7 @@ namespace OverEarth
             
             yield return new WaitForSeconds(1);
 
-            Destroy(gameObject, 3600);
+            Destroy(gameObject);
 
             yield break;
         }

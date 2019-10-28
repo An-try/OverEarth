@@ -8,25 +8,25 @@ namespace OverEarth
         public Text TargetNameText;
         public Text TargetInfoText;
 
-        private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
-        {
-            if (Manager.instance.LastSelectedTarget) // If there is any remembered target
-            {
-                TargetNameText.text = OutputTargetName(); // Display target name
+        //private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
+        //{
+        //    if (Manager.instance.LastSelectedTarget) // If there is any remembered target
+        //    {
+        //        TargetNameText.text = OutputTargetName(); // Display target name
 
-                // Display target info
-                TargetInfoText.text =
-                    "Distance: " + OutputDistanceToTarget() +
-                    "\n" + OutputTargetHP();// +
-                    //"\n" + OutputTargetDefence();
-            }
-            else // If there is no remembered target
-            {
-                // Inform player about it
-                TargetNameText.text = "<color=red>NO TARGET</color>";
-                TargetInfoText.text = "";
-            }
-        }
+        //        // Display target info
+        //        TargetInfoText.text =
+        //            "Distance: " + OutputDistanceToTarget() +
+        //            "\n" + OutputTargetHP();// +
+        //            //"\n" + OutputTargetDefence();
+        //    }
+        //    else // If there is no remembered target
+        //    {
+        //        // Inform player about it
+        //        TargetNameText.text = "<color=red>NO TARGET</color>";
+        //        TargetInfoText.text = "";
+        //    }
+        //}
 
         private string OutputTargetName()
         {
@@ -44,15 +44,15 @@ namespace OverEarth
             return "";
         }
 
-        private string OutputTargetHP()
-        {
-            if (Manager.instance.LastSelectedTarget.GetComponent<Ship>()) // If the target has a Ship script
-            {
-                // Return ship's HP
-                return "HP: <color=lime>" + Manager.instance.LastSelectedTarget.GetComponent<Ship>().CurrentDurability.ToString() + "</color>";
-            }
-            return "";
-        }
+        //private string OutputTargetHP()
+        //{
+        //    if (Manager.instance.LastSelectedTarget.GetComponent<Ship>()) // If the target has a Ship script
+        //    {
+        //        // Return ship's HP
+        //        return "HP: <color=lime>" + Manager.instance.LastSelectedTarget.GetComponent<Ship>().CurrentDurability.ToString() + "</color>";
+        //    }
+        //    return "";
+        //}
 
         //private string OutputTargetDefence()
         //{
