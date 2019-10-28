@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,7 +93,7 @@ namespace OverEarth
             #region Get target by distance, or by min/max parameter
             if (entityParameter == EntityParameters.None)
             {
-                nearestTarget = GetTargetByDistance(originalTransform, targetsByAffectedArea);
+                nearestTarget = GetNearestObject(originalTransform, targetsByAffectedArea);
             }
             else
             {
@@ -128,28 +129,56 @@ namespace OverEarth
             }
             #endregion
 
-            return nearestTarget; // Set the nearest target if it was found. Otherwise, the nearest target will be null.
+            #region Get nearest part of the target
+
+            Ship nearestShip = nearestTarget.GetComponent<Ship>();
+            if (nearestShip)
+            {
+                return GetNearestDamageablePart(originalTransform, nearestShip.DamageableParts);
+            }
+            else
+            {
+                return nearestTarget; // Set the nearest target if it was found. Otherwise, the nearest target will be null.
+            }
+
+            #endregion
         }
 
-        private static Transform GetTargetByDistance(Transform originalTransform, List<Transform> targetsByAffectedArea)
+        private static Transform GetNearestObject(Transform originalTransform, List<Transform> objectsForSearch)
         {
-            Transform nearestTarget = null;
+            Transform nearestObject = null;
 
             float minDistance = Mathf.Infinity;
-            for (int i = 0; i < targetsByAffectedArea.Count; i++)
+            for (int i = 0; i < objectsForSearch.Count; i++)
             {
-                float distance = Vector3.Distance(originalTransform.position, targetsByAffectedArea[i].position);
+                float distance = Vector3.Distance(originalTransform.position, objectsForSearch[i].position);
                 if (distance < minDistance)
                 {
                     minDistance = distance;
-                    nearestTarget = targetsByAffectedArea[i];
+                    nearestObject = objectsForSearch[i];
                 }
             }
 
-            return nearestTarget;
+            return nearestObject;
         }
 
+        private static Transform GetNearestDamageablePart(Transform originalTransform, List<Damageable> damageablesForSearch)
+        {
+            Transform nearestDamageableObject = null;
 
+            float minDistance = Mathf.Infinity;
+            for (int i = 0; i < damageablesForSearch.Count; i++)
+            {
+                float distance = Vector3.Distance(originalTransform.position, damageablesForSearch[i].Position);
+                if (distance < minDistance)
+                {
+                    minDistance = distance;
+                    nearestDamageableObject = damageablesForSearch[i].transform;
+                }
+            }
+
+            return nearestDamageableObject;
+        }
 
 
 

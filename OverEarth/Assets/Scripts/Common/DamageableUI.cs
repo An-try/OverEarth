@@ -9,9 +9,11 @@ namespace OverEarth
 {
     public class DamageableUI : MonoBehaviour
     {
-        [SerializeField] private DamageablePartTypes _damageablePartType;
+        [Header("Parts to display")]
+        [Tooltip("Select one or several parts")]
+        [SerializeField] private List<DamageablePartTypes> _damageablePartTypes;
 
-        private Damageable _damageablePart;
+        private List<Damageable> _damageableParts = new List<Damageable>();
         private Image _partImage;
 
         private void Awake()
@@ -19,14 +21,21 @@ namespace OverEarth
             _partImage = GetComponent<Image>();
         }
 
-        private void OnEnable()
-        {
-            SubscribeEvents();
-        }
+        //private void OnEnable()
+        //{
+        //    SubscribeEvents();
+        //}
 
         private void SubscribeEvents()
         {
-            _damageablePart.TakeDamageEvent += UpdateImageColor;
+            for (int i = 0; i < _damageableParts.Count; i++)
+            {
+                if (_damageableParts[i])
+                {
+                    _damageableParts[i].TakeDamageEvent += UpdateImageColor;
+                    _damageableParts[i].InvokeTakingDamageEvent();
+                }
+            }
         }
 
         private void OnDisable()
@@ -36,18 +45,50 @@ namespace OverEarth
 
         private void UnsubscribeEvents()
         {
-            _damageablePart.TakeDamageEvent -= UpdateImageColor;
+            for (int i = 0; i < _damageableParts.Count; i++)
+            {
+                _damageableParts[i].TakeDamageEvent -= UpdateImageColor;
+            }
         }
 
-        public void AssignDamageablePart(Damageable damageable)
+        public void AssignDamageablePart(Ship ship)
         {
-            _damageablePart = damageable.DamageableParts.Find(shipPart => shipPart.DamageablePartType.Equals(_damageablePartType));
+            for (int i = 0; i < ship.DamageableParts.Count; i++)
+            {
+                for (int j = 0; j < _damageablePartTypes.Count; j++)
+                {
+                    Damageable damageablePart = ship.DamageableParts.Find(shipPart => shipPart.DamageablePartType.Equals(_damageablePartTypes[j]));
+
+                    if (damageablePart && !_damageableParts.Contains(damageablePart))
+                    {
+                        _damageableParts.Add(damageablePart);
+                    }
+                }
+            }
+
+            SubscribeEvents();
         }
 
-        private void UpdateImageColor(float _maxDurability, float _currentDurability)
+        private void UpdateImageColor()
         {
-            float r = 255 - (_currentDurability / _maxDurability * 255);
-            float g = _currentDurability / _maxDurability * 255;
+            float averageCurrentDurability = 0;
+            float averageMaxDurability = 0;
+            for (int i = 0; i < _damageableParts.Count; i++)
+            {
+                //if (_damageableParts[i] == null)
+                //{
+                //    _damageableParts.RemoveAt(i);
+                //    i--;
+                //    continue;
+                //}
+                averageCurrentDurability += _damageableParts[i].CurrentDurability;
+                averageMaxDurability += _damageableParts[i].MaxDurability;
+            }
+            averageCurrentDurability /= _damageableParts.Count;
+            averageMaxDurability /= _damageableParts.Count;
+
+            float r = 255 - (averageCurrentDurability / averageMaxDurability * 255);
+            float g = averageCurrentDurability / averageMaxDurability * 255;
 
             byte R = (byte)Mathf.Clamp(r, 0, 255);
             byte G = (byte)Mathf.Clamp(g, 0, 255);

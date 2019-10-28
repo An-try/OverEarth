@@ -56,7 +56,7 @@ namespace OverEarth
                 // For example: 0.1 / 0.02(Fixed update time) = 5 parts
                 // Thus, the damage formula looks like this: DAMAGE_PER_HIT / (HIT_DURATION / TIME_BETWEEN_EACH_DURATION_PART)
                 float damage = laserDamagePerHit / (laserHitDuration / Time.fixedDeltaTime);
-                DoDamage(damage, hit);
+                DoDamage(damage, hit.collider);
             }
             else // If raycast hit nothing
             {

@@ -14,9 +14,9 @@ namespace OverEarth
         // TODO: Make an hit hole effect
         public GameObject HitHolePrefab; // Hit hole from the impact will be in the place of impact of the object
 
-        private protected void DoDamage(float damage, RaycastHit hit)
+        private protected void DoDamage(float damage, Collider collider)
         {
-            Damageable hittedObject = hit.transform.GetComponent<Damageable>();
+            Damageable hittedObject = collider.GetComponent<Damageable>();
 
             if (hittedObject)
             {
@@ -24,7 +24,7 @@ namespace OverEarth
             }
             else
             {
-                hittedObject = hit.transform.GetComponentInParent<Damageable>();
+                hittedObject = collider.GetComponentInParent<Damageable>();
                 if (hittedObject)
                 {
                     hittedObject.DoDamage(damage);

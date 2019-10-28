@@ -5,15 +5,14 @@ using UnityEngine;
 
 namespace OverEarth
 {
-    public abstract class Damageable : MonoBehaviour
+    public class Damageable : MonoBehaviour
     {
         [SerializeField] private List<MonoBehaviour> _functionalСomponents;
 
-        public List<Damageable> DamageableParts { get; private protected set; }
+        public DamageablePartTypes DamageablePartType;
 
-        public DamageablePartTypes DamageablePartType { get; private set; }
-
-        public event Action<float, float> TakeDamageEvent;
+        public event Action TakeDamageEvent;
+        public event Action DestroyedEvent;
 
         private protected float _maxDurability;
         private protected float _currentDurability;
@@ -25,9 +24,22 @@ namespace OverEarth
         public float MaxArmor => _maxArmor;
         public float CurrentArmor => _currentArmor;
 
-        private protected virtual void Start()
+        public Vector3 Position => transform.position;
+
+        /// <summary>
+        /// For Debugging. MaxDurability = 10000; CurrentDurability = 10000; MaxArmor = 5000; CurrentArmor = 5000.
+        /// </summary>
+        public void SetDefaultParameters()
         {
-            TakeDamageEvent?.Invoke(_maxDurability, _currentDurability);
+            _maxDurability = 10000;
+            _currentDurability = _maxDurability;
+            _maxArmor = 5000;
+            _currentArmor = _maxArmor;
+        }
+
+        public void InvokeTakingDamageEvent()
+        {
+            TakeDamageEvent?.Invoke();
         }
 
         public void DoDamage(float damage)
@@ -53,7 +65,7 @@ namespace OverEarth
                 _currentDurability -= damage;
             }
 
-            TakeDamageEvent?.Invoke(_maxDurability, _currentDurability);
+            TakeDamageEvent?.Invoke();
 
             if (_currentDurability <= 0)
             {
@@ -64,13 +76,14 @@ namespace OverEarth
         public virtual void DestroyObject()
         {
             StartCoroutine(PlayDestroyAnimation());
+            DestroyedEvent?.Invoke();
         }
 
         private IEnumerator PlayDestroyAnimation()
         {
             SetActiveFunctionalComponents(false);
-            transform.SetParent(null);
-            AddExplosionForce();
+            //transform.SetParent(null);
+            //AddExplosionForce();
             
             yield return new WaitForSeconds(1);
 

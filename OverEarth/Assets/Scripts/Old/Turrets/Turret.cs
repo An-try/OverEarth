@@ -250,7 +250,7 @@ namespace OverEarth
             // If the turret is targeting an object except bullets and rockets (determined by layerMask)
             if (Physics.Raycast(aimingRay, out RaycastHit hit, _turretRange, layerMask))
             {
-                if (hit.collider.transform.root == _target) // If aiming on current nearest target
+                if (hit.collider.transform == _target || hit.collider.transform.parent == _target) // If aiming on current nearest target
                 {
                     return true; // Aimed at the enemy
                 }
@@ -273,7 +273,7 @@ namespace OverEarth
 
             if (Physics.Raycast(aimingRay, out RaycastHit hit, _turretRange)) // If turret aiming at some object
             {
-                if (hit.collider.transform.root == gameObject.transform.root) // If this object is the current ship on which turret is attached
+                if (hit.transform.root == transform.root) // If this object is the current ship on which turret is attached
                 {
                     return true; // Aimed at the owner
                 }

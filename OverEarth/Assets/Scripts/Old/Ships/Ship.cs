@@ -7,9 +7,16 @@ using UnityEngine;
 namespace OverEarth
 {
     [RequireComponent(typeof(Inventory), typeof(Equipment))]
-    public abstract class Ship : Damageable
+    public abstract class Ship : MonoBehaviour
     {
         [SerializeField] private Transform _shipObservingPlaceForCamera;
+
+        public List<Damageable> DamageableParts { get; private set; }
+
+        private float _maxDurability;
+        private float _currentDurability;
+        private float _maxArmor;
+        private float _currentArmor;
 
         private float _maxSpeed = 100;
         public int transmission = 0; // Transmission can be positive and negative. This defines the ship moving direction - forward or backward
@@ -40,8 +47,16 @@ namespace OverEarth
         public GameObject SelfTargetMarkers;
 
         public GameObject ShipBurningParticles;
+
         
+
         public Transform ShipObservingPlaceForCamera => _shipObservingPlaceForCamera;
+
+        public float MaxDurability => _maxDurability;
+        public float CurrentDurability => _currentDurability;
+        public float MaxArmor => _maxArmor;
+        public float CurrentArmor => _currentArmor;
+        
         public float MaxSpeed => _maxSpeed;
         public float ThrustForce => _thrustForce;
         public float StrafeForce => _strafeForce;
@@ -64,10 +79,8 @@ namespace OverEarth
             _currentArmor = 9999999999999999999;
         }
 
-        private protected override void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
+        private protected virtual void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
         {
-            base.Start();
-
             MainHullTexture = MainHull.GetComponent<MeshRenderer>(); // Get mesh renderer of this ship main hull
 
             _thrustForce *= GetComponent<Rigidbody>().mass; // Multiply forward speed by the mass of the ship

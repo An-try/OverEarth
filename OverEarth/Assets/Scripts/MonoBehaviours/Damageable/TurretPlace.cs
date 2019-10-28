@@ -17,10 +17,8 @@ namespace OverEarth
             _currentArmor = _maxArmor;
         }
 
-        private protected override void Start()
+        private void Start()
         {
-            base.Start();
-
             _turret = GetComponentInChildren<Turret>();
         }
     }
