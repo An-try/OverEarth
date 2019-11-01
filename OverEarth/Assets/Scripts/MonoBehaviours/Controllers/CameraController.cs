@@ -15,6 +15,7 @@ namespace OverEarth
         [SerializeField] private float _scrollMin = 0f;
         [SerializeField] private float _defaultMouseRotateSensitivity = 3f;
         [SerializeField] private float _zoomedCameraFieldOfView = 10f; // Field of view when zooming
+        [Range(1, 100)] [SerializeField] private int _cameraZoomingStartPersentage = 50; // Field of view when zooming
 
         [SerializeField] private bool _canMovingCamera = true;
 
@@ -87,7 +88,7 @@ namespace OverEarth
             _limitRotateY = Mathf.Abs(_limitRotateY); // Get the absolute value of limit rotate Y
             _limitRotateY = Mathf.Clamp(_limitRotateY, -Mathf.Infinity, 90); // Clamp limit rotate Y up to 90
 
-            _cameraOffset = new Vector3(_cameraOffset.x, _cameraOffset.y, -Mathf.Abs(_scrollMax) / 2); // Set camera offset for start camera position
+            _cameraOffset = new Vector3(_cameraOffset.x, _cameraOffset.y, -Mathf.Abs(_scrollMax) * _cameraZoomingStartPersentage / 100f); // Set camera offset for start camera position
 
             _cameraParent.position = _targetCameraRotatesAround.position + _cameraOffset; // Set start camera position
         }

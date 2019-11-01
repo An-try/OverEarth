@@ -28,7 +28,7 @@ namespace OverEarth
         private float _autoStopForce = 1f;
         private float _currentStopForce = 0f;
 
-        public float RadarRange = 3000f;
+        public float RadarRange = 0f;
 
         private int _shipFiresAmount = 0;
 
@@ -115,7 +115,7 @@ namespace OverEarth
             _thrustForce *= GetComponent<Rigidbody>().mass; // Multiply forward speed by the mass of the ship
             _rotationForce *= GetComponent<Rigidbody>().mass; // Multiply rotation speed by the mass of the ship
 
-            InvokeRepeating("SetShipBurningSimulationIfShipIsOnFire", 0f, 0.1f); // Start or stop ship burning simulation
+            //InvokeRepeating("SetShipBurningSimulationIfShipIsOnFire", 0f, 0.1f); // Start or stop ship burning simulation
 
             
             // FOR DEBUGGING.
@@ -134,29 +134,29 @@ namespace OverEarth
         //    }
         //}
 
-        private void SetShipBurningSimulationIfShipIsOnFire()
-        {
-            for (int i = 0; i < ShipBurningParticles.transform.childCount; i++) // Pass all game objects that contains burning particles
-            {
-                // Get particle system on game object that contains particles
-                ParticleSystem particleSystem = ShipBurningParticles.transform.GetChild(i).GetComponent<ParticleSystem>();
-                var mainParticlesSettings = particleSystem.main; // Get main particle system settings
-                Light burningLight = particleSystem.GetComponentInChildren<Light>(); // Get light that lights when ship is burning
+        //private void SetShipBurningSimulationIfShipIsOnFire()
+        //{
+        //    for (int i = 0; i < ShipBurningParticles.transform.childCount; i++) // Pass all game objects that contains burning particles
+        //    {
+        //        // Get particle system on game object that contains particles
+        //        ParticleSystem particleSystem = ShipBurningParticles.transform.GetChild(i).GetComponent<ParticleSystem>();
+        //        var mainParticlesSettings = particleSystem.main; // Get main particle system settings
+        //        Light burningLight = particleSystem.GetComponentInChildren<Light>(); // Get light that lights when ship is burning
 
-                if (_shipFiresAmount > 0) // If there is any fire on the ship
-                {
-                    mainParticlesSettings.loop = true; // Set looping to burning particles
-                    particleSystem.Play(); // Start a burning particle system
-                    burningLight.enabled = true; // Turn on the burning light
-                    burningLight.intensity = UnityEngine.Random.Range(250, 351); // Change the intensity of burning light to create a simple burning sensation
-                }
-                else
-                {
-                    mainParticlesSettings.loop = false; // Set no looping to burning particles
-                    burningLight.enabled = false; // Turn off the burning light
-                }
-            }
-        }
+        //        if (_shipFiresAmount > 0) // If there is any fire on the ship
+        //        {
+        //            mainParticlesSettings.loop = true; // Set looping to burning particles
+        //            particleSystem.Play(); // Start a burning particle system
+        //            burningLight.enabled = true; // Turn on the burning light
+        //            burningLight.intensity = UnityEngine.Random.Range(250, 351); // Change the intensity of burning light to create a simple burning sensation
+        //        }
+        //        else
+        //        {
+        //            mainParticlesSettings.loop = false; // Set no looping to burning particles
+        //            burningLight.enabled = false; // Turn off the burning light
+        //        }
+        //    }
+        //}
 
         public float GetParameterValue(EntityParameters entityParameter)
         {

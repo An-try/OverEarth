@@ -394,16 +394,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5476365555846977114}
-  - component: {fileID: 3870985212315817728}
-  - component: {fileID: 2790427147168700566}
-  - component: {fileID: 5752683453644675634}
+  - component: {fileID: 3148886183472889029}
+  - component: {fileID: 8597153698023145119}
+  - component: {fileID: 1179509722}
   m_Layer: 0
-  m_Name: FighterInterceptor
+  m_Name: FighterLight
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5476365555846977114
 Transform:
   m_ObjectHideFlags: 0
@@ -419,7 +419,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3870985212315817728
+--- !u!54 &3148886183472889029
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5476365555847268986}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!114 &8597153698023145119
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -428,10 +444,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 5476365555847268986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 81c9264f4271b8f40a9352b236a572b3, type: 3}
+  m_Script: {fileID: 11500000, guid: 235a6615124795442b98c1f03500003e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2790427147168700566
+  m_MaxEnginePower: 40
+  m_Lift: 0.002
+  m_ZeroLiftSpeed: 300
+  m_RollEffect: 1
+  m_PitchEffect: 1
+  m_YawEffect: 0.2
+  m_BankedTurnEffect: 0.5
+  m_AerodynamicEffect: 0.02
+  m_AutoTurnPitch: 0.5
+  m_AutoRollLevel: 0.2
+  m_AutoPitchLevel: 0.2
+  m_AirBrakesEffect: 3
+  m_ThrottleChangeSpeed: 0.3
+  m_DragIncreaseFactor: 0.001
+--- !u!114 &1179509722
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -440,29 +470,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 5476365555847268986}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 35a1483b3730afc40a73d378af67d70e, type: 3}
+  m_Script: {fileID: 11500000, guid: b297a60c0ddf0ee4dabefaf158fb097d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &5752683453644675634
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5476365555847268986}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa8442406f9eb814a80c2461d7746e04, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _shipObservingPlaceForCamera: {fileID: 0}
-  Transmission: 0
-  RadarRange: 10000
-  MainHull: {fileID: 0}
-  MainHullTexture: {fileID: 0}
-  TargetCameraRotatesAround: {fileID: 0}
-  SelfTargetMarkers: {fileID: 0}
-  ShipBurningParticles: {fileID: 0}
+  maxRollAngle: 80
+  maxPitchAngle: 80
 --- !u!1 &5476365555847268988
 GameObject:
   m_ObjectHideFlags: 0
