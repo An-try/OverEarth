@@ -33,21 +33,6 @@ namespace OverEarth
             TakeDamageUIAnimation();
         }
 
-        //static class Андрей
-        //{
-        //    public static int УровеньВладенияЮнити => 999;
-        //}
-
-        //void АндрейИнфо()
-        //{
-        //    ВывестиНаЭкран(Андрей.УровеньВладенияЮнити);
-        //}
-
-        //void ВывестиНаЭкран(int a)
-        //{
-        //    print(a);
-        //}
-
         private void CameraShaking()
         {
             if (!_isCameraShakingComplete)
@@ -61,7 +46,12 @@ namespace OverEarth
             KillSequence(_cameraShakingAnimationSequence);
             _cameraShakingAnimationSequence = DOTween.Sequence();
 
-            Vector3 shakeDirection = new Vector3(0, 0, Random.Range(-1, 2));
+            int randomNumber = Random.Range(0, 2);
+            if (randomNumber == 0)
+            {
+                randomNumber = -1;
+            }
+            Vector3 shakeDirection = new Vector3(0, 0, randomNumber);
             _cameraShakingAnimationSequence.Insert(0, playerCamera.DOShakePosition(_cameraShakingAnimationTime, 0.01f, 1));
             _cameraShakingAnimationSequence.Insert(0, playerCamera.DOPunchRotation(shakeDirection, _cameraShakingAnimationTime)).OnComplete(() =>
             {

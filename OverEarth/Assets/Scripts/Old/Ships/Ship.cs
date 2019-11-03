@@ -76,6 +76,8 @@ namespace OverEarth
 
             Inventory = GetComponent<Inventory>();
             Equipment = GetComponent<Equipment>();
+
+            _warpAnimation = GetComponentInChildren<WarpAnimation>();
         }
 
         private void SubscribeEvents()
@@ -154,6 +156,26 @@ namespace OverEarth
         public void DoWarp()
         {
             _warpAnimation.DoWarp();
+        }
+
+        public void AnimateShipWarping()
+        {
+            StartCoroutine(ShipWarping());
+        }
+
+        private IEnumerator ShipWarping()
+        {
+            float time = 0.8f;
+
+            while (time > 0)
+            {
+                time -= Time.fixedDeltaTime;
+                transform.localScale *= 0.9f;
+                transform.position += transform.forward * 10;
+                _warpAnimation.transform.position -= transform.forward * 10;
+            }
+
+            yield break;
         }
     }
 }
