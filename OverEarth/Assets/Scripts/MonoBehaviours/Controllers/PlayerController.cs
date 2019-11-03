@@ -7,8 +7,9 @@ namespace OverEarth
 {
     public class PlayerController : Singleton<PlayerController>
     {
+        public Camera Camera;
         public Ship Ship;
-        public Station Station;
+        //public Station Station;
 
         public static event Action<bool> AIStateChangedEvent;
         public static event Action<bool> MenuButtonPressedEvent;
@@ -16,9 +17,15 @@ namespace OverEarth
 
         private AimingMethods _aimingMethod = AimingMethods.CameraCenter;
 
-        public bool InStation { get; private set; }
-        public bool IsAIEnabled { get; private set; }
-        public bool IsMenuOpened { get; private set; } = false;
+        //public static bool IsInStation { get; private set; }
+        public static bool IsAIEnabled { get; private set; }
+        public static bool IsMenuOpened { get; private set; } = false;
+        public static bool IsInsideControlCenter { get; private set; }
+
+        private void Start()
+        {
+            Camera = Camera.main;
+        }
 
         private void Update()
         {
@@ -35,6 +42,11 @@ namespace OverEarth
             if (Input.GetKeyDown(KeyCode.I))
             {
                 MenuButtonPressed();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                ChangeCamera();
             }
         }
 
@@ -66,6 +78,26 @@ namespace OverEarth
         {
             IsMenuOpened = !IsMenuOpened;
             MenuButtonPressedEvent?.Invoke(IsMenuOpened);
+        }
+
+        private void ChangeCamera()
+        {
+            Camera camera = Ship.GetComponentInChildren<Camera>();
+
+            camera.enabled = !camera.enabled;
+
+            if (camera.enabled)
+            {
+                Camera = camera;
+                MainCameraUIPanelController.Instance.ClosePanel();
+                IsInsideControlCenter = true;
+            }
+            else
+            {
+                Camera = Camera.main;
+                MainCameraUIPanelController.Instance.OpenPanel();
+                IsInsideControlCenter = false;
+            }
         }
     }
 }

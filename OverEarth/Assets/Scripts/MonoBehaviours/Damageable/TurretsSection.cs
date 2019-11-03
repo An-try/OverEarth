@@ -16,7 +16,7 @@ namespace OverEarth
             _currentArmor = _maxArmor;
         }
 
-        public override void DestroyObject()
+        private protected override void DestroyObject()
         {
             base.DestroyObject();
 

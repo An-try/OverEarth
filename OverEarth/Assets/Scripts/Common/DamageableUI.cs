@@ -13,7 +13,8 @@ namespace OverEarth
         [Tooltip("Select one or several parts")]
         [SerializeField] private List<DamageablePartTypes> _damageablePartTypes;
 
-        private List<Damageable> _damageableParts = new List<Damageable>();
+        public List<Damageable> DamageableParts { get; private set; } = new List<Damageable>();
+
         private Image _partImage;
 
         private void Awake()
@@ -28,13 +29,12 @@ namespace OverEarth
 
         private void SubscribeEvents()
         {
-            for (int i = 0; i < _damageableParts.Count; i++)
+            for (int i = 0; i < DamageableParts.Count; i++)
             {
-                if (_damageableParts[i])
+                if (DamageableParts[i])
                 {
-                    _damageableParts[i].TakeDamageEvent += UpdateImageColor;
-                    _damageableParts[i].DestroyedEvent += SetDestroyedImageColor;
-                    _damageableParts[i].InvokeTakingDamageEvent();
+                    DamageableParts[i].TakeDamageEvent += UpdateImageColor;
+                    DamageableParts[i].DestroyedEvent += SetDestroyedImageColor;
                 }
             }
         }
@@ -46,10 +46,10 @@ namespace OverEarth
 
         private void UnsubscribeEvents()
         {
-            for (int i = 0; i < _damageableParts.Count; i++)
+            for (int i = 0; i < DamageableParts.Count; i++)
             {
-                _damageableParts[i].TakeDamageEvent -= UpdateImageColor;
-                _damageableParts[i].DestroyedEvent -= SetDestroyedImageColor;
+                DamageableParts[i].TakeDamageEvent -= UpdateImageColor;
+                DamageableParts[i].DestroyedEvent -= SetDestroyedImageColor;
             }
         }
 
@@ -61,9 +61,9 @@ namespace OverEarth
                 {
                     Damageable damageablePart = ship.DamageableParts.Find(shipPart => shipPart.DamageablePartType.Equals(_damageablePartTypes[j]));
 
-                    if (damageablePart && !_damageableParts.Contains(damageablePart))
+                    if (damageablePart && !DamageableParts.Contains(damageablePart))
                     {
-                        _damageableParts.Add(damageablePart);
+                        DamageableParts.Add(damageablePart);
                     }
                 }
             }
@@ -75,7 +75,7 @@ namespace OverEarth
         {
             float averageCurrentDurability = 0;
             float averageMaxDurability = 0;
-            for (int i = 0; i < _damageableParts.Count; i++)
+            for (int i = 0; i < DamageableParts.Count; i++)
             {
                 //if (_damageableParts[i] == null)
                 //{
@@ -83,11 +83,11 @@ namespace OverEarth
                 //    i--;
                 //    continue;
                 //}
-                averageCurrentDurability += _damageableParts[i].CurrentDurability;
-                averageMaxDurability += _damageableParts[i].MaxDurability;
+                averageCurrentDurability += DamageableParts[i].CurrentDurability;
+                averageMaxDurability += DamageableParts[i].MaxDurability;
             }
-            averageCurrentDurability /= _damageableParts.Count;
-            averageMaxDurability /= _damageableParts.Count;
+            averageCurrentDurability /= DamageableParts.Count;
+            averageMaxDurability /= DamageableParts.Count;
 
             float r = 255 - (averageCurrentDurability / averageMaxDurability * 255);
             float g = averageCurrentDurability / averageMaxDurability * 255;

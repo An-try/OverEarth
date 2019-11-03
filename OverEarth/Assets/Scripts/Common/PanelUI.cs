@@ -20,7 +20,7 @@ namespace OverEarth
 
         private protected abstract void Init();
 
-        private protected void OpenPanel()
+        public void OpenPanel()
         {
             KillSequence();
             _animationSequence = DOTween.Sequence();
@@ -30,7 +30,7 @@ namespace OverEarth
             _panelGroup.blocksRaycasts = true;
         }
 
-        private protected void ClosePanel()
+        public void ClosePanel()
         {
             KillSequence();
             _animationSequence = DOTween.Sequence();

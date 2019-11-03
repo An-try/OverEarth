@@ -56,13 +56,13 @@ namespace OverEarth
             }
             _isCameraShakingComplete = false;
 
-            Transform playerCamera = CameraController.Instance.Camera.transform;
+            Transform playerCamera = PlayerController.Instance.Camera.transform;
             
             KillSequence(_cameraShakingAnimationSequence);
             _cameraShakingAnimationSequence = DOTween.Sequence();
 
             Vector3 shakeDirection = new Vector3(0, 0, Random.Range(-1, 2));
-            _cameraShakingAnimationSequence.Insert(0, playerCamera.DOShakePosition(_cameraShakingAnimationTime));
+            _cameraShakingAnimationSequence.Insert(0, playerCamera.DOShakePosition(_cameraShakingAnimationTime, 0.01f, 1));
             _cameraShakingAnimationSequence.Insert(0, playerCamera.DOPunchRotation(shakeDirection, _cameraShakingAnimationTime)).OnComplete(() =>
             {
                 _isCameraShakingComplete = true;

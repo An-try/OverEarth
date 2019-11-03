@@ -7,7 +7,7 @@ namespace OverEarth
 {
     public class Damageable : MonoBehaviour
     {
-        [SerializeField] private List<MonoBehaviour> _functionalСomponents;
+        [SerializeField] private List<GameObject> _functionalСomponents;
 
         public DamageablePartTypes DamageablePartType;
 
@@ -19,6 +19,8 @@ namespace OverEarth
         private protected float _maxArmor;
         private protected float _currentArmor;
 
+        private protected bool _canShakeCamera = true;
+
         public float MaxDurability => _maxDurability;
         public float CurrentDurability => _currentDurability;
         public float MaxArmor => _maxArmor;
@@ -26,14 +28,19 @@ namespace OverEarth
 
         public Vector3 Position => transform.position;
 
+        private protected virtual void Start()
+        {
+            _functionalСomponents.Add(gameObject);
+        }
+
         /// <summary>
-        /// For Debugging. MaxDurability = 10000; CurrentDurability = 10000; MaxArmor = 5000; CurrentArmor = 5000.
+        /// For Debugging. MaxDurability = 10000; CurrentDurability = 10000; MaxArmor = 1000; CurrentArmor = 1000.
         /// </summary>
         public void SetDefaultParameters()
         {
-            _maxDurability = 10000;
+            _maxDurability = 1000;
             _currentDurability = _maxDurability;
-            _maxArmor = 5000;
+            _maxArmor = 100;
             _currentArmor = _maxArmor;
         }
 
@@ -42,7 +49,13 @@ namespace OverEarth
             TakeDamageEvent?.Invoke();
         }
 
-        public void DoDamage(float damage)
+        public void AddDurability(float amount)
+        {
+            _currentDurability += amount;
+            _currentDurability = Mathf.Clamp(_currentDurability, 0, _maxDurability);
+        }
+
+        public virtual void DoDamage(float damage)
         {
             if (_currentArmor <= 0)
             {
@@ -55,8 +68,7 @@ namespace OverEarth
                 damageToDurability = 0;
             }
             _currentDurability -= damageToDurability;
-
-
+            
             float currentArmor = _currentArmor;
             _currentArmor -= damage;
             damage -= currentArmor;
@@ -65,58 +77,61 @@ namespace OverEarth
                 _currentDurability -= damage;
             }
 
-            UIAnimationsController.Instance.TakeDamage();
-
             TakeDamageEvent?.Invoke();
 
             if (_currentDurability <= 0)
             {
                 DestroyObject();
             }
+
+            if (_canShakeCamera && transform.root.CompareTag("Player"))
+            {
+                UIAnimationsController.Instance.TakeDamage();
+            }
         }
 
-        public virtual void DestroyObject()
+        private protected virtual void DestroyObject()
         {
-            StartCoroutine(PlayDestroyAnimation());
+            SetActiveFunctionalComponents(false);
+            //StartCoroutine(PlayDestroyAnimation());
             DestroyedEvent?.Invoke(this);
         }
 
-        private IEnumerator PlayDestroyAnimation()
-        {
-            SetActiveFunctionalComponents(false);
-            //transform.SetParent(null);
-            //AddExplosionForce();
-            
-            yield return new WaitForSeconds(1);
+        //private IEnumerator PlayDestroyAnimation()
+        //{
+        //    //transform.SetParent(null);
+        //    //AddExplosionForce();
 
-            Destroy(gameObject);
+        //    //yield return new WaitForSeconds(1);
 
-            yield break;
-        }
+        //    //Destroy(gameObject);
+
+        //    yield break;
+        //}
 
         private void SetActiveFunctionalComponents(bool value)
         {
             for (int i = 0; i < _functionalСomponents.Count; i++)
             {
-                _functionalСomponents[i].enabled = value;
+                _functionalСomponents[i].SetActive(value);
             }
         }
 
-        private void AddExplosionForce()
-        {
-            Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
+        //private void AddExplosionForce()
+        //{
+        //    Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
 
-            if (rigidbody)
-            {
-                rigidbody.AddExplosionForce(100f, transform.position, 10f);
-            }
-            else
-            {
-                rigidbody = gameObject.AddComponent<Rigidbody>();
-                rigidbody.angularDrag = 0;
-                rigidbody.useGravity = false;
-                rigidbody.AddExplosionForce(100f, transform.position, 10f);
-            }
-        }
+        //    if (rigidbody)
+        //    {
+        //        rigidbody.AddExplosionForce(100f, transform.position, 10f);
+        //    }
+        //    else
+        //    {
+        //        rigidbody = gameObject.AddComponent<Rigidbody>();
+        //        rigidbody.angularDrag = 0;
+        //        rigidbody.useGravity = false;
+        //        rigidbody.AddExplosionForce(100f, transform.position, 10f);
+        //    }
+        //}
     }
 }

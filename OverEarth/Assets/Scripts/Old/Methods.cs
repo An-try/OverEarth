@@ -17,6 +17,7 @@ namespace OverEarth
             Turret turretScript = originalTransform.GetComponent<Turret>();
 
             nearestTarget = null;
+            Ship nearestShip = null;
 
             #region Get targets by tags
             // Get all root game objects with tags.
@@ -131,15 +132,16 @@ namespace OverEarth
 
             #region Get nearest part of the target
 
-            Ship nearestShip = nearestTarget.GetComponent<Ship>();
-            if (nearestShip)
+            if (nearestTarget)
             {
-                return GetNearestDamageablePart(originalTransform, nearestShip.DamageableParts);
+                nearestShip = nearestTarget.GetComponent<Ship>();
+                if (nearestShip && nearestShip.DamageableParts.Count > 0)
+                {
+                    return GetNearestDamageablePart(originalTransform, nearestShip.DamageableParts);
+                }
             }
-            else
-            {
-                return nearestTarget; // Set the nearest target if it was found. Otherwise, the nearest target will be null.
-            }
+
+            return nearestTarget; // Set the nearest target if it was found. Otherwise, the nearest target will be null.
 
             #endregion
         }

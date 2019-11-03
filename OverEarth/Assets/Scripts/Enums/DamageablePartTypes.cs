@@ -18,6 +18,7 @@
         Bottom,
         Bridge,
         Reactor,
-        Engine
+        Engine,
+        Shield
     }
 }
