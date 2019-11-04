@@ -11,9 +11,7 @@ namespace OverEarth
         [SerializeField] private string _name = "New item";
         [SerializeField] private Sprite _image = null;
         [SerializeField] private GameObject _objectPrefab = null;
-
-
-
+        
         public string Name => _name;
         public Sprite Image => _image;
         public GameObject ObjectPrefab => _objectPrefab;

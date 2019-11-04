@@ -5,22 +5,22 @@ namespace OverEarth
 {
     public abstract class Turret : MonoBehaviour
     {
-        [SerializeField] private AudioClip ShootingSound;
+        [SerializeField] private AudioClip _shootingSound;
 
-        [SerializeField] private TurretEquipment _turretEquipment; // Item for this turret
+        [SerializeField] private protected TurretEquipment _turretEquipment; // Item for this turret
 
-        public List<string> TargetTags; // Targets for this turret
+        [SerializeField] private GameObject _turretBase; // Base platform of the turret that rotates horizontally
+        [SerializeField] private protected GameObject _turretCannons; // Cannons of the turret that totates vertically
+
+        [SerializeField] private protected GameObject _shootPlace;
+        [SerializeField] private protected GameObject _shootAnimationPrefab;
+
+        private protected AudioSource _audioSource;
+        private protected List<string> _targetTags; // Targets for this turret
         private protected Transform _target;
         private protected Transform _targetPart;
-
-        public GameObject TurretBase; // Base platform of the turret that rotates horizontally
-        public GameObject TurretCannons; // Cannons of the turret that totates vertically
-
-        public GameObject ShootPlace;
-        public GameObject ShootAnimationPrefab;
-        //public GameObject HitHole;
-
-        public Vector3 AimPoint; // The point that the turret should look at
+        
+        private Vector3 _aimPoint; // The point that the turret should look at
 
         private float _turnRate; // Turret turning speed
         private protected float _turretRange;
@@ -32,7 +32,7 @@ namespace OverEarth
         [Range(0.0f, 90.0f)] private float _elevation; // Maximum turn up in degrees
         [Range(0.0f, 90.0f)] private float _depression; // Maximum turn down in degrees
 
-        public bool turretAI; // If the turret is controlled by AI
+        private bool _turretAI = true; // If the turret is controlled by AI
 
         private float _defaultTimeToFindTarget = 1f;
         private float _currentTimeToFindTarget;
@@ -44,6 +44,11 @@ namespace OverEarth
         public float Depression => _depression;
 
         public abstract void Shoot();
+
+        private void Awake()
+        {
+            _audioSource = GetComponent<AudioSource>();
+        }
 
         private void OnEnable()
         {
@@ -70,27 +75,6 @@ namespace OverEarth
             SetTurretParameters();
         }
 
-        private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
-        {
-            if (PlayerController.IsMenuOpened)
-            {
-                return;
-            }
-
-            FindTarget();
-
-            if (turretAI) // If the turret is controlled by AI
-            {
-                AutomaticTurretControl();
-            }
-            else // If the turret is not controlled by AI
-            {
-                ManualTurretControl();
-            }
-
-            CooldownDecrease();
-        }
-
         public virtual void SetTurretParameters()
         {
             _turnRate = _turretEquipment.TurnRate;
@@ -107,20 +91,39 @@ namespace OverEarth
             switch (transform.root.tag)
             {
                 case "Player":  // If this turret is on a player ship
-                    turretAI = PlayerController.IsAIEnabled; // Set if the turret is controlled by AI
-                    TargetTags = new List<string> { "Enemy" }; // Set enemies as targets for this turret
+                    _turretAI = PlayerController.IsAIEnabled; // Set if the turret is controlled by AI
+                    _targetTags = new List<string> { "Enemy" }; // Set enemies as targets for this turret
                     break;
                 case "Ally": // If this turret is on an ally ship
-                    turretAI = true; // Set the turret under AI control
-                    TargetTags = new List<string> { "Enemy" }; // Set enemies as targets for this turret
+                    _targetTags = new List<string> { "Enemy" }; // Set enemies as targets for this turret
                     break;
                 case "Enemy": // If this turret is on an enemy ship
-                    turretAI = true; // Set the turret under AI control
-                    TargetTags = new List<string> { "Player", "Ally" }; // Set allies as targets for this turret
+                    _targetTags = new List<string> { "Player", "Ally" }; // Set allies as targets for this turret
                     break;
                 default:
                     break;
             }
+        }
+
+        private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
+        {
+            if (PlayerController.IsMenuOpened)
+            {
+                return;
+            }
+
+            FindTarget();
+
+            if (_turretAI) // If the turret is controlled by AI
+            {
+                AutomaticTurretControl();
+            }
+            else // If the turret is not controlled by AI
+            {
+                ManualTurretControl();
+            }
+
+            CooldownDecrease();
         }
 
         // Set the turret AI. This method executes by delegate of PlayerMovement script
@@ -128,7 +131,7 @@ namespace OverEarth
         {
             if (transform.root.CompareTag("Player"))
             {
-                turretAI = AIState;
+                _turretAI = AIState;
             }
         }
 
@@ -155,7 +158,7 @@ namespace OverEarth
         {
             if (_targetPart != null) // If there is any target
             {
-                AimPoint = _targetPart.position; // Set a target position as an aim point
+                _aimPoint = _targetPart.position; // Set a target position as an aim point
 
                 RotateBase(); // Totate base of the turret to the aim point
                 RotateCannons(); // Totate cannons of the turret to the aim point
@@ -175,7 +178,7 @@ namespace OverEarth
         // Method executes when turret AI is disabled
         public void ManualTurretControl()
         {
-            AimPoint = CameraController.Instance.AimPoint; // Set the point on which camera is looking as an aim point
+            _aimPoint = CameraController.Instance.AimPoint; // Set the point on which camera is looking as an aim point
 
             RotateBase(); // Totate base of the turret to the aim point
             RotateCannons(); // Totate cannons of the turret to the aim point
@@ -190,7 +193,7 @@ namespace OverEarth
         public void RotateBase()
         {
             // Get local position of aim point in relative to this turret
-            Vector3 localTargetPos = transform.InverseTransformPoint(AimPoint);
+            Vector3 localTargetPos = transform.InverseTransformPoint(_aimPoint);
             localTargetPos.y = 0f; // Put the aiming point at the same height with this tower
 
             Vector3 clampedLocalVector2Target = localTargetPos; // New point to rotate with clamped rotate traverses
@@ -200,15 +203,15 @@ namespace OverEarth
 
             Quaternion rotationGoal = Quaternion.LookRotation(clampedLocalVector2Target); // Create a new rotation that looking at new point
                                                                                           // Rotates current turret to the new quaternion
-            Quaternion newRotation = Quaternion.RotateTowards(TurretBase.transform.localRotation, rotationGoal, _turnRate * Time.deltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(_turretBase.transform.localRotation, rotationGoal, _turnRate * Time.deltaTime);
 
-            TurretBase.transform.localRotation = newRotation; // Apply intermediate rotation to the turret
+            _turretBase.transform.localRotation = newRotation; // Apply intermediate rotation to the turret
         }
 
         public void RotateCannons()
         {
             // Get local position of aim point in relative to this turret
-            Vector3 localTargetPos = TurretBase.transform.InverseTransformPoint(AimPoint);
+            Vector3 localTargetPos = _turretBase.transform.InverseTransformPoint(_aimPoint);
             localTargetPos.x = 0f; // Put the aiming point at the same vertical with this tower
 
             Vector3 clampedLocalVec2Target = localTargetPos; // New point to rotate with clamped rotate traverses
@@ -218,20 +221,20 @@ namespace OverEarth
 
             Quaternion rotationGoal = Quaternion.LookRotation(clampedLocalVec2Target); // Create a new rotation that looking at new point
                                                                                        // Rotates current turret to the new quaternion
-            Quaternion newRotation = Quaternion.RotateTowards(TurretCannons.transform.localRotation, rotationGoal, 2 * _turnRate * Time.deltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(_turretCannons.transform.localRotation, rotationGoal, 2 * _turnRate * Time.deltaTime);
 
-            TurretCannons.transform.localRotation = newRotation; // Apply intermediate rotation to the turret
+            _turretCannons.transform.localRotation = newRotation; // Apply intermediate rotation to the turret
         }
 
         public void RotateToDefault()
         {
             // Set new intermediate rotation of base and cannons to default rotation
-            Quaternion newBaseRotation = Quaternion.RotateTowards(TurretBase.transform.localRotation, Quaternion.identity, _turnRate * Time.deltaTime);
-            Quaternion newCannonRotation = Quaternion.RotateTowards(TurretCannons.transform.localRotation, Quaternion.identity, 2.0f * _turnRate * Time.deltaTime);
+            Quaternion newBaseRotation = Quaternion.RotateTowards(_turretBase.transform.localRotation, Quaternion.identity, _turnRate * Time.deltaTime);
+            Quaternion newCannonRotation = Quaternion.RotateTowards(_turretCannons.transform.localRotation, Quaternion.identity, 2.0f * _turnRate * Time.deltaTime);
 
             // Apply intermediate rotation
-            TurretBase.transform.localRotation = newBaseRotation;
-            TurretCannons.transform.localRotation = newCannonRotation;
+            _turretBase.transform.localRotation = newBaseRotation;
+            _turretCannons.transform.localRotation = newCannonRotation;
         }
 
         public virtual bool AimedAtEnemy()
@@ -242,7 +245,7 @@ namespace OverEarth
             layerMask = ~layerMask; // Invert these layers. So raycast will ignore bullets and missiles
 
             // Create an outgoing ray from cannons with turret range lenght
-            Ray aimingRay = new Ray(TurretCannons.transform.position, TurretCannons.transform.forward * _turretRange);
+            Ray aimingRay = new Ray(_turretCannons.transform.position, _turretCannons.transform.forward * _turretRange);
 
             // If the turret is targeting an object except bullets and rockets (determined by layerMask)
             if (Physics.Raycast(aimingRay, out RaycastHit hit, _turretRange, layerMask))
@@ -259,7 +262,7 @@ namespace OverEarth
         public bool AimedAtOwner()
         {
             // Create an outgoing ray from cannons with turret range lenght
-            Ray aimingRay = new Ray(TurretCannons.transform.position, TurretCannons.transform.forward * _turretRange);
+            Ray aimingRay = new Ray(_turretCannons.transform.position, _turretCannons.transform.forward * _turretRange);
 
             if (Physics.Raycast(aimingRay, out RaycastHit hit, _turretRange)) // If turret aiming at some object
             {
@@ -277,7 +280,7 @@ namespace OverEarth
 
             if (_currentTimeToFindTarget <= 0)
             {
-                _targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target, EntityParameters.None, MinMaxValues.MaxValue);
+                _targetPart = Methods.SearchNearestTarget(transform, _targetTags, out Transform target, EntityParameters.None, MinMaxValues.MaxValue);
                 _target = target;
                 _currentTimeToFindTarget = _defaultTimeToFindTarget;
             }

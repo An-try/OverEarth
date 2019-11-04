@@ -4,7 +4,7 @@ namespace OverEarth
 {
     public class MissileLauncher : Turret
     {
-        public GameObject MissilePrefab;
+        [SerializeField] private GameObject _missilePrefab;
 
         public override bool AimedAtEnemy()
         {
@@ -18,12 +18,12 @@ namespace OverEarth
 
         public override void Shoot()
         {
-            GameObject missile = Instantiate(MissilePrefab, TurretCannons.transform.position, TurretCannons.transform.rotation); // Create a new missile
-            missile.GetComponent<Rocket>().TargetTags = TargetTags;
+            GameObject missile = Instantiate(_missilePrefab, _turretCannons.transform.position, _turretCannons.transform.rotation); // Create a new missile
+            missile.GetComponent<Rocket>().TargetTags = _targetTags;
 
             _currentCooldown = _maxCooldown; // Add a cooldown to this turret
 
-            GetComponent<AudioSource>().Play(); // Play an shoot sound
+            _audioSource.Play(); // Play an shoot sound
         }
     }
 }

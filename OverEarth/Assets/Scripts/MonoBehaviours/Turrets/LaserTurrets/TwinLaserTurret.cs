@@ -4,29 +4,29 @@ namespace OverEarth
 {
     public class TwinLaserTurret : Turret
     {
-        public GameObject RightLaserBeam;
-        public GameObject LeftLaserBeam;
+        [SerializeField] private GameObject _rightLaserBeam;
+        [SerializeField] private GameObject _leftLaserBeam;
 
-        public float hitDuration;
+        public float _hitDuration;
 
         public override void SetTurretParameters()
         {
             base.SetTurretParameters();
 
-            hitDuration = 0.1f;
+            _hitDuration = _turretEquipment.HitDuration;
         }
 
         public override void Shoot()
         {
-            RightLaserBeam.GetComponent<Laser>().LaserLength = _turretRange; // Set the laset lenght to the right laser beam
-            RightLaserBeam.GetComponent<Laser>().SetHitDuration(hitDuration); // Set the hit duration to the right laser beam
+            _rightLaserBeam.GetComponent<Laser>().LaserLength = _turretRange; // Set the laset lenght to the right laser beam
+            _rightLaserBeam.GetComponent<Laser>().SetHitDuration(_hitDuration); // Set the hit duration to the right laser beam
 
-            LeftLaserBeam.GetComponent<Laser>().LaserLength = _turretRange; // Set the laset lenght to the left laser beam
-            LeftLaserBeam.GetComponent<Laser>().SetHitDuration(hitDuration); // Set the hit duration to the left laser beam
+            _leftLaserBeam.GetComponent<Laser>().LaserLength = _turretRange; // Set the laset lenght to the left laser beam
+            _leftLaserBeam.GetComponent<Laser>().SetHitDuration(_hitDuration); // Set the hit duration to the left laser beam
 
-            _currentCooldown = _maxCooldown + hitDuration; // Add a cooldown to this turret
+            _currentCooldown = _maxCooldown + _hitDuration; // Add a cooldown to this turret
 
-            GetComponent<AudioSource>().Play(); // Play an shoot sound
+            _audioSource.Play(); // Play an shoot sound
         }
     }
 }

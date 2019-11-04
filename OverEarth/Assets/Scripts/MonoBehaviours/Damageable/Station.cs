@@ -22,7 +22,7 @@ namespace OverEarth
 
             for (int i = 0; i < _turretsSections.Count; i++)
             {
-                _turretsSections[i].DoDamage(MinMaxValuesConstants.MAX_DAMAGE);
+                _turretsSections[i].DoDamage(int.MaxValue);
             }
         }
     }

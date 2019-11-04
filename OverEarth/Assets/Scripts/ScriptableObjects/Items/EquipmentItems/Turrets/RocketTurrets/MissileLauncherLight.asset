@@ -9,12 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66cd57eda4eb74e4ca56220c2cfe35b8, type: 3}
-  m_Name: PlasmaTurret
+  m_Script: {fileID: 11500000, guid: c5fcf47cb1a378f4089824a46c97be8b, type: 3}
+  m_Name: MissileLauncherLight
   m_EditorClassIdentifier: 
-  _name: New item
-  _image: {fileID: 0}
-  _objectPrefab: {fileID: 0}
+  _name: MissileLauncherLight
+  _image: {fileID: 21300000, guid: b1ce7193c4a2f7945bdba5018debf5b7, type: 3}
+  _objectPrefab: {fileID: 1987248111061682, guid: c75be91b456e7e149a0937ddf1a9b043,
+    type: 3}
   _durabilityModifier: 0
   _durabilityRegen: 0
   _armorModifier: 0
