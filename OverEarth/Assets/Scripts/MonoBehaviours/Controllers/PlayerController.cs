@@ -17,6 +17,8 @@ namespace OverEarth
 
         private AimingMethods _aimingMethod = AimingMethods.CameraCenter;
 
+        public float CameraDefaultFieldOfView;
+
         //public static bool IsInStation { get; private set; }
         public static bool IsAIEnabled { get; private set; }
         public static bool IsMenuOpened { get; private set; } = false;
@@ -25,6 +27,7 @@ namespace OverEarth
         private void Start()
         {
             Camera = Camera.main;
+            CameraDefaultFieldOfView = Camera.fieldOfView;
         }
 
         private void Update()

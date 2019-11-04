@@ -47,12 +47,14 @@ namespace OverEarth
         public GameObject ShipBurningParticles;
 
         private WarpAnimation _warpAnimation;
+        private bool _isWarpEnded = false;
 
 
         
         public Transform ShipObservingPlaceForCamera => _shipObservingPlaceForCamera;
         public bool IsPrepareForWarpAnimationCompleted => _warpAnimation.IsPrepareForWarpAnimationCompleted;
         public bool CanWarp => _warpAnimation.CanWarp;
+        public bool IsWarpEnded => _isWarpEnded;
 
         public float MaxSpeed => _maxSpeed;
         public float ThrustForce => _thrustForce;
@@ -156,6 +158,27 @@ namespace OverEarth
         public void DoWarp()
         {
             _warpAnimation.DoWarp();
+            StartCoroutine(ShipPreWarping());
+        }
+
+        private IEnumerator ShipPreWarping()
+        {
+            PlayerController.Instance.CameraDefaultFieldOfView = PlayerController.Instance.Camera.fieldOfView;
+            float time = 5f;
+
+            while (time > 0)
+            {
+                PlayerController.Instance.Camera.fieldOfView *= 0.999f;
+
+                transform.localScale *= 0.999f;
+                transform.position += transform.forward * 1.01f;
+                _warpAnimation.transform.position -= transform.forward * 1.01f;
+
+                time -= Time.fixedDeltaTime;
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
+            }
+
+            yield break;
         }
 
         public void AnimateShipWarping()
@@ -169,11 +192,41 @@ namespace OverEarth
 
             while (time > 0)
             {
-                time -= Time.fixedDeltaTime;
                 transform.localScale *= 0.9f;
-                transform.position += transform.forward * 10;
-                _warpAnimation.transform.position -= transform.forward * 10;
+                transform.position += transform.forward * 100;
+                _warpAnimation.transform.position -= transform.forward * 100;
+
+                time -= Time.fixedDeltaTime;
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
             }
+
+            _isWarpEnded = true;
+
+            StartCoroutine(ExitFromWarp());
+
+            yield break;
+        }
+
+        private IEnumerator ExitFromWarp()
+        {
+            _warpAnimation.transform.position += transform.forward * 100;
+
+            while (transform.localScale.x < 1)
+            {
+                PlayerController.Instance.Camera.fieldOfView *= 1.005f;
+                transform.localScale *= 1.1f;
+                transform.position += transform.forward * 100;
+                _warpAnimation.transform.position -= transform.forward * 100;
+                
+                yield return new WaitForSeconds(Time.fixedDeltaTime);
+            }
+
+            PlayerController.Instance.Camera.fieldOfView = PlayerController.Instance.CameraDefaultFieldOfView;
+            transform.localScale = Vector3.one;
+
+            _isWarpEnded = false;
+
+            StopAllCoroutines();
 
             yield break;
         }

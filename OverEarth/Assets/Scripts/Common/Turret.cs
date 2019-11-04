@@ -7,7 +7,7 @@ namespace OverEarth
     {
         [SerializeField] private AudioClip ShootingSound;
 
-        public Item item; // Item for this turret
+        [SerializeField] private TurretEquipment _turretEquipment; // Item for this turret
 
         public List<string> TargetTags; // Targets for this turret
         private protected Transform _target;
@@ -22,15 +22,15 @@ namespace OverEarth
 
         public Vector3 AimPoint; // The point that the turret should look at
 
-        public float turnRate; // Turret turning speed
+        private float _turnRate; // Turret turning speed
         private protected float _turretRange;
-        public float cooldown;
-        public float currentCooldown;
+        private protected float _maxCooldown;
+        private protected float _currentCooldown;
 
-        [Range(0.0f, 180.0f)] public float _rightTraverse; // Maximum right turn in degrees
-        [Range(0.0f, 180.0f)] public float _leftTraverse; // Maximum left turn in degrees
-        [Range(0.0f, 90.0f)] public float _elevation; // Maximum turn up in degrees
-        [Range(0.0f, 90.0f)] public float _depression; // Maximum turn down in degrees
+        [Range(0.0f, 180.0f)] private float _rightTraverse; // Maximum right turn in degrees
+        [Range(0.0f, 180.0f)] private float _leftTraverse; // Maximum left turn in degrees
+        [Range(0.0f, 90.0f)] private float _elevation; // Maximum turn up in degrees
+        [Range(0.0f, 90.0f)] private float _depression; // Maximum turn down in degrees
 
         public bool turretAI; // If the turret is controlled by AI
 
@@ -77,6 +77,8 @@ namespace OverEarth
                 return;
             }
 
+            FindTarget();
+
             if (turretAI) // If the turret is controlled by AI
             {
                 AutomaticTurretControl();
@@ -86,12 +88,21 @@ namespace OverEarth
                 ManualTurretControl();
             }
 
-            FindTarget();
             CooldownDecrease();
         }
 
         public virtual void SetTurretParameters()
         {
+            _turnRate = _turretEquipment.TurnRate;
+            _turretRange = _turretEquipment.Range;
+            _maxCooldown = _turretEquipment.MaxCooldown;
+            _currentCooldown = _maxCooldown;
+
+            _rightTraverse = _turretEquipment.RightTraverse;
+            _leftTraverse = _turretEquipment.LeftTraverse;
+            _elevation = _turretEquipment.Elevation;
+            _depression = _turretEquipment.Depression;
+
             // Check this turret tag
             switch (transform.root.tag)
             {
@@ -124,15 +135,15 @@ namespace OverEarth
         // Decrease turret cooldown each fixed update
         public void CooldownDecrease()
         {
-            if (currentCooldown >= 0)
+            if (_currentCooldown >= 0)
             {
-                currentCooldown -= Time.deltaTime;
+                _currentCooldown -= Time.deltaTime;
             }
         }
 
         public bool CooldownIsZero()
         {
-            if (currentCooldown <= 0)
+            if (_currentCooldown <= 0)
             {
                 return true;
             }
@@ -155,7 +166,7 @@ namespace OverEarth
             }
 
             // If the turret is aimed at the enemy, its cooldown is zero and it is not aimed at the owner
-            if (AimedAtEnemy() && CooldownIsZero() && !AimedAtOwner())
+            if (CooldownIsZero() && AimedAtEnemy() && !AimedAtOwner())
             {
                 Shoot();
             }
@@ -184,20 +195,12 @@ namespace OverEarth
 
             Vector3 clampedLocalVector2Target = localTargetPos; // New point to rotate with clamped rotate traverses
 
-            if (localTargetPos.x >= 0f) // If the aim point is located to the right of the turret
-            {
-                // Set new position to rotate with max right traverse
-                clampedLocalVector2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * _rightTraverse, float.MaxValue);
-            }
-            else // If the aim point is located to the left of the turret
-            {
-                // Set new position to rotate with max left traverse
-                clampedLocalVector2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * _leftTraverse, float.MaxValue);
-            }
+            float traverse = localTargetPos.x >= 0 ? _rightTraverse : _leftTraverse;
+            clampedLocalVector2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * traverse, float.MaxValue);
 
             Quaternion rotationGoal = Quaternion.LookRotation(clampedLocalVector2Target); // Create a new rotation that looking at new point
                                                                                           // Rotates current turret to the new quaternion
-            Quaternion newRotation = Quaternion.RotateTowards(TurretBase.transform.localRotation, rotationGoal, turnRate * Time.deltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(TurretBase.transform.localRotation, rotationGoal, _turnRate * Time.deltaTime);
 
             TurretBase.transform.localRotation = newRotation; // Apply intermediate rotation to the turret
         }
@@ -210,20 +213,12 @@ namespace OverEarth
 
             Vector3 clampedLocalVec2Target = localTargetPos; // New point to rotate with clamped rotate traverses
 
-            if (localTargetPos.y >= 0f) // If the aim point is located above the turret
-            {
-                // Set new position to rotate with max up traverse
-                clampedLocalVec2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * _elevation, float.MaxValue);
-            }
-            else // If the aim point is located below the turret
-            {
-                // Set new position to rotate with max down traverse
-                clampedLocalVec2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * _depression, float.MaxValue);
-            }
+            float traverse = localTargetPos.y >= 0 ? _elevation : _depression;
+            clampedLocalVec2Target = Vector3.RotateTowards(Vector3.forward, localTargetPos, Mathf.Deg2Rad * traverse, float.MaxValue);
 
             Quaternion rotationGoal = Quaternion.LookRotation(clampedLocalVec2Target); // Create a new rotation that looking at new point
                                                                                        // Rotates current turret to the new quaternion
-            Quaternion newRotation = Quaternion.RotateTowards(TurretCannons.transform.localRotation, rotationGoal, 2 * turnRate * Time.deltaTime);
+            Quaternion newRotation = Quaternion.RotateTowards(TurretCannons.transform.localRotation, rotationGoal, 2 * _turnRate * Time.deltaTime);
 
             TurretCannons.transform.localRotation = newRotation; // Apply intermediate rotation to the turret
         }
@@ -231,8 +226,8 @@ namespace OverEarth
         public void RotateToDefault()
         {
             // Set new intermediate rotation of base and cannons to default rotation
-            Quaternion newBaseRotation = Quaternion.RotateTowards(TurretBase.transform.localRotation, Quaternion.identity, turnRate * Time.deltaTime);
-            Quaternion newCannonRotation = Quaternion.RotateTowards(TurretCannons.transform.localRotation, Quaternion.identity, 2.0f * turnRate * Time.deltaTime);
+            Quaternion newBaseRotation = Quaternion.RotateTowards(TurretBase.transform.localRotation, Quaternion.identity, _turnRate * Time.deltaTime);
+            Quaternion newCannonRotation = Quaternion.RotateTowards(TurretCannons.transform.localRotation, Quaternion.identity, 2.0f * _turnRate * Time.deltaTime);
 
             // Apply intermediate rotation
             TurretBase.transform.localRotation = newBaseRotation;
@@ -256,15 +251,8 @@ namespace OverEarth
                 {
                     return true; // Aimed at the enemy
                 }
-                else // If not aiming on current nearest target
-                {
-                    return false; // Not aimed at the enemy
-                }
             }
-            else // If turret is not aimed at anything
-            {
-                return false; // Not aimed at the enemy
-            }
+            return false; // Not aimed at the enemy
         }
 
         // If the turret aimed at the ship on which it is attached
@@ -278,10 +266,6 @@ namespace OverEarth
                 if (hit.transform.root == transform.root) // If this object is the current ship on which turret is attached
                 {
                     return true; // Aimed at the owner
-                }
-                else
-                {
-                    return false; // Not aimed at the owner
                 }
             }
             return false; // Not aimed at the owner

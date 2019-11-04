@@ -31,13 +31,13 @@ namespace OverEarth
         private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
         {
             // Delegate called when player ship is assigned
-            Manager.instance.onPlayerShipAssigned += StartUpdateShipInfo;
+            //Manager.instance.onPlayerShipAssigned += StartUpdateShipInfo;
         }
 
         private void StartUpdateShipInfo()
         {
-            InvokeRepeating("UpdateShipInfo", 0, 0.1f);
-            playerShipScript = Manager.instance.PlayerShip.GetComponent<Ship>(); // Get player ship script
+            //InvokeRepeating("UpdateShipInfo", 0, 0.1f);
+            //playerShipScript = Manager.instance.PlayerShip.GetComponent<Ship>(); // Get player ship script
         }
 
     //    private void UpdateShipInfo()

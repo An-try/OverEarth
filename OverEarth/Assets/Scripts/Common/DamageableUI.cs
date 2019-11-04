@@ -53,17 +53,16 @@ namespace OverEarth
             }
         }
 
-        public void AssignDamageablePart(Ship ship)
+        public void AssignDamageableParts(Ship ship)
         {
             for (int i = 0; i < ship.DamageableParts.Count; i++)
             {
                 for (int j = 0; j < _damageablePartTypes.Count; j++)
                 {
-                    Damageable damageablePart = ship.DamageableParts.Find(shipPart => shipPart.DamageablePartType.Equals(_damageablePartTypes[j]));
-
-                    if (damageablePart && !DamageableParts.Contains(damageablePart))
+                    if (ship.DamageableParts[i].DamageablePartType == _damageablePartTypes[j])
                     {
-                        DamageableParts.Add(damageablePart);
+                        DamageableParts.Add(ship.DamageableParts[i]);
+                        break;
                     }
                 }
             }
@@ -100,7 +99,23 @@ namespace OverEarth
 
         private void SetDestroyedImageColor(Damageable damageable)
         {
-            _partImage.color = Color.black;
+            float averageCurrentDurability = 0;
+            for (int i = 0; i < DamageableParts.Count; i++)
+            {
+                //if (_damageableParts[i] == null)
+                //{
+                //    _damageableParts.RemoveAt(i);
+                //    i--;
+                //    continue;
+                //}
+                averageCurrentDurability += DamageableParts[i].CurrentDurability;
+            }
+            averageCurrentDurability /= DamageableParts.Count;
+
+            if (averageCurrentDurability <= 0)
+            {
+                _partImage.color = Color.black;
+            }
         }
     }
 }

@@ -65,8 +65,8 @@ namespace OverEarth
             {
                 // Show warning message, and destroy warning message, voice commands info panel and this script after a while
                 float timeToDestroy = 10f;
-                StartCoroutine(
-                    Methods.ShowWarningMessage(Manager.instance.WarningMessageObject, "Speech recognition is not supported on this computer", timeToDestroy));
+                //StartCoroutine(
+                    //Methods.ShowWarningMessage(Manager.instance.WarningMessageObject, "Speech recognition is not supported on this computer", timeToDestroy));
                 Destroy(VoiceCommandsInfoPanel.instance.gameObject);
                 Destroy(this, timeToDestroy + 1f);
             }
@@ -163,7 +163,7 @@ namespace OverEarth
 
         private void InventoryInteractAction() // Open or close inventory panel
         {
-            Manager.instance.ActivateDeactivateUIPanel(Manager.instance.InventoryPanel);
+            //Manager.instance.ActivateDeactivateUIPanel(Manager.instance.InventoryPanel);
         }
 
         private void CancelCommandAction() // Change available commands. Executes when player wants to return to the main commands

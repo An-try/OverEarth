@@ -42,7 +42,7 @@ namespace OverEarth
                 Destroy(this); // Destroy this script
             }
 
-            Manager.instance.onPlayerShipAssigned += ActivateCamera; // Calls when player ship spawned
+            //Manager.instance.onPlayerShipAssigned += ActivateCamera; // Calls when player ship spawned
         }
 
         private void ActivateCamera()
@@ -127,9 +127,9 @@ namespace OverEarth
             {
                 cameraLookingPoint = new Vector3(hit.point.x, hit.point.y, hit.point.z); // Set hit coordinates
 
-                Manager.instance.CurrentSelectedTarget = hit.transform.gameObject; // Set current selected target as hitted game object
-                Manager.instance.LastSelectedTarget = hit.transform.gameObject; // Set last selected target as hitted game object
-                Manager.instance.onCurrentSelectedTargetAssigned?.Invoke();
+                //Manager.instance.CurrentSelectedTarget = hit.transform.gameObject; // Set current selected target as hitted game object
+                //Manager.instance.LastSelectedTarget = hit.transform.gameObject; // Set last selected target as hitted game object
+                //Manager.instance.onCurrentSelectedTargetAssigned?.Invoke();
             }
             else // If ray doesn't hit anything
             {
@@ -138,7 +138,7 @@ namespace OverEarth
                     transform.position.y + transform.forward.y * cameraAimRayLength,
                     transform.position.z + transform.forward.z * cameraAimRayLength);
 
-                Manager.instance.CurrentSelectedTarget = null; // Clear current selected target
+                //Manager.instance.CurrentSelectedTarget = null; // Clear current selected target
             }
         }
     }

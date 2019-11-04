@@ -17,7 +17,6 @@ namespace OverEarth
         private protected void DoDamage(float damage, Collider collider)
         {
             Damageable hittedObject = collider.GetComponent<Damageable>();
-
             if (hittedObject)
             {
                 hittedObject.DoDamage(damage);
@@ -25,7 +24,6 @@ namespace OverEarth
             else
             {
                 hittedObject = collider.GetComponentInParent<Damageable>();
-
                 if (hittedObject)
                 {
                     hittedObject.DoDamage(damage);

@@ -14,17 +14,7 @@ namespace OverEarth
         public override void SetTurretParameters()
         {
             base.SetTurretParameters();
-
-            turnRate = 30f;
-            _turretRange = 50000f;
-            cooldown = 2f;
-            currentCooldown = cooldown;
-
-            _rightTraverse = 180f;
-            _leftTraverse = 180f;
-            _elevation = 60f;
-            _depression = 5f;
-
+            
             bulletForce = 50000f;
             turretScatter = 0.001f;
 
@@ -57,7 +47,7 @@ namespace OverEarth
             // Add force to the bullet so it will fly directly
             bullet.GetComponent<Rigidbody>().AddForce((ShootPlace.transform.forward + scatter) * bulletForce);
 
-            currentCooldown = cooldown; // Add a cooldown to this turret
+            _currentCooldown = _maxCooldown; // Add a cooldown to this turret
 
             GetComponent<AudioSource>().Play(); // Play an shoot sound
         }

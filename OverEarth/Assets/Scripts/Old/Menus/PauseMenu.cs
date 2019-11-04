@@ -39,18 +39,18 @@ namespace OverEarth
             _PauseMenu.SetActive(true);
             Time.timeScale = 0f; // Set game speed to 0 (pause game)
 
-            Manager.instance.GameInfoPanel.SetActive(false); // Deactivate main game info panel
+            //Manager.instance.GameInfoPanel.SetActive(false); // Deactivate main game info panel
 
             // Disable all UI panels
-            foreach (GameObject Panel in Manager.instance.UIPanels)
-            {
-                Panel.SetActive(false);
-            }
+            //foreach (GameObject Panel in Manager.instance.UIPanels)
+            //{
+            //    Panel.SetActive(false);
+            //}
 
-            if (Manager.instance.CurrentTargetInfoCamera) // If current target info camera exists
-            {
-                Manager.instance.CurrentTargetInfoCamera.SetActive(false); // Disable current target info camera
-            }
+            //if (Manager.instance.CurrentTargetInfoCamera) // If current target info camera exists
+            //{
+            //    Manager.instance.CurrentTargetInfoCamera.SetActive(false); // Disable current target info camera
+            //}
         }
 
         public void ResumeGame()
@@ -59,12 +59,12 @@ namespace OverEarth
             _PauseMenu.SetActive(false);
             Time.timeScale = 1f; // Set game speed to 1 (normal game speed)
 
-            Manager.instance.GameInfoPanel.SetActive(true); // Activate main game info panel
+            //Manager.instance.GameInfoPanel.SetActive(true); // Activate main game info panel
 
-            if (Manager.instance.CurrentTargetInfoCamera) // If target info camera exists
-            {
-                Manager.instance.CurrentTargetInfoCamera.SetActive(true); // Activate current target info camera
-            }
+            //if (Manager.instance.CurrentTargetInfoCamera) // If target info camera exists
+            //{
+            //    Manager.instance.CurrentTargetInfoCamera.SetActive(true); // Activate current target info camera
+            //}
         }
 
         public void ExitGame()

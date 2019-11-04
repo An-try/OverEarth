@@ -40,7 +40,7 @@ namespace OverEarth
         {
             for (int i = 0; i < _damageablesUI.Count; i++)
             {
-                _damageablesUI[i].AssignDamageablePart(PlayerController.Instance.Ship);
+                _damageablesUI[i].AssignDamageableParts(PlayerController.Instance.Ship);
             }
         }
 

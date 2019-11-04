@@ -28,21 +28,21 @@ namespace OverEarth
         //    }
         //}
 
-        private string OutputTargetName()
-        {
-            return Manager.instance.LastSelectedTarget.name;
-        }
+        //private string OutputTargetName()
+        //{
+        //    return Manager.instance.LastSelectedTarget.name;
+        //}
 
-        private string OutputDistanceToTarget()
-        {
-            if (Manager.instance.PlayerShip) // If player ship exists
-            {
-                // Return the distance from the target and player ship
-                return "<color=lime>" + (int)Vector3.Distance(Manager.instance.LastSelectedTarget.transform.position,
-                                                              Manager.instance.PlayerShip.transform.position) + "</color>";
-            }
-            return "";
-        }
+        //private string OutputDistanceToTarget()
+        //{
+        //    if (Manager.instance.PlayerShip) // If player ship exists
+        //    {
+        //        // Return the distance from the target and player ship
+        //        return "<color=lime>" + (int)Vector3.Distance(Manager.instance.LastSelectedTarget.transform.position,
+        //                                                      Manager.instance.PlayerShip.transform.position) + "</color>";
+        //    }
+        //    return "";
+        //}
 
         //private string OutputTargetHP()
         //{

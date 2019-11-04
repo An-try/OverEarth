@@ -12,16 +12,41 @@ namespace OverEarth
         private bool _warpJumpStarted = false;
         private bool _sceneLoaded = false;
 
+        private List<string> _scenesNames = new List<string>();
+        private int _nextSceneIndex = 1;
+
+        private protected override void Awake()
+        {
+            base.Awake();
+
+            _scenesNames.Add("BaseDefence");
+            _scenesNames.Add("Game");
+        }
+
+        private void OnEnable()
+        {
+            SubscribeEvents();
+        }
+
         private void SubscribeEvents()
         {
             SceneManager.sceneLoaded += SceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            UnsubscribeEvents();
+        }
+
+        private void UnsubscribeEvents()
+        {
+            SceneManager.sceneLoaded -= SceneLoaded;
         }
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.J) && !_warpJumpStarted)
             {
-                print('a');
                 _warpJumpStarted = true;
                 StartCoroutine(PrepareToWarp());
             }
@@ -29,23 +54,34 @@ namespace OverEarth
 
         private IEnumerator PrepareToWarp()
         {
-            print('b');
-            SceneLoading = SceneManager.LoadSceneAsync("Game");
+            SceneLoading = SceneManager.LoadSceneAsync(_scenesNames[_nextSceneIndex]);
             SceneLoading.allowSceneActivation = false;
 
-            PlayerController.Instance.Ship.PrepareToWarp();
+            _nextSceneIndex++;
+            if (_nextSceneIndex >= _scenesNames.Count)
+            {
+                _nextSceneIndex = 0;
+            }
 
-            //yield return new WaitUntil(() => SceneLoading.isDone);
-            yield return new WaitUntil(() => _sceneLoaded);
-            print('c');
-            yield return new WaitUntil(() => PlayerController.Instance.Ship.IsPrepareForWarpAnimationCompleted);
-            print('d');
+            PlayerController.Instance.Ship.PrepareToWarp(); print("Preparation for warp started");
+
+            yield return new WaitUntil(() => _sceneLoaded); print("Scene loaded");
+            yield return new WaitUntil(() => PlayerController.Instance.Ship.IsPrepareForWarpAnimationCompleted); print("Preparation for warp completed");
 
             PlayerController.Instance.Ship.DoWarp();
 
-            yield return new WaitUntil(() => PlayerController.Instance.Ship.CanWarp);
+            yield return new WaitUntil(() => PlayerController.Instance.Ship.CanWarp); print("Ship warped");
+            SceneLoading.allowSceneActivation = true;
 
             PlayerController.Instance.Ship.AnimateShipWarping();
+
+            yield return new WaitUntil(() => PlayerController.Instance.Ship.IsWarpEnded);
+
+            //_sceneLoaded = false;
+            _warpJumpStarted = false;
+            SceneLoading = null;
+
+            StopAllCoroutines();
 
             yield break;
         }

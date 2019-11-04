@@ -20,24 +20,39 @@ namespace OverEarth
             Ship nearestShip = null;
 
             #region Get targets by tags
+
             // Get all root game objects with tags.
             List<Transform> targetsByTag = new List<Transform>();
             GameObject[] sceneRoots = SceneManager.GetActiveScene().GetRootGameObjects();
 
+            List<GameObject> allScenesRoots = new List<GameObject>();
             for (int i = 0; i < sceneRoots.Length; i++)
+            {
+                allScenesRoots.Add(sceneRoots[i]);
+            }
+            for (int i = 0; i < DoNotDestroyOnLoad.Instance.Objects.Length; i++)
+            {
+                allScenesRoots.Add(DoNotDestroyOnLoad.Instance.Objects[i]);
+            }
+            
+            for (int i = 0; i < allScenesRoots.Count; i++)
             {
                 for (int j = 0; j < targetTags.Count; j++)
                 {
-                    if (sceneRoots[i].CompareTag(targetTags[j]))
+                    if (allScenesRoots[i].CompareTag(targetTags[j]))
                     {
-                        targetsByTag.Add(sceneRoots[i].transform);
+                        targetsByTag.Add(allScenesRoots[i].transform);
                         break; // Do not check this root for other tags.
                     }
                 }
             }
+
             #endregion
 
+
+
             #region Get targets by affected area
+
             List<Transform> targetsByAffectedArea = new List<Transform>();
 
             //float turretRange = turretScript.Range;
@@ -85,6 +100,7 @@ namespace OverEarth
 
             //    }
             //}
+
             #endregion
 
             ///
@@ -92,6 +108,7 @@ namespace OverEarth
             ///
 
             #region Get target by distance, or by min/max parameter
+
             if (entityParameter == EntityParameters.None)
             {
                 nearestTarget = GetNearestObject(originalTransform, targetsByAffectedArea);
@@ -128,7 +145,10 @@ namespace OverEarth
                     }
                 }
             }
+
             #endregion
+
+
 
             #region Get nearest part of the target
 

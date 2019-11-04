@@ -20,6 +20,9 @@ namespace OverEarth
 
         public List<string> TargetTags { private get; set; } // List that contains
 
+        private float _defaultTimeToFindTarget = 1f;
+        private float _currentTimeToFindTarget;
+
         public virtual void Awake() // Awake is called when the script instance is being loaded
         {
             rocketWarhead = new RocketWarhead();
@@ -35,8 +38,9 @@ namespace OverEarth
 
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
-            _targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target);
-            _target = target;
+            FindTarget();
+            //_targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target);
+            //_target = target;
 
             if (HP <= 0)
             {
@@ -59,21 +63,21 @@ namespace OverEarth
             float rayLength = 400f;
             float rocketSizeToAvoid = 3f;
 
-            #region DEBUG RAYS
-            Debug.DrawRay(transform.position + new Vector3(rocketSizeToAvoid, rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
-            Debug.DrawRay(transform.position + new Vector3(rocketSizeToAvoid, -rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
-            Debug.DrawRay(transform.position + new Vector3(-rocketSizeToAvoid, rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
-            Debug.DrawRay(transform.position + new Vector3(-rocketSizeToAvoid, -rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
+            //#region DEBUG RAYS
+            //Debug.DrawRay(transform.position + new Vector3(rocketSizeToAvoid, rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
+            //Debug.DrawRay(transform.position + new Vector3(rocketSizeToAvoid, -rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
+            //Debug.DrawRay(transform.position + new Vector3(-rocketSizeToAvoid, rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
+            //Debug.DrawRay(transform.position + new Vector3(-rocketSizeToAvoid, -rocketSizeToAvoid, 0f), transform.forward * rayLength / 2);
 
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.up) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.up + Vector3.right) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.right) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.right + Vector3.down) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.down) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.down + Vector3.left) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.left) * rayLength);
-            Debug.DrawRay(transform.position, (transform.forward + Vector3.left + Vector3.up) * rayLength);
-            #endregion
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.up) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.up + Vector3.right) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.right) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.right + Vector3.down) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.down) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.down + Vector3.left) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.left) * rayLength);
+            //Debug.DrawRay(transform.position, (transform.forward + Vector3.left + Vector3.up) * rayLength);
+            //#endregion
 
             // Rays that check whether the path is free in front of the rocket
             Ray rayForwardFirst = new Ray(transform.position + new Vector3(rocketSizeToAvoid, rocketSizeToAvoid, 0f), transform.forward);
@@ -82,14 +86,14 @@ namespace OverEarth
             Ray rayForwardFourth = new Ray(transform.position + new Vector3(-rocketSizeToAvoid, -rocketSizeToAvoid, 0f), transform.forward);
 
             // Rays that check whether the path is clear in different directions in front of the rocket
-            Ray rayUp = new Ray(transform.position, transform.forward + Vector3.up);
-            Ray rayUpRight = new Ray(transform.position, transform.forward + Vector3.up + Vector3.right);
-            Ray rayRight = new Ray(transform.position, transform.forward + Vector3.right);
-            Ray rayRightDown = new Ray(transform.position, transform.forward + Vector3.right + Vector3.down);
-            Ray rayDown = new Ray(transform.position, transform.forward + Vector3.down);
-            Ray rayDownLeft = new Ray(transform.position, transform.forward + Vector3.down + Vector3.left);
-            Ray rayLeft = new Ray(transform.position, transform.forward + Vector3.left);
-            Ray rayLeftUp = new Ray(transform.position, transform.forward + Vector3.left + Vector3.up);
+            Ray rayUp = new Ray(transform.position, transform.forward + transform.up);
+            Ray rayUpRight = new Ray(transform.position, transform.forward + transform.up + transform.right);
+            Ray rayRight = new Ray(transform.position, transform.forward + transform.right);
+            Ray rayRightDown = new Ray(transform.position, transform.forward + transform.right + -transform.up);
+            Ray rayDown = new Ray(transform.position, transform.forward + -transform.up);
+            Ray rayDownLeft = new Ray(transform.position, transform.forward + -transform.up + -transform.right);
+            Ray rayLeft = new Ray(transform.position, transform.forward + -transform.right);
+            Ray rayLeftUp = new Ray(transform.position, transform.forward + -transform.right + transform.up);
 
             RaycastHit hit = new RaycastHit();
 
@@ -168,6 +172,18 @@ namespace OverEarth
             //DamageManager.instance.DealRocketDamage(this, collision); // Call a method of dealing damage by this rocket to the hitted ship
             DoDamage(500f, collision);
             DestroyRocket(); // Call destroy rocket method
+        }
+
+        private void FindTarget()
+        {
+            _currentTimeToFindTarget -= Time.fixedDeltaTime;
+
+            if (_currentTimeToFindTarget <= 0)
+            {
+                _targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target, EntityParameters.None, MinMaxValues.MaxValue);
+                _target = target;
+                _currentTimeToFindTarget = _defaultTimeToFindTarget;
+            }
         }
 
         private void DestroyRocket()

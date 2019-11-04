@@ -20,15 +20,10 @@ public class StartMenu : MonoBehaviour
         LoadingInfoObject.SetActive(false);
     }
 
-    private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
-    {
-        Cursor.visible = true;
-    }
-
     public void PlayButtonPressed() // The game start button is pressed
     {
         MainMenu.SetActive(false); // Deactivate the main menu
-        LoadSceneAsynchronously("Game"); // Load game scene
+        LoadSceneAsynchronously("BaseDefence"); // Load game scene
     }
 
     public void OptionsButtonPressed()
