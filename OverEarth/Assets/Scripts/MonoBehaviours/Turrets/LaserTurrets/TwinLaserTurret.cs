@@ -13,7 +13,7 @@ namespace OverEarth
         {
             base.SetTurretParameters();
 
-            _hitDuration = _turretEquipment.HitDuration;
+            _hitDuration = _turretItem.HitDuration;
         }
 
         public override void Shoot()

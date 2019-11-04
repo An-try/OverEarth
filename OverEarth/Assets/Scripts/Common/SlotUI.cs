@@ -85,13 +85,13 @@ namespace OverEarth
                 return;
             }
 
-            if (!slotUnderCursor.IsInventorySlot && !itemInContainer.IsEquipment())
+            if (!slotUnderCursor.IsInventorySlot && !itemInContainer.IsEquipment)
             {
                 ReturnItem(this, itemInContainer);
                 return;
             }
 
-            if (!this.IsInventorySlot && itemUnderCursor && !itemUnderCursor.IsEquipment())
+            if (!this.IsInventorySlot && itemUnderCursor && !itemUnderCursor.IsEquipment)
             {
                 ReturnItem(this, itemInContainer);
                 return;

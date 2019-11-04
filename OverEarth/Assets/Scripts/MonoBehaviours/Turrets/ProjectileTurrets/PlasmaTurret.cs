@@ -15,8 +15,8 @@ namespace OverEarth
         {
             base.SetTurretParameters();
             
-            _bulletForce = _turretEquipment.BulletForce;
-            _turretScatter = _turretEquipment.TurretScatter;
+            _bulletForce = _turretItem.BulletForce;
+            _turretScatter = _turretItem.TurretScatter;
 
             _shootPlace = _rightShootPlace;
         }

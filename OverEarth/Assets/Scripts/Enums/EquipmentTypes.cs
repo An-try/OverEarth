@@ -5,7 +5,6 @@
         Upgrade,
         Armor,
         Shield,
-        Weapon,
         Engine
     }
 }

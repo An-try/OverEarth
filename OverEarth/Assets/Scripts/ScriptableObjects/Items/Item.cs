@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace OverEarth
 {
@@ -15,16 +14,8 @@ namespace OverEarth
         public string Name => _name;
         public Sprite Image => _image;
         public GameObject ObjectPrefab => _objectPrefab;
-        private protected virtual EquipmentTypes _thisEquipmentType => (EquipmentTypes)999; // Get enum number of 999 (it is out of range, so this object is not equipment)
 
-        public bool IsEquipment() // (out EquipmentTypes equipmentType)
-        {
-            //equipmentType = _thisEquipmentType;
-            if (Enum.IsDefined(typeof(EquipmentTypes), _thisEquipmentType))
-            {
-                return true;
-            }
-            return false;
-        }
+        public virtual bool IsTurret => false;
+        public virtual bool IsEquipment => false;
     }
 }

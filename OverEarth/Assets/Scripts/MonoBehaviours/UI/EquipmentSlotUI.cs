@@ -39,7 +39,7 @@ namespace OverEarth
 
         private protected override void RemoveItem()
         {
-            if (Item.IsEquipment())
+            if (Item.IsEquipment)
             {
                 _equipmentSlot.RemoveEquipment();
             }

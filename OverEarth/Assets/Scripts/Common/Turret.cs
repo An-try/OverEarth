@@ -7,7 +7,7 @@ namespace OverEarth
     {
         [SerializeField] private AudioClip _shootingSound;
 
-        [SerializeField] private protected TurretEquipment _turretEquipment; // Item for this turret
+        [SerializeField] private protected TurretItem _turretItem; // Item for this turret
 
         [SerializeField] private GameObject _turretBase; // Base platform of the turret that rotates horizontally
         [SerializeField] private protected GameObject _turretCannons; // Cannons of the turret that totates vertically
@@ -77,15 +77,15 @@ namespace OverEarth
 
         public virtual void SetTurretParameters()
         {
-            _turnRate = _turretEquipment.TurnRate;
-            _turretRange = _turretEquipment.Range;
-            _maxCooldown = _turretEquipment.MaxCooldown;
+            _turnRate = _turretItem.TurnRate;
+            _turretRange = _turretItem.Range;
+            _maxCooldown = _turretItem.MaxCooldown;
             _currentCooldown = _maxCooldown;
 
-            _rightTraverse = _turretEquipment.RightTraverse;
-            _leftTraverse = _turretEquipment.LeftTraverse;
-            _elevation = _turretEquipment.Elevation;
-            _depression = _turretEquipment.Depression;
+            _rightTraverse = _turretItem.RightTraverse;
+            _leftTraverse = _turretItem.LeftTraverse;
+            _elevation = _turretItem.Elevation;
+            _depression = _turretItem.Depression;
 
             // Check this turret tag
             switch (transform.root.tag)
