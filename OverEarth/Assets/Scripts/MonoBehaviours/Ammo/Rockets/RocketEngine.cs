@@ -1,55 +1,23 @@
-﻿namespace OverEarth
+﻿using UnityEngine;
+
+namespace OverEarth
 {
     /// <summary>
     /// Engines for any rocket.
     /// </summary>
-    public class RocketEngine
+    [CreateAssetMenu(fileName = "New rocket engine", menuName = "OverEarth/Items/Rocket Parts/Rocket Engine")]
+    public class RocketEngine : Item
     {
-        public float HP = 0f;
-        public float mass = 0f;
+        [SerializeField] private float _maxDurability = 0;
+        [SerializeField] private float _maxArmor = 0;
+        [SerializeField] private float _mass = 0;
+        [SerializeField] private float _maxVelocity = 0;
+        [SerializeField] private float _turnRate = 0;
 
-        public float missileVelocity = 0f;
-        public float maxMissileVelocity = 0f;
-        public float turnRate = 0f;
-
-        public void SolidFuel()
-        {
-            HP = 100f;
-            mass = 400f;
-
-            missileVelocity = 100.0f;
-            maxMissileVelocity = 500.0f;
-            turnRate = 2.0f;
-        }
-
-        public void LiquidPropellant()
-        {
-            HP = 110f;
-            mass = 400f;
-
-            missileVelocity = 100.0f;
-            maxMissileVelocity = 500.0f;
-            turnRate = 2.0f;
-        }
-
-        public void Hybrid()
-        {
-            HP = 125f;
-            mass = 400f;
-
-            missileVelocity = 100.0f;
-            maxMissileVelocity = 500.0f;
-            turnRate = 2.0f;
-        }
-
-        public void HypersonicStraightThroughAirJet()
-        {
-            HP = 150f;
-            mass = 400f;
-
-            missileVelocity = 100.0f;
-            maxMissileVelocity = 500.0f;
-            turnRate = 2.0f;
-        }
+        public float MaxDurability => _maxDurability;
+        public float MaxArmor => _maxArmor;
+        public float Mass => _mass;
+        public float MaxVelocity => _maxVelocity;
+        public float TurnRate => _turnRate;
     }
 }

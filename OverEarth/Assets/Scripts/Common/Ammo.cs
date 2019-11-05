@@ -7,12 +7,18 @@ namespace OverEarth
     /// </summary>
     public abstract class Ammo : MonoBehaviour
     {
-        private protected float _kineticDamage;
+        [SerializeField] private protected AmmoItem _ammoItem;
+        
+        private protected GameObject _hitSparksPrefab; // Sparks when hit something
+        private GameObject _hitHolePrefab; // Hit hole from the impact will be in the place of impact of the object
+        private protected float _damage;
 
-        public GameObject SparksPrefab; // Sparks when hit something
-
-        // TODO: Make an hit hole effect
-        public GameObject HitHolePrefab; // Hit hole from the impact will be in the place of impact of the object
+        private void Start()
+        {
+            _hitSparksPrefab = _ammoItem.HitSparksPrefab;
+            _hitHolePrefab = _ammoItem.HitHolePrefab;
+            _damage = _ammoItem.Damage;
+        }
 
         private protected void DoDamage(float damage, Collider collider)
         {

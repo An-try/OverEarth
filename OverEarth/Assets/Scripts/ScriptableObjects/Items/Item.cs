@@ -8,6 +8,7 @@ namespace OverEarth
     public abstract class Item : ScriptableObject
     {
         [SerializeField] private string _name = "New item";
+        [SerializeField] private string _description = "Item description";
         [SerializeField] private Sprite _image = null;
         [SerializeField] private GameObject _objectPrefab = null;
         

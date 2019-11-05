@@ -5,33 +5,40 @@ namespace OverEarth
 {
     public abstract class Rocket : Ammo
     {
-        public float HP = 0f; // Health of the rocket
+        [SerializeField] private RocketWarhead _rocketWarhead; // Rocket warhead component.
+        [SerializeField] private RocketEngine _rocketEngine; // Rocket engine component.
+        [SerializeField] private GameObject _explosionPrefab; // Explosion effect when rocket hit something
+        [SerializeField] private GameObject _explosionSmokePrefab; // Smoke that takes off from a rocket
+
+        private float _maxDurability; // Health of the rocket
+        private float _currentDurability; // Health of the rocket
+        private float _maxArmor;
+        private float _currentArmor;
+        private float _maxVelocity;
+        private float _currentVelocity;
 
         private Transform _target; // The target that this rocket should pursue
         private Transform _targetPart; // The target part that this rocket should pursue
 
-        private Rigidbody RocketRigidbody;
-
-        public RocketWarhead rocketWarhead; // Rocket warhead component
-        public RocketEngine rocketEngine; // Rocket engine component
-
-        public GameObject ExplosionPrefab; // Explosion effect when rocket hit something
-        public GameObject ExplosionSmokePrefab; // Smoke that takes off from a rocket
+        private Rigidbody _rocketRigidbody;
 
         public List<string> TargetTags { private get; set; } // List that contains
 
         private float _defaultTimeToFindTarget = 1f;
         private float _currentTimeToFindTarget;
 
-        public virtual void Awake() // Awake is called when the script instance is being loaded
+        private void Awake() // Awake is called when the script instance is being loaded
         {
-            rocketWarhead = new RocketWarhead();
-            rocketEngine = new RocketEngine();
+            _rocketRigidbody = GetComponent<Rigidbody>();
         }
 
         private void Start() // Start is called on the frame when a script is enabled just before any of the Update methods are called the first time
         {
-            RocketRigidbody = transform.GetComponent<Rigidbody>(); // Get the rigidbody attached to this game object
+            _maxDurability = _rocketWarhead.MaxDurability + _rocketEngine.MaxDurability;
+            _currentDurability = _maxDurability;
+            _maxArmor = _rocketWarhead.MaxArmor + _rocketEngine.MaxArmor;
+            _currentArmor = _maxArmor;
+            _maxVelocity = _rocketEngine.MaxVelocity;
 
             Destroy(gameObject, 60f); // Destroy the rocket after some time
         }
@@ -39,21 +46,19 @@ namespace OverEarth
         private void FixedUpdate() // FixedUpdate is called at a fixed framerate frequency
         {
             FindTarget();
-            //_targetPart = Methods.SearchNearestTarget(transform, TargetTags, out Transform target);
-            //_target = target;
 
-            if (HP <= 0)
+            if (_currentDurability <= 0)
             {
                 DestroyRocket();
             }
 
             // Add missile velocity to the limit
-            if (rocketEngine.missileVelocity < rocketEngine.maxMissileVelocity)
+            if (_currentVelocity < _rocketEngine.MaxVelocity)
             {
-                rocketEngine.missileVelocity++;
+                _currentVelocity++;
             }
 
-            RocketRigidbody.velocity = transform.forward * rocketEngine.missileVelocity; // Apply velocity to the missile
+            _rocketRigidbody.velocity = transform.forward * _currentVelocity; // Apply velocity to the missile
 
             ObstaclesAvoidance(); // Avoid obstacles and move to the target
         }
@@ -158,12 +163,12 @@ namespace OverEarth
             if (_targetPart != null && moveToTarget) // If target exists and moving to target is allow
             {
                 Quaternion targetRotation = Quaternion.LookRotation(_targetPart.position - transform.position); // Set new look rotation based on target
-                RocketRigidbody.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rocketEngine.turnRate)); // Apply new rotation
+                _rocketRigidbody.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, _rocketEngine.TurnRate)); // Apply new rotation
             }
             else
             {
                 Quaternion targetRotation = Quaternion.LookRotation(newAvoidingPosition - transform.position); // Set new look rotation based on avoiding
-                RocketRigidbody.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, rocketEngine.turnRate)); // Apply new rotation
+                _rocketRigidbody.MoveRotation(Quaternion.RotateTowards(transform.rotation, targetRotation, _rocketEngine.TurnRate)); // Apply new rotation
             }
         }
 
@@ -189,9 +194,9 @@ namespace OverEarth
         private void DestroyRocket()
         {
             // Instantiate an explosion effects
-            GameObject spark = Instantiate(SparksPrefab, transform.position, Quaternion.identity);
-            GameObject explosion = Instantiate(ExplosionPrefab, transform.position, Quaternion.identity);
-            GameObject smoke = Instantiate(ExplosionSmokePrefab, transform.position, Quaternion.identity);
+            GameObject spark = Instantiate(_hitSparksPrefab, transform.position, Quaternion.identity);
+            GameObject explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
+            GameObject smoke = Instantiate(_explosionSmokePrefab, transform.position, Quaternion.identity);
 
             // Destroy this objects after some time
             Destroy(spark.gameObject, 2f);

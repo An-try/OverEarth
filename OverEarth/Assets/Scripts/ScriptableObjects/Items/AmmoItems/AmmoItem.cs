@@ -6,6 +6,14 @@ namespace OverEarth
 {
     public abstract class AmmoItem : Item
     {
-        public float Damage = 0;
+        [SerializeField] private GameObject _hitSparksPrefab;
+        [SerializeField] private GameObject _hitHolePrefab;
+        [SerializeField] private float _damage = 0;
+        [SerializeField] private float _lifeTime = 0;
+
+        public GameObject HitSparksPrefab => _hitSparksPrefab;
+        public GameObject HitHolePrefab => _hitHolePrefab;
+        public float Damage => _damage;
+        public float LifeTime => _lifeTime;
     }
 }

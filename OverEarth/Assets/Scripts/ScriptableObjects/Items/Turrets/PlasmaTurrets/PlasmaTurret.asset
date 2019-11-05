@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4044331dd42c9f644bd1e26eb6afb4f7, type: 3}
+  m_Name: PlasmaTurret
+  m_EditorClassIdentifier: 
+  _name: PlasmaTurret
+  _image: {fileID: 21300000, guid: aaeed94bdf92cbc41bc049d070219b0d, type: 3}
+  _objectPrefab: {fileID: 1146533288891614, guid: 24b6271c535dac74a8e8b2fda476dd90,
+    type: 3}
+  _maxCooldown: 2
+  _range: 10000
+  _turnRate: 30
+  _rightTraverse: 180
+  _leftTraverse: 180
+  _elevation: 80
+  _depression: 10
+  _bulletForce: 100
+  _turretScatter: 0.001

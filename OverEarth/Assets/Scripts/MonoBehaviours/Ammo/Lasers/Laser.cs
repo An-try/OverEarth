@@ -10,9 +10,8 @@ namespace OverEarth
         [HideInInspector] public float LaserLength;
         
         private LineRenderer _lineRenderer; // Component that draws a line
-
-        private float _laserDamagePerHit = 10f;
-        private float _laserHitDuration = 0.5f;
+        
+        private float _laserHitDuration;
         private float _currentHitDuration;
         
         private void Awake() // Awake is called when the script instance is being loaded
@@ -54,7 +53,7 @@ namespace OverEarth
                 // Amount of this parts is calculates like this: HIT_DURATION / TIME_BETWEEN_EACH_DURATION_PART
                 // For example: 0.1 / 0.02(Fixed update time) = 5 parts
                 // Thus, the damage formula looks like this: DAMAGE_PER_HIT / (HIT_DURATION / TIME_BETWEEN_EACH_DURATION_PART)
-                float damage = _laserDamagePerHit / (_laserHitDuration / Time.fixedDeltaTime);
+                float damage = _damage / (_laserHitDuration / Time.fixedDeltaTime);
                 DoDamage(damage, hit.collider);
             }
             else // If raycast hit nothing
