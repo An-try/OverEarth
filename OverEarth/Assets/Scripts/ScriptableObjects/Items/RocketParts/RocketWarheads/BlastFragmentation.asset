@@ -10,10 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7a54aef9a7bdb0d43af95ba9aa19b0eb, type: 3}
-  m_Name: HighExplosiveFragmentation
+  m_Name: BlastFragmentation
   m_EditorClassIdentifier: 
-  _name: High Explosive Fragmentation
-  _description: Item description
+  _name: Blast Fragmentation
+  _description: Blast fragmentation warhead is designed to hit targets with a high-speed
+    stream of fragments, formed when an explosive charge is detonated. It combines
+    two damaging effects - fragmentation and high-explosive. They are one of the most
+    common types of warheads. They are used to destroy almost all types of targets,
+    except underwater, underground and heavily armored targets.
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
   _maxDurability: 0

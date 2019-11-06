@@ -7,11 +7,12 @@ namespace OverEarth
     {
         [SerializeField] private RocketWarhead _rocketWarhead; // Rocket warhead component.
         [SerializeField] private RocketEngine _rocketEngine; // Rocket engine component.
+
         [SerializeField] private GameObject _explosionPrefab; // Explosion effect when rocket hit something
         [SerializeField] private GameObject _explosionSmokePrefab; // Smoke that takes off from a rocket
 
-        private float _maxDurability; // Health of the rocket
-        private float _currentDurability; // Health of the rocket
+        private float _maxDurability;
+        private float _currentDurability;
         private float _maxArmor;
         private float _currentArmor;
         private float _maxVelocity;

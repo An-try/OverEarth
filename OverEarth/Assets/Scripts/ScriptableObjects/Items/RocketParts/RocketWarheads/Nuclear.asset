@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Nuclear
   m_EditorClassIdentifier: 
   _name: Nuclear
-  _description: Item description
+  _description: 'A nuclear warhead uses a nuclear charge. There are several types
+    of such charges: nuclear (using uranium and plutonium), thermonuclear and their
+    derivatives (neutron, x-ray charge). The main damaging effects of nuclear warheads
+    are a shock wave, light radiation, penetrating radiation, an electromagnetic pulse
+    and radioactive contamination. They have the most powerful destructive effect
+    and are weapons of mass destruction. A huge drawback is radioactive contamination.'
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
   _maxDurability: 0

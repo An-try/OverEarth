@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: Incendiary
   m_EditorClassIdentifier: 
   _name: Incendiary
-  _description: Item description
+  _description: Incendiary warheads are designed to defeat the enemy s manpower, destroy
+    its weapons and military equipment, stocks of material resources, as well as to
+    create fires in combat zones due to the combustion of a charge - incendiary mixture.
+    The damaging effect is the released thermal energy and toxic products of combustion.
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
   _maxDurability: 0

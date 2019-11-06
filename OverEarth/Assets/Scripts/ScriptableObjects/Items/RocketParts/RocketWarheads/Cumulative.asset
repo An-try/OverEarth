@@ -13,7 +13,12 @@ MonoBehaviour:
   m_Name: Cumulative
   m_EditorClassIdentifier: 
   _name: Cumulative
-  _description: Item description
+  _description: A warhead, the main damaging effect of which is based on a cumulative
+    effect. During an explosion, a metal stream is formed, which is sent at a supersonic
+    speed towards the target. It is used to destroy targets protected by armor or
+    concrete (tanks, bunkers). The cumulative jet, pushing through the barrier, penetrates
+    inside with its fragments, as well as fragments of the cladding or chipped pieces
+    of armor, striking the crew and unarmored elements - fuel lines, tanks, ammunition.
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
   _maxDurability: 0

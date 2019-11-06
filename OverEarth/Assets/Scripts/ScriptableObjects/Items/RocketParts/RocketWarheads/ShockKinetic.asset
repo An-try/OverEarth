@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7a54aef9a7bdb0d43af95ba9aa19b0eb, type: 3}
   m_Name: ShockKinetic
   m_EditorClassIdentifier: 
-  _name: Shock Kinetic
-  _description: Item description
+  _name: Shock-Kinetic
+  _description: Shock-kinetic warheads are a class of warheads, the basic principle
+    of which is based on the direct hit of ammunition in the target, with its subsequent
+    destruction. Designed to engage protected armored targets (armored vehicles, ships),
+    satellites and ballistic missile nuclear warheads.
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
   _maxDurability: 0
