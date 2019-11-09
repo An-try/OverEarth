@@ -107,7 +107,8 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.23885375, y: 256.3821, z: 0.23140767}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1896991578211772075}
   m_Father: {fileID: 4909500814469704}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -303,7 +304,37 @@ MonoBehaviour:
   _turretItem: {fileID: 11400000, guid: 6325512f124de45409a51120df90e8f6, type: 2}
   _turretBase: {fileID: 1253153617453988}
   _turretCannons: {fileID: 1545321392522286}
-  _shootPlace: {fileID: 1545321392522286}
+  _shootPlace: {fileID: 1162342147290730941}
   _shootAnimationPrefab: {fileID: 0}
   _missilePrefab: {fileID: 1268428923894664, guid: 75140daf6ad0b704ca693c3f45b3323b,
     type: 3}
+--- !u!1 &1162342147290730941
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1896991578211772075}
+  m_Layer: 0
+  m_Name: ShootPlace
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1896991578211772075
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1162342147290730941}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 68, z: 243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4262855936199524}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

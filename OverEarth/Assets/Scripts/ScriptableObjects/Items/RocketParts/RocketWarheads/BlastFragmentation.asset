@@ -20,7 +20,7 @@ MonoBehaviour:
     except underwater, underground and heavily armored targets.
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
-  _maxDurability: 0
-  _maxArmor: 0
-  _damage: 0
-  _mass: 0
+  _maxDurability: 100
+  _maxArmor: 100
+  _damage: 300
+  _mass: 1

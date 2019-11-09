@@ -16,8 +16,8 @@ MonoBehaviour:
   _description: Item description
   _image: {fileID: 0}
   _objectPrefab: {fileID: 0}
-  _maxDurability: 0
-  _maxArmor: 0
-  _mass: 0
-  _maxVelocity: 0
-  _turnRate: 0
+  _maxDurability: 100
+  _maxArmor: 100
+  _mass: 1
+  _maxVelocity: 200
+  _turnRate: 2
