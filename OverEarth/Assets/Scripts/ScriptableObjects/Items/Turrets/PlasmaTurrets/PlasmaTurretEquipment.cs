@@ -2,7 +2,7 @@
 
 namespace OverEarth
 {
-    [CreateAssetMenu(fileName = "New plasma turret", menuName = "OverEarth/Items/Plasma Turret")]
+    [CreateAssetMenu(fileName = "New plasma turret", menuName = "OverEarth/Items/Turrets/Plasma Turret")]
     public class PlasmaTurretEquipment : TurretItem
     {
         [SerializeField] private float _bulletForce = 0;

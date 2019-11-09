@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 559625a8b2dae5a46898f535dff80599, type: 3}
+  m_Name: EMPAmmo
+  m_EditorClassIdentifier: 
+  _name: EMP Ammo
+  _description: Item description
+  _image: {fileID: 0}
+  _objectPrefab: {fileID: 123563657860091396, guid: 1b15e91000662c34ebe141f392d16096,
+    type: 3}
+  _hitSparksPrefab: {fileID: 0}
+  _hitHolePrefab: {fileID: 0}
+  _damage: 50
+  _lifeTime: 60

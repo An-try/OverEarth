@@ -2,7 +2,7 @@
 
 namespace OverEarth
 {
-    [CreateAssetMenu(fileName = "New laser turret", menuName = "OverEarth/Items/Laser Turret")]
+    [CreateAssetMenu(fileName = "New laser turret", menuName = "OverEarth/Items/Turrets/Laser Turret")]
     public class LaserTurretEquipment : TurretItem
     {
         [SerializeField] private float _hitDuration = 0;

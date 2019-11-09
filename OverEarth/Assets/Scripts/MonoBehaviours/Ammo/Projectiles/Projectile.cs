@@ -17,7 +17,7 @@ namespace OverEarth
 
         private void OnCollisionEnter(Collision collision) // Called when this collider/rigidbody has begun touching another rigidbody/collider
         {
-            DoDamage(_damage, collision);
+            DoDamage(_damage, collision.collider);
             DestroyProjectile(); // Destroy this projectile
         }
 
@@ -25,7 +25,7 @@ namespace OverEarth
         {
             GameObject spark = Instantiate(_hitSparksPrefab); // Instantiate sparks
             spark.transform.position = transform.position; // Set sparks position
-            Destroy(spark, 0.3f); // Destroy sparks after some time
+            Destroy(spark, 1); // Destroy sparks after some time
             Destroy(gameObject); // Destroy this projectile
         }
     }

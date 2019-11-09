@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace OverEarth
 {
-    [CreateAssetMenu(fileName = "New rocket turret", menuName = "OverEarth/Items/Rocket Turret")]
+    [CreateAssetMenu(fileName = "New rocket turret", menuName = "OverEarth/Items/Turrets/Rocket Turret")]
     public class RocketTurretEquipment : TurretItem
     {
 

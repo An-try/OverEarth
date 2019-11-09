@@ -176,7 +176,7 @@ namespace OverEarth
         private void OnCollisionEnter(Collision collision) // Called when this collider/rigidbody has begun touching another rigidbody/collider
         {
             //DamageManager.instance.DealRocketDamage(this, collision); // Call a method of dealing damage by this rocket to the hitted ship
-            DoDamage(500f, collision);
+            DoDamage(_damage, collision.collider);
             DestroyRocket(); // Call destroy rocket method
         }
 

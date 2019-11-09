@@ -20,6 +20,11 @@ namespace OverEarth
             _damage = _ammoItem.Damage;
         }
 
+        /// <summary>
+        /// Transfer collider or Collision.collider.
+        /// </summary>
+        /// <param name="damage"></param>
+        /// <param name="collider"></param>
         private protected void DoDamage(float damage, Collider collider)
         {
             Damageable hittedObject = collider.GetComponent<Damageable>();
@@ -30,23 +35,6 @@ namespace OverEarth
             else
             {
                 hittedObject = collider.GetComponentInParent<Damageable>();
-                if (hittedObject)
-                {
-                    hittedObject.DoDamage(damage);
-                }
-            }
-        }
-
-        private protected void DoDamage(float damage, Collision collision)
-        {
-            Damageable hittedObject = collision.collider.GetComponent<Damageable>();
-            if (hittedObject)
-            {
-                hittedObject.DoDamage(damage);
-            }
-            else
-            {
-                hittedObject = collision.collider.GetComponentInParent<Damageable>();
                 if (hittedObject)
                 {
                     hittedObject.DoDamage(damage);
