@@ -38,9 +38,9 @@ namespace OverEarth
         /// </summary>
         public void SetDefaultParameters()
         {
-            _maxDurability = 10000;
+            _maxDurability = 5000;
             _currentDurability = _maxDurability;
-            _maxArmor = 5000;
+            _maxArmor = 1000;
             _currentArmor = _maxArmor;
         }
 

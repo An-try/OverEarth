@@ -23,9 +23,9 @@ namespace OverEarth
 
         private void DestroyProjectile()
         {
-            GameObject spark = Instantiate(_hitSparksPrefab); // Instantiate sparks
-            spark.transform.position = transform.position; // Set sparks position
-            Destroy(spark, 1); // Destroy sparks after some time
+            //GameObject spark = Instantiate(_hitSparksPrefab); // Instantiate sparks
+            //spark.transform.position = transform.position; // Set sparks position
+            //Destroy(spark, 1); // Destroy sparks after some time
             Destroy(gameObject); // Destroy this projectile
         }
     }

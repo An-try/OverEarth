@@ -65,6 +65,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -142,6 +143,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -296,27 +298,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7538f63f034081d4f84f41b5510b54ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootingSound: {fileID: 8300000, guid: 406abe6e803b244eca380af5865dc5cb, type: 3}
-  item: {fileID: 0}
-  TargetTags: []
-  TurretBase: {fileID: 1849001976023146}
-  TurretCannons: {fileID: 1691963451514128}
-  ShootPlace: {fileID: 0}
-  ShootAnimationPrefab: {fileID: 1853411115896420, guid: b539fa8305c5d6e46b7db63498a8ed96,
+  _shootingSound: {fileID: 8300000, guid: efc8a171e707c43fcb789f5980dafb79, type: 3}
+  _turretItem: {fileID: 11400000, guid: 06128bee4503393468e177b3fc032171, type: 2}
+  _turretBase: {fileID: 1849001976023146}
+  _turretCannons: {fileID: 1691963451514128}
+  _shootPlace: {fileID: 0}
+  _shootAnimationPrefab: {fileID: 1853411115896420, guid: b539fa8305c5d6e46b7db63498a8ed96,
     type: 3}
-  AimPoint: {x: 0, y: 0, z: 0}
-  turnRate: 0
-  cooldown: 0
-  currentCooldown: 0
-  _rightTraverse: 0
-  _leftTraverse: 0
-  _elevation: 0
-  _depression: 0
-  turretAI: 0
-  ProjectilePrefab: {fileID: 1986079117999160, guid: 0a93423680bf12c46bacda8ba91360fe,
+  _projectilePrefab: {fileID: 1986079117999160, guid: 0a93423680bf12c46bacda8ba91360fe,
     type: 3}
-  RightShootPlace: {fileID: 1879476429410654}
-  LeftShootPlace: {fileID: 1858186718335812}
+  _rightShootPlace: {fileID: 1879476429410654}
+  _leftShootPlace: {fileID: 1858186718335812}
 --- !u!1 &1178410911068004
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,6 +374,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -459,6 +452,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -536,6 +530,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -613,6 +608,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -690,6 +686,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -767,6 +764,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -1034,6 +1032,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

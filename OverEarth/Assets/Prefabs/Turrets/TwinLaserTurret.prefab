@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 82447883952266338}
   - component: {fileID: 114221692281150000}
   m_Layer: 0
-  m_Name: TwinLaserPulseTurret
+  m_Name: TwinLaserTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143,25 +143,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3cc4f9e9c7f30b409e29a3ccb5d008d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootingSound: {fileID: 8300000, guid: f1364d48e48ea4fdab44868cc9b2a10e, type: 3}
-  item: {fileID: 0}
-  TargetTags: []
-  TurretBase: {fileID: 1744142559798906}
-  TurretCannons: {fileID: 1855947822126170}
-  ShootPlace: {fileID: 0}
-  ShootAnimationPrefab: {fileID: 0}
-  AimPoint: {x: 0, y: 0, z: 0}
-  turnRate: 0
-  cooldown: 0
-  currentCooldown: 0
-  _rightTraverse: 0
-  _leftTraverse: 0
-  _elevation: 0
-  _depression: 0
-  turretAI: 0
-  RightLaserBeam: {fileID: 1075114156310072}
-  LeftLaserBeam: {fileID: 1250740400471698}
-  hitDuration: 0
+  _shootingSound: {fileID: 8300000, guid: 406abe6e803b244eca380af5865dc5cb, type: 3}
+  _turretItem: {fileID: 11400000, guid: 2943900b8100412448021368b5384284, type: 2}
+  _turretBase: {fileID: 1744142559798906}
+  _turretCannons: {fileID: 1855947822126170}
+  _shootPlace: {fileID: 0}
+  _shootAnimationPrefab: {fileID: 0}
+  _rightLaserBeam: {fileID: 1075114156310072}
+  _leftLaserBeam: {fileID: 1250740400471698}
+  _hitDuration: 0.1
 --- !u!1 &1075114156310072
 GameObject:
   m_ObjectHideFlags: 0
@@ -207,11 +197,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471f2204de61dec47a742f74870ef322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SparksPrefab: {fileID: 1465382322416064, guid: 663fb69b58f57f840b86dadca72859cc,
-    type: 3}
-  HitHolePrefab: {fileID: 0}
-  laserHitDuration: 0
-  laserLength: 0
+  _ammoItem: {fileID: 11400000, guid: 56981d2e43f3fcd4887bae0f4b5b045f, type: 2}
+  LaserLength: 0
 --- !u!1 &1106614863944396
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +264,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5006,6 +4994,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -5086,11 +5075,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 471f2204de61dec47a742f74870ef322, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SparksPrefab: {fileID: 1465382322416064, guid: 663fb69b58f57f840b86dadca72859cc,
-    type: 3}
-  HitHolePrefab: {fileID: 0}
-  laserHitDuration: 0
-  laserLength: 0
+  _ammoItem: {fileID: 11400000, guid: 56981d2e43f3fcd4887bae0f4b5b045f, type: 2}
+  LaserLength: 0
 --- !u!1 &1341342937157624
 GameObject:
   m_ObjectHideFlags: 0
@@ -5156,6 +5142,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -9885,6 +9872,7 @@ ParticleSystemRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10007,6 +9995,7 @@ LineRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -10197,6 +10186,7 @@ LineRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0

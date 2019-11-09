@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: PlasmaTurret
   m_EditorClassIdentifier: 
   _name: PlasmaTurret
+  _description: Item description
   _image: {fileID: 21300000, guid: aaeed94bdf92cbc41bc049d070219b0d, type: 3}
   _objectPrefab: {fileID: 1146533288891614, guid: 24b6271c535dac74a8e8b2fda476dd90,
     type: 3}
@@ -23,5 +24,5 @@ MonoBehaviour:
   _leftTraverse: 180
   _elevation: 80
   _depression: 10
-  _bulletForce: 100
+  _bulletForce: 100000
   _turretScatter: 0.001

@@ -66,6 +66,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -143,6 +144,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -297,21 +299,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3fb877d5d63c1c409f9076c974bb90d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ShootingSound: {fileID: 8300000, guid: 5ea20ca807ef08f47906f9079f22e219, type: 3}
-  item: {fileID: 0}
-  TargetTags: []
-  TurretBase: {fileID: 1253153617453988}
-  TurretCannons: {fileID: 1545321392522286}
-  ShootPlace: {fileID: 0}
-  ShootAnimationPrefab: {fileID: 0}
-  AimPoint: {x: 0, y: 0, z: 0}
-  turnRate: 0
-  cooldown: 0
-  currentCooldown: 0
-  _rightTraverse: 0
-  _leftTraverse: 0
-  _elevation: 0
-  _depression: 0
-  turretAI: 0
-  MissilePrefab: {fileID: 1268428923894664, guid: 75140daf6ad0b704ca693c3f45b3323b,
+  _shootingSound: {fileID: 8300000, guid: 5ea20ca807ef08f47906f9079f22e219, type: 3}
+  _turretItem: {fileID: 11400000, guid: 6325512f124de45409a51120df90e8f6, type: 2}
+  _turretBase: {fileID: 1253153617453988}
+  _turretCannons: {fileID: 1545321392522286}
+  _shootPlace: {fileID: 1545321392522286}
+  _shootAnimationPrefab: {fileID: 0}
+  _missilePrefab: {fileID: 1268428923894664, guid: 75140daf6ad0b704ca693c3f45b3323b,
     type: 3}

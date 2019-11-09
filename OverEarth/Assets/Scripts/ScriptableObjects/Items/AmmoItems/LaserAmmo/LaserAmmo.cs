@@ -2,17 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LaserAmmo : MonoBehaviour
+namespace OverEarth
 {
-    // Start is called before the first frame update
-    void Start()
+    [CreateAssetMenu(fileName = "New projectile ammo", menuName = "OverEarth/Items/Ammo/Laser Ammo")]
+    public class LaserAmmo : AmmoItem
     {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 }

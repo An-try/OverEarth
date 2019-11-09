@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10e4182ed0ec7f47b61fea406c368f5, type: 3}
+  m_Name: MissileLight
+  m_EditorClassIdentifier: 
+  _name: Missile Light
+  _description: Item description
+  _image: {fileID: 0}
+  _objectPrefab: {fileID: 1268428923894664, guid: 75140daf6ad0b704ca693c3f45b3323b,
+    type: 3}
+  _hitSparksPrefab: {fileID: 1818252622265450, guid: 67adf538203c3a74ab043e09ec663468,
+    type: 3}
+  _hitHolePrefab: {fileID: 0}
+  _damage: 0
+  _lifeTime: 60

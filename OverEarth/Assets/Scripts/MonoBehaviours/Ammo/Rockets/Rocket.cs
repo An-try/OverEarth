@@ -195,12 +195,12 @@ namespace OverEarth
         private void DestroyRocket()
         {
             // Instantiate an explosion effects
-            GameObject spark = Instantiate(_hitSparksPrefab, transform.position, Quaternion.identity);
+            //GameObject spark = Instantiate(_hitSparksPrefab, transform.position, Quaternion.identity);
             GameObject explosion = Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
             GameObject smoke = Instantiate(_explosionSmokePrefab, transform.position, Quaternion.identity);
 
             // Destroy this objects after some time
-            Destroy(spark.gameObject, 2f);
+            //Destroy(spark.gameObject, 2f);
             Destroy(explosion.gameObject, 2f);
             Destroy(smoke.gameObject, 2f);
 
